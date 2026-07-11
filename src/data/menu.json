@@ -1,0 +1,51 @@
+[
+  {
+    "note": "DO",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  },
+  {
+    "note": "RE",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  },
+  {
+    "note": "MI",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  },
+  {
+    "note": "FA",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  },
+  {
+    "note": "SOL",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  },
+  {
+    "note": "LA",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  },
+  {
+    "note": "SI",
+    "submenus": [
+      { "label": "Mayor", "quality": "major" },
+      { "label": "Menor", "quality": "minor" }
+    ]
+  }
+]

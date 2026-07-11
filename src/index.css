@@ -1,0 +1,72 @@
+:root {
+  --bg-primary: #fdf6e3;
+  --bg-secondary: #eee8d5;
+  --text-primary: #586e75;
+  --text-secondary: #657b83;
+  --accent: #b58900;
+  --card-bg: #fffcf5;
+  --card-border: #d3c6aa;
+  --sidebar-bg: #f5f0e1;
+  --sidebar-text: #454d4e;
+  --highlight: #d33682;
+}
+
+body {
+  margin: 0;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background-color: var(--bg-primary);
+  /* Textura sutil de papel retro */
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="preserve"/%3E%3C/filter%3E%3Crect width="100%)" height="100%" filter="url(%23n)" opacity="0.05"/%3E%3C/svg%3E');
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: none;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.app-main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.app-header {
+  text-align: center;
+  color: var(--accent);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  /* Efecto de sombra retro sutil */
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.1), 4px 4px 0px rgba(0,0,0,0.05);
+}
+
+header h1 {
+  text-align: center;
+}
+
+.piano-container, .piano-highlight-container {
+  margin: 20px auto;
+}
+
+.collections-container {
+  margin-top: 3rem;
+}
+
+.collection-item h3 {
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px;
+}
+
+.degree-card:hover {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,26 @@
+.piano-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  border: 1px solid var(--card-border);
+}
+
+.piano-container h3,
+.piano-container h4,
+.piano-container span {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: var(--text-primary);
+}
+
+.piano-title {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 15px;
+  text-align: center;
+}

@@ -1,0 +1,125 @@
+.collection-list {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.collection-list h2 {
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.collection-item {
+  margin-bottom: 40px;
+}
+
+.collection-item h3 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  border-bottom: 3px solid var(--accent);
+  display: block;
+  padding-bottom: 10px;
+}
+
+.root-note-section {
+  margin-bottom: 3rem;
+}
+
+.root-note-title {
+  border-bottom: 2px solid var(--card-border);
+  padding-bottom: 10px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.chords-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.degree-card {
+  text-align: center;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.degree-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.degree-card h4 {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.quality-display {
+  font-size: 0.75rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 1px solid var(--card-border);
+}
+
+.piano-wrapper {
+  margin-bottom: 10px;
+}
+
+.notes-info {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+/* Nuevas clases para eliminar estilos inline */
+.empty-message,
+.empty-collection-message {
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty-chord-message {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+}
+
+.notes-label {
+  font-weight: bold;
+}
+
+/* Mapeo de colores para las etiquetas de notas */
+.label-degree-0 { color: #e74c3c; }
+.label-degree-1 { color: #3498db; }
+.label-degree-2 { color: #2ecc71; }
+.label-degree-3 { color: #f1c40f; }
+.label-degree-4 { color: #9b59b6; }
+.label-degree-5 { color: #e67e22; }
+.label-degree-6 { color: #1abc9c; }
+.label-degree-7 { color: #34985e; }
