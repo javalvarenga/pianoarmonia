@@ -1,0 +1,41 @@
+.hamburger-menu {
+  display: none; /* Oculto por defecto en desktop */
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+}
+
+.hamburger-bar {
+  width: 30px;
+  height: 3px;
+  background-color: var(--accent);
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: flex;
+  }
+
+  /* Animación simple de hamburguesa a X */
+  .hamburger-menu.open .hamburger-bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .hamburger-menu.open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-menu.open .hamburger-bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+}

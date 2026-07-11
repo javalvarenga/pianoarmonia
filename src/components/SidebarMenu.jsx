@@ -5,7 +5,7 @@ import './SidebarMenu.css';
  * Componente SidebarMenu que renderiza la navegación lateral
  * basada en la estructura de niveles definida.
  */
-const SidebarMenu = () => {
+const SidebarMenu = ({ isOpen, toggleMenu }) => {
   // Nota: En una implementación real, estos datos vendrían de src/data/menu.json
   const menuData = [
     { name: 'DO', children: ['Mayor', 'Menor'] },
@@ -18,14 +18,14 @@ const SidebarMenu = () => {
   ];
 
   return (
-    <aside className="sidebar-menu">
+    <aside className={`sidebar-menu ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
         <h2 className="sidebar-title">Armonía</h2>
       </div>
       <nav className="menu-container">
         {menuData.map((item, index) => (
           <div key={`menu-sec-${index}`} className="menu-section">
-            <div className="menu-level-1">
+            <div className="menu-level-1" onClick={toggleMenu}>
               {item.name}
             </div>
             <div className="menu-level-2-container">
@@ -33,6 +33,7 @@ const SidebarMenu = () => {
                 <div 
                   key={`menu-child-${childIndex}`} 
                   className="menu-level-2"
+                  onClick={toggleMenu}
                 >
                   {child}
                 </div>
