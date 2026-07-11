@@ -5,6 +5,7 @@ export const collections = [
     type: "major-scale",
     root: "C",
     scale: ["C", "D", "E", "F", "G", "A", "B"],
+    route: "/c-major",
     chords: [
       {
         note: "C",

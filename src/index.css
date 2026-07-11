@@ -18,22 +18,30 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Evitar scroll horizontal */
 }
 
 .app-layout {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  max-width: none;
+  flex-direction: column; /* Mobile-first: columna por defecto */
+  align-items: center; /* Centrado en móvil */
+  max-width: 100vw;
   padding: 0;
   min-height: 100vh;
+  overflow-x: hidden; /* Evitar scroll horizontal */
+  width: 100%; /* Asegurar ancho completo */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .app-layout {
+    flex-direction: row; /* En desktop, fila */
+    align-items: flex-start; /* Alineación inicial */
+  }
 }
 
 @media (max-width: 768px) {
-  .app-layout {
-    flex-direction: column;
-  }
-  
   .sidebar-menu {
     height: auto;
     width: 100%;
@@ -53,26 +61,56 @@ body {
     width: 100%;
     padding: 1rem;
     margin-top: 60px; /* Espacio para el menú hamburguesa */
+    overflow-x: hidden; /* Evitar scroll horizontal */
+    box-sizing: border-box; /* Incluir padding en el ancho */
   }
 }
 
 .app-main-content {
   flex: 1;
-  padding: 2rem;
+  padding: 1rem; /* Mobile-first: padding reducido */
   overflow-y: auto;
+  overflow-x: hidden; /* Evitar scroll horizontal */
+  max-width: 100vw;
+  width: 100%; /* Asegurar ancho completo */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado en móvil */
+  height: 100vh; /* Asegurar altura completa */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .app-main-content {
+    padding: 2rem; /* En desktop, padding normal */
+  }
 }
 
 .app-header {
   text-align: center;
   color: var(--accent);
   font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 3rem;
+  font-size: 2rem; /* Mobile-first: tamaño reducido */
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem; /* Mobile-first: margen reducido */
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px; /* Mobile-first: espaciado reducido */
   /* Efecto de sombra retro sutil */
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.1), 4px 4px 0px rgba(0,0,0,0.05);
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05);
+  overflow-wrap: break-word; /* Romper palabras largas */
+  width: 100%; /* Asegurar ancho completo */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .app-header {
+    font-size: 3rem; /* En desktop, tamaño normal */
+    margin-bottom: 1.5rem; /* En desktop, margen normal */
+    letter-spacing: 2px; /* En desktop, espaciado normal */
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1), 4px 4px 0px rgba(0,0,0,0.05);
+  }
 }
 
 header h1 {
@@ -80,11 +118,35 @@ header h1 {
 }
 
 .piano-container, .piano-highlight-container {
-  margin: 20px auto;
+  margin: 10px auto; /* Mobile-first: margen reducido */
+  max-width: 100%;
+  overflow-x: hidden; /* Evitar scroll horizontal */
+  width: 100%; /* Asegurar ancho completo */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .piano-container, .piano-highlight-container {
+    margin: 20px auto; /* En desktop, margen normal */
+  }
 }
 
 .collections-container {
-  margin-top: 3rem;
+  margin-top: 1rem; /* Mobile-first: margen reducido */
+  overflow-x: hidden; /* Evitar scroll horizontal */
+  width: 100%; /* Asegurar ancho completo */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado en móvil */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .collections-container {
+    margin-top: 3rem; /* En desktop, margen normal */
+  }
 }
 
 .collection-item h3 {

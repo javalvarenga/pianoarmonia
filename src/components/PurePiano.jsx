@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './purePiano.css';
+import { Sostenidos } from './Sostenidos'; // Importación añadida
 
 /**
  * Componente PurePiano que renderiza un teclado de piano básico.
  * Recibe únicamente noteColors para determinar qué teclas resaltar y con qué color.
  */
 const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Verificar al cargar
+    checkIsMobile();
+
+    // Agregar event listener
+    window.addEventListener('resize', checkIsMobile);
+
+    // Limpiar event listener
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
   // Definición estándar de la escala cromática
   const notesTemplate = [
     { note: 'C', type: 'white' },
@@ -38,39 +56,42 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
     return `${normalizedName}${octave}`;
   };
 
-  // Generamos el teclado para 3 octavas empezando desde C4 (4, 5 y 6)
+  // Determinar el rango de octavas según el dispositivo
+  const startOctave = isMobile ? 4 : 4;
+  const endOctave = isMobile ? 5 : 6;
+
+  // Generamos el teclado para el rango de octavas
   const keyboard = [];
-  for (let octave = 4; octave <= 6; octave++) {
+  for (let octave = startOctave; octave <= endOctave; octave++) {
     notesTemplate.forEach((n) => {
       const fullNote = `${n.note}${octave}`;
       keyboard.push({ ...n, fullNote });
     });
   }
 
-  return (
-    <div className="piano-keyboard-wrapper">
-      <div className="piano-keyboard">
-        {keyboard.map((key, index) => {
-          // Buscamos el color para la nota actual
-          let colorClass = '';
-          if (noteColors && typeof noteColors === 'object') {
-            for (const [note, color] of Object.entries(noteColors)) {
-              if (getNormalizedNote(note) === key.fullNote) {
-                colorClass = color;
-                break;
-              }
-            }
-          }
+  // Normalizamos las notas a resaltar
+  const normalizedNoteColors = {};
+  if (noteColors && typeof noteColors === 'object') {
+    for (const [note, color] of Object.entries(noteColors)) {
+      const normalized = getNormalizedNote(note);
+      normalizedNoteColors[normalized] = color;
+    }
+  }
 
-          return (
-            <div
-              key={index}
-              className={`piano-key ${key.type} ${colorClass}`}
-              onClick={() => onKeyPress(key.fullNote)}
-            />
-          );
-        })}
-      </div>
+  return (
+    <div className="piano-keyboard">
+      {keyboard.map((key, index) => {
+        // Buscamos el color para la nota actual
+        const colorClass = normalizedNoteColors[key.fullNote] || '';
+
+        return (
+          <div
+            key={`${key.fullNote}-${index}`}
+            className={`piano-key ${key.type} ${colorClass}`}
+            onClick={() => onKeyPress(key.fullNote)}
+          />
+        );
+      })}
     </div>
   );
 };
