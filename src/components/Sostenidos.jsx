@@ -31,11 +31,16 @@ const Sostenidos = ({
   // Calcular posiciones para las teclas negras
   const calculatePosition = (index) => {
     // Cada octava tiene 7 teclas blancas
-    const octavePosition = Math.floor(index / 5) * 100; // 100% por octava
+    const octavePosition = Math.floor(index / 5);
     const inOctaveIndex = index % 5;
-    const positionsInOctave = [10, 25, 55, 70, 85]; // Porcentajes para las 5 teclas negras
     
-    return `${octavePosition + positionsInOctave[inOctaveIndex] / 7}%`;
+    // Posiciones relativas de las teclas negras en una octava
+    const positionsInOctave = [0, 1, 3, 4, 5];
+    
+    // Calcular la posición en porcentaje
+    const position = (octavePosition * 7 + positionsInOctave[inOctaveIndex]) * (100 / 14);
+    
+    return `${position}%`;
   };
 
   return (
