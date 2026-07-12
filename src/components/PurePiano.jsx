@@ -24,8 +24,22 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  // Notas naturales (blancas) en una octava
-  const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  // Generar notas blancas para dos octavas
+  const generateWhiteNotes = () => {
+    const octaves = [3, 4]; // Octavas 3 y 4
+    const whiteNoteNames = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    const notes = [];
+    
+    octaves.forEach(octave => {
+      whiteNoteNames.forEach(note => {
+        notes.push(`${note}${octave}`);
+      });
+    });
+    
+    return notes;
+  };
+
+  const whiteNotes = generateWhiteNotes();
   
   // Función para obtener el color de una nota
   const getNoteColor = (note) => {
