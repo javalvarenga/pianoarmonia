@@ -1,57 +1,60 @@
 import React from 'react';
 
-/**
- * Componente Sostenidos que renderiza las teclas negras del piano.
- * Recibe noteColors, onKeyPress, getNoteColor y hasNoteColor como props.
- */
 const Sostenidos = ({ 
   noteColors = {}, 
   onKeyPress = () => {}, 
-  getNoteColor = () => {}, 
-  hasNoteColor = () => {},
+  getNoteColor = () => 'transparent', 
+  hasNoteColor = () => false,
   startOctave = 3,
   endOctave = 4
 }) => {
-  // Generar notas sostenidas para el rango de octavas especificado
-  const generateSharpNotes = () => {
-    const sharpNoteNames = ['C#', 'D#', 'F#', 'G#', 'A#'];
-    const notes = [];
+  // Definir las posiciones de las teclas negras
+  const blackKeyPositions = {
+    'C#': 1,
+    'D#': 2,
+    'F#': 4,
+    'G#': 5,
+    'A#': 6
+  };
+
+  // Generar todas las notas negras para el rango de octavas
+  const generateBlackNotes = () => {
+    const blackNotes = [];
+    const blackNoteNames = ['C#', 'D#', 'F#', 'G#', 'A#'];
     
     for (let octave = startOctave; octave <= endOctave; octave++) {
-      sharpNoteNames.forEach(note => {
-        notes.push(`${note}${octave}`);
+      blackNoteNames.forEach(note => {
+        blackNotes.push(`${note}${octave}`);
       });
     }
     
-    return notes;
+    return blackNotes;
   };
 
-  const sharpNotes = generateSharpNotes();
+  const blackNotes = generateBlackNotes();
 
-  // Calcular posiciones para las teclas negras
-  const calculatePosition = (index) => {
-    // Cada octava tiene 7 teclas blancas
-    const octavePosition = Math.floor(index / 5);
-    const inOctaveIndex = index % 5;
+  // Calcular posición de tecla negra
+  const getBlackKeyPosition = (note) => {
+    const noteName = note.slice(0, -1);
+    const octave = parseInt(note.slice(-1));
     
-    // Posiciones relativas de las teclas negras en una octava
-    const positionsInOctave = [0, 1, 3, 4, 5];
+    // Calcular desplazamiento basado en la octava
+    const octaveOffset = (octave - startOctave) * 7;
     
-    // Calcular la posición en porcentaje
-    const position = (octavePosition * 7 + positionsInOctave[inOctaveIndex]) * (100 / 14);
-    
-    return `${position}%`;
+    return octaveOffset + blackKeyPositions[noteName];
   };
 
   return (
     <div className="black-keys">
-      {sharpNotes.map((note, index) => {
+      {blackNotes.map((note) => {
+        const position = getBlackKeyPosition(note);
+        
         return (
           <div 
             key={note}
             className={`black-key ${hasNoteColor(note) ? 'highlighted' : ''}`}
             style={{
-              left: calculatePosition(index),
+              left: `calc(${(position - 0.5) * (100 / 14)}% - 2%)`,
               backgroundColor: hasNoteColor(note) ? getNoteColor(note) : 'black',
               borderColor: hasNoteColor(note) ? getNoteColor(note) : '#333'
             }}

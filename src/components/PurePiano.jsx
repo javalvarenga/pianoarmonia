@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './purePiano.css';
-import Sostenidos from './Sostenidos.jsx'; // Importación corregida
+import Sostenidos from './Sostenidos.jsx';
 
-/**
- * Componente PurePiano que renderiza un teclado de piano básico.
- * Recibe únicamente noteColors para determinar qué teclas resaltar y con qué color.
- */
 const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -14,17 +10,11 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    // Verificar al cargar
     checkIsMobile();
-
-    // Agregar event listener
     window.addEventListener('resize', checkIsMobile);
-
-    // Limpiar event listener
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  // Constantes para definir el rango de octavas
   const START_OCTAVE = 3;
   const END_OCTAVE = 4;
 
@@ -44,12 +34,10 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
 
   const whiteNotes = generateWhiteNotes();
   
-  // Función para obtener el color de una nota
   const getNoteColor = (note) => {
     return noteColors[note] || 'transparent';
   };
 
-  // Función para determinar si una nota debe tener borde
   const hasNoteColor = (note) => {
     return noteColors[note] && noteColors[note] !== 'transparent';
   };
@@ -57,7 +45,6 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
   return (
     <div className="piano-container">
       <div className="piano">
-        {/* Teclas blancas */}
         <div className="white-keys">
           {whiteNotes.map((note) => (
             <div 
@@ -74,7 +61,6 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
           ))}
         </div>
         
-        {/* Teclas negras (sostenidos) */}
         <Sostenidos 
           noteColors={noteColors}
           onKeyPress={onKeyPress}
@@ -85,7 +71,6 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
         />
       </div>
       
-      {/* Indicador de notas activas */}
       {Object.keys(noteColors).length > 0 && (
         <div className="active-notes-indicator">
           <h4>Notas resaltadas:</h4>
