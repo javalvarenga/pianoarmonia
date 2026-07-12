@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './SidebarMenu.css';
-import { collections } from '../data/collections.js';
+import menuData from '../data/menu.json';
 
 /**
  * Componente SidebarMenu que renderiza la navegación lateral
@@ -10,53 +10,6 @@ import { collections } from '../data/collections.js';
 const SidebarMenu = ({ isOpen, toggleMenu }) => {
   const navigate = useNavigate();
   
-  // Crear un mapa de rutas basado en las colecciones
-  const routeMap = collections.reduce((acc, collection) => {
-    if (collection.route) {
-      acc[`${collection.root}-${collection.type}`] = collection.route;
-    }
-    return acc;
-  }, {});
-
-  const handleMenuClick = (note, child) => {
-    // Convertir a formato de colección
-    const noteMap = {
-      'DO': 'C',
-      'RE': 'D',
-      'MI': 'E',
-      'FA': 'F',
-      'SOL': 'G',
-      'LA': 'A',
-      'SI': 'B'
-    };
-    
-    const qualityMap = {
-      'Mayor': 'major-scale',
-      'Menor': 'minor-scale'
-    };
-    
-    const collectionKey = `${noteMap[note]}-${qualityMap[child]}`;
-    
-    if (routeMap[collectionKey]) {
-      navigate(routeMap[collectionKey]);
-    } else if (note === 'DO' && child === 'Mayor') {
-      // Fallback para la implementación existente
-      navigate('/c-major');
-    }
-    toggleMenu();
-  };
-
-  // Nota: En una implementación real, estos datos vendrían de src/data/menu.json
-  const menuData = [
-    { name: 'DO', children: ['Mayor', 'Menor'] },
-    { name: 'RE', children: ['Mayor', 'Menor'] },
-    { name: 'MI', children: ['Mayor', 'Menor'] },
-    { name: 'FA', children: ['Mayor', 'Menor'] },
-    { name: 'SOL', children: ['Mayor', 'Menor'] },
-    { name: 'LA', children: ['Mayor', 'Menor'] },
-    { name: 'SI', children: ['Mayor', 'Menor'] },
-  ];
-
   // Estado para controlar qué menús están abiertos
   const [openMenus, setOpenMenus] = useState({});
 
@@ -66,6 +19,26 @@ const SidebarMenu = ({ isOpen, toggleMenu }) => {
       ...prev,
       [index]: !prev[index]
     }));
+  };
+
+  const handleMenuClick = (note, child) => {
+    // Convertir a formato de ruta
+    const noteMap = {
+      'DO': 'do',
+      'RE': 're',
+      'MI': 'mi',
+      'FA': 'fa',
+      'SOL': 'sol',
+      'LA': 'la',
+      'SI': 'si'
+    };
+    
+    const routeNote = noteMap[note];
+    
+    if (routeNote) {
+      navigate(`/scale/${routeNote}`);
+    }
+    toggleMenu();
   };
 
   return (
@@ -85,22 +58,24 @@ const SidebarMenu = ({ isOpen, toggleMenu }) => {
                 className="menu-level-1"
                 onClick={() => toggleSubMenu(index)}
               >
-                <span className="menu-text">{item.name}</span>
+                <span className="menu-text">{item.note}</span>
                 <span className={`chevron-icon ${openMenus[index] ? 'open' : ''}`}>
                   ▼
                 </span>
               </div>
-              <div className={`menu-level-2-container ${openMenus[index] ? 'open' : ''}`}>
-                {item.children.map((child, childIndex) => (
-                  <div 
-                    key={childIndex}
-                    className="menu-level-2"
-                    onClick={() => handleMenuClick(item.name, child)}
-                  >
-                    {child}
-                  </div>
-                ))}
-              </div>
+              {openMenus[index] && (
+                <ul className="submenu">
+                  {item.submenus.map((child, childIndex) => (
+                    <li 
+                      key={childIndex} 
+                      className="menu-level-2"
+                      onClick={() => handleMenuClick(item.note, child)}
+                    >
+                      <span className="menu-text">{child.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
