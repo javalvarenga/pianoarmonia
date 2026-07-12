@@ -1,3 +1,20 @@
+/* Variables CSS */
+:root {
+  --piano-bg: #f0f0f0;
+  --white-key: #ffffff;
+  --white-key-hover: #f5f5f5;
+  --white-key-active: #e0e0e0;
+  --black-key: #000000;
+  --black-key-hover: #333333;
+  --black-key-active: #444444;
+  --key-border: #ccc;
+  --key-border-dark: #333;
+  --key-label: #666;
+  --key-label-dark: #ccc;
+  --highlight-border: #d33682;
+}
+
+/* Contenedor principal */
 .piano-container {
   display: flex;
   flex-direction: column;
@@ -7,17 +24,20 @@
   max-width: 800px;
 }
 
+/* Piano */
 .piano {
   position: relative;
   height: 200px;
-  background: #f0f0f0;
+  background: var(--piano-bg);
   border-radius: 8px;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
+/* Teclas blancas */
 .white-keys {
   display: flex;
   width: 100%;
@@ -26,8 +46,8 @@
 
 .white-key {
   flex: 1;
-  background: white;
-  border: 1px solid #ccc;
+  background: var(--white-key);
+  border: 1px solid var(--key-border);
   border-radius: 0 0 4px 4px;
   margin: 0 1px;
   cursor: pointer;
@@ -38,22 +58,25 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1;
+  transition: background-color 0.1s ease, transform 0.1s ease;
 }
 
 .white-key:hover {
-  background: #f5f5f5;
+  background: var(--white-key-hover);
+}
+
+.white-key:active,
+.white-key:focus {
+  background: var(--white-key-active);
+  outline: none;
+  transform: translateY(1px);
 }
 
 .white-key.highlighted {
-  border: 2px solid;
+  border: 2px solid var(--highlight-border);
 }
 
-.key-label {
-  font-size: 10px;
-  color: #666;
-  user-select: none;
-}
-
+/* Teclas negras */
 .black-keys {
   position: absolute;
   top: 10px;
@@ -67,8 +90,8 @@
   position: absolute;
   width: 4%;
   height: 100%;
-  background: black;
-  border: 1px solid #333;
+  background: var(--black-key);
+  border: 1px solid var(--key-border-dark);
   border-radius: 0 0 4px 4px;
   cursor: pointer;
   display: flex;
@@ -78,17 +101,36 @@
   box-sizing: border-box;
   z-index: 2;
   pointer-events: auto;
-  transition: all 0.1s ease;
+  transition: background-color 0.1s ease, transform 0.1s ease;
 }
 
 .black-key:hover {
-  background: #333;
+  background: var(--black-key-hover);
+}
+
+.black-key:active,
+.black-key:focus {
+  background: var(--black-key-active);
+  outline: none;
+  transform: translateY(1px);
 }
 
 .black-key.highlighted {
-  border: 2px solid;
+  border: 2px solid var(--highlight-border);
 }
 
+/* Etiquetas de teclas */
+.key-label {
+  font-size: 10px;
+  color: var(--key-label);
+  user-select: none;
+}
+
+.black-key .key-label {
+  color: var(--key-label-dark);
+}
+
+/* Indicador de notas activas */
 .active-notes-indicator {
   margin-top: 20px;
   padding: 15px;
@@ -128,7 +170,7 @@
   color: var(--text-primary);
 }
 
-/* Responsive styles for mobile */
+/* Estilos responsivos */
 @media (max-width: 768px) {
   .piano {
     height: 150px;

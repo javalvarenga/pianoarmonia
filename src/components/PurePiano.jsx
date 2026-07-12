@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './purePiano.css';
-import Sostenidos from './Sostenidos.jsx';
 
 const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-
+  // Definir las notas del piano (2 octavas completas)
   const START_OCTAVE = 3;
   const END_OCTAVE = 4;
-
-  // Generar notas blancas para el rango de octavas especificado
-  const generateWhiteNotes = () => {
-    const whiteNoteNames = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-    const notes = [];
-    
-    for (let octave = START_OCTAVE; octave <= END_OCTAVE; octave++) {
-      whiteNoteNames.forEach(note => {
-        notes.push(`${note}${octave}`);
-      });
-    }
-    
-    return notes;
+  
+  // Notas blancas
+  const whiteNotes = [];
+  for (let octave = START_OCTAVE; octave <= END_OCTAVE; octave++) {
+    ['C', 'D', 'E', 'F', 'G', 'A', 'B'].forEach(note => {
+      whiteNotes.push(`${note}${octave}`);
+    });
+  }
+  
+  // Notas negras
+  const blackNotes = [];
+  for (let octave = START_OCTAVE; octave <= END_OCTAVE; octave++) {
+    ['C#', 'D#', 'F#', 'G#', 'A#'].forEach(note => {
+      blackNotes.push(`${note}${octave}`);
+    });
+  }
+  
+  // Posiciones de las teclas negras (en porcentaje)
+  const blackKeyPositions = {
+    'C#3': 7.14,
+    'D#3': 21.43,
+    'F#3': 50,
+    'G#3': 64.29,
+    'A#3': 78.57,
+    'C#4': 7.14 + 100,
+    'D#4': 21.43 + 100,
+    'F#4': 50 + 100,
+    'G#4': 64.29 + 100,
+    'A#4': 78.57 + 100
   };
-
-  const whiteNotes = generateWhiteNotes();
   
   const getNoteColor = (note) => {
     return noteColors[note] || 'transparent';
@@ -45,6 +47,7 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
   return (
     <div className="piano-container">
       <div className="piano">
+        {/* Teclas blancas */}
         <div className="white-keys">
           {whiteNotes.map((note) => (
             <div 
@@ -55,20 +58,45 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
                 borderColor: hasNoteColor(note) ? getNoteColor(note) : '#ccc'
               }}
               onClick={() => onKeyPress(note)}
+              aria-label={`Tecla ${note}`}
+              role="button"
+              tabIndex="0"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onKeyPress(note);
+                }
+              }}
             >
               <span className="key-label">{note}</span>
             </div>
           ))}
         </div>
         
-        <Sostenidos 
-          noteColors={noteColors}
-          onKeyPress={onKeyPress}
-          getNoteColor={getNoteColor}
-          hasNoteColor={hasNoteColor}
-          startOctave={START_OCTAVE}
-          endOctave={END_OCTAVE}
-        />
+        {/* Teclas negras */}
+        <div className="black-keys">
+          {blackNotes.map((note) => (
+            <div 
+              key={note}
+              className={`black-key ${hasNoteColor(note) ? 'highlighted' : ''}`}
+              style={{
+                left: `${blackKeyPositions[note]}%`,
+                backgroundColor: hasNoteColor(note) ? getNoteColor(note) : 'black',
+                borderColor: hasNoteColor(note) ? getNoteColor(note) : '#333'
+              }}
+              onClick={() => onKeyPress(note)}
+              aria-label={`Tecla ${note}`}
+              role="button"
+              tabIndex="0"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onKeyPress(note);
+                }
+              }}
+            >
+              <span className="key-label">{note}</span>
+            </div>
+          ))}
+        </div>
       </div>
       
       {Object.keys(noteColors).length > 0 && (
