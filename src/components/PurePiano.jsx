@@ -24,17 +24,20 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  // Generar notas blancas para dos octavas
+  // Constantes para definir el rango de octavas
+  const START_OCTAVE = 3;
+  const END_OCTAVE = 4;
+
+  // Generar notas blancas para el rango de octavas especificado
   const generateWhiteNotes = () => {
-    const octaves = [3, 4]; // Octavas 3 y 4
     const whiteNoteNames = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
     const notes = [];
     
-    octaves.forEach(octave => {
+    for (let octave = START_OCTAVE; octave <= END_OCTAVE; octave++) {
       whiteNoteNames.forEach(note => {
         notes.push(`${note}${octave}`);
       });
-    });
+    }
     
     return notes;
   };
@@ -77,6 +80,8 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
           onKeyPress={onKeyPress}
           getNoteColor={getNoteColor}
           hasNoteColor={hasNoteColor}
+          startOctave={START_OCTAVE}
+          endOctave={END_OCTAVE}
         />
       </div>
       

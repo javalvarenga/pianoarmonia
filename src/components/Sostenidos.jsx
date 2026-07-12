@@ -4,18 +4,24 @@ import React from 'react';
  * Componente Sostenidos que renderiza las teclas negras del piano.
  * Recibe noteColors, onKeyPress, getNoteColor y hasNoteColor como props.
  */
-const Sostenidos = ({ noteColors = {}, onKeyPress = () => {}, getNoteColor = () => {}, hasNoteColor = () => {} }) => {
-  // Generar notas sostenidas para dos octavas
+const Sostenidos = ({ 
+  noteColors = {}, 
+  onKeyPress = () => {}, 
+  getNoteColor = () => {}, 
+  hasNoteColor = () => {},
+  startOctave = 3,
+  endOctave = 4
+}) => {
+  // Generar notas sostenidas para el rango de octavas especificado
   const generateSharpNotes = () => {
-    const octaves = [3, 4]; // Octavas 3 y 4
     const sharpNoteNames = ['C#', 'D#', 'F#', 'G#', 'A#'];
     const notes = [];
     
-    octaves.forEach(octave => {
+    for (let octave = startOctave; octave <= endOctave; octave++) {
       sharpNoteNames.forEach(note => {
         notes.push(`${note}${octave}`);
       });
-    });
+    }
     
     return notes;
   };
