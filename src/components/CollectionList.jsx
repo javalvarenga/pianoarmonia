@@ -7,6 +7,25 @@ import './CollectionList.css';
  * estructuradas por Colección -> Nota Raíz (chords) -> Acorde (qualities).
  */
 const CollectionList = ({ data = [] }) => {
+  // Función para obtener colores por grado
+  const getColorByDegree = (degree) => {
+    const colorMap = {
+      1: '#FF6B6B', // Rojo
+      2: '#4ECDC4', // Turquesa
+      3: '#45B7D1', // Azul
+      4: '#96CEB4', // Verde
+      5: '#FFEAA7', // Amarillo
+      6: '#DDA0DD', // Ciruela
+      7: '#98D8C8', // Verde agua
+      8: '#F7DC6F', // Oro
+      9: '#BB8FCE', // Lavanda
+      10: '#85C1E9', // Celeste
+      11: '#F8C471', // Melocotón
+      12: '#82E0AA'  // Menta
+    };
+    return colorMap[degree] || '#CCCCCC'; // Gris por defecto
+  };
+
   return (
     <div className="collection-list">
       <h2>
@@ -29,46 +48,43 @@ const CollectionList = ({ data = [] }) => {
                     Raíz: {rootNoteGroup.note}
                   </h4>
                   
-                  <div className="chords-grid">
-                    {rootNoteGroup.qualities && Array.isArray(rootNoteGroup.qualities) ? (
-                      rootNoteGroup.qualities.map((chord, chordIndex) => {
-                        const noteColors = {};
-                        const colorIdx = (chordIndex + rootIndex) % 8;
-                        const colorClass = `color-degree-${colorIdx}`;
-                        
-                        if (Array.isArray(chord.notes)) {
-                          chord.notes.forEach(note => {
-                            noteColors[note] = colorClass;
-                          });
-                        }
-
-                        return (
-                          <div key={`chord-${chordIndex}`} className="degree-card">
-                            <div className="card-header">
-                              <h4>{chord.name}</h4>
-                              {chord.quality && (
-                                <span className="quality-display">
-                                  {chord.quality}
-                                </span>
-                              )}
-                            </div>
-                            <div className="piano-wrapper">
-                              <Piano noteColors={noteColors} />
-                            </div>
-                            <p className="notes-info">
-                              <strong className={`notes-label label-degree-${colorIdx}`}>
+                  {rootNoteGroup.chords && Array.isArray(rootNoteGroup.chords) ? (
+                    rootNoteGroup.chords.map((chord, chordIndex) => {
+                      // Crear un objeto para mapear notas a colores
+                      const noteColors = {};
+                      if (Array.isArray(chord.notes)) {
+                        chord.notes.forEach((note, index) => {
+                          // Asignar colores según el grado de la nota en el acorde
+                          const degree = (index % 12) + 1;
+                          noteColors[note] = getColorByDegree(degree);
+                        });
+                      }
+                      
+                      return (
+                        <div key={`chord-${chordIndex}`} className="chord-item">
+                          <div className="chord-header">
+                            <h5 className="chord-name">
+                              {chord.quality || 'Acorde sin nombre'}
+                            </h5>
+                            
+                            <p className="chord-notes">
+                              <strong className="notes-label">
                                 Notas:
                               </strong> {Array.isArray(chord.notes) && chord.notes.length > 0 
                                 ? chord.notes.join(', ') 
                                 : 'Sin notas definidas'}
                             </p>
                           </div>
-                        );
-                      })
-                    ) : (
-                      <p className="empty-chord-message">No hay acordes definidos para esta nota.</p>
-                    )}
-                  </div>
+                          
+                          <div className="piano-container">
+                            <Piano noteColors={noteColors} />
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="empty-chord-message">No hay acordes definidos para esta nota.</p>
+                  )}
                 </div>
               ))
             ) : (

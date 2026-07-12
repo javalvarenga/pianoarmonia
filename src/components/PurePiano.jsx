@@ -24,74 +24,68 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  // Definición estándar de la escala cromática
-  const notesTemplate = [
-    { note: 'C', type: 'white' },
-    { note: 'C#', type: 'black' },
-    { note: 'D', type: 'white' },
-    { note: 'D#', type: 'black' },
-    { note: 'E', type: 'white' },
-    { note: 'F', type: 'white' },
-    { note: 'F#', type: 'black' },
-    { note: 'G', type: 'white' },
-    { note: 'G#', type: 'black' },
-    { note: 'A', type: 'white' },
-    { note: 'A#', type: 'black' },
-    { note: 'B', type: 'white' },
-  ];
+  // Notas naturales (blancas) en una octava
+  const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  
+  // Notas con sostenido
+  const sharpNotes = ['C#', 'D#', 'F#', 'G#', 'A#'];
 
-  // Mapeo de equivalencias para bemoles (Flat) -> Sostenidos (Sharp)
-  const flatToSharp = {
-    'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#'
+  // Función para obtener el color de una nota
+  const getNoteColor = (note) => {
+    return noteColors[note] || 'transparent';
   };
 
-  const getNormalizedNote = (noteStr) => {
-    if (!noteStr) return '';
-    // Separar la nota de la octava (ej: 'Db4' -> ['Db', '4'])
-    const match = noteStr.match(/^([A-G][#b]?)([0-9]*)$/);
-    if (!match) return noteStr;
-    
-    const [_, name, octave] = match;
-    const normalizedName = flatToSharp[name] || name;
-    return `${normalizedName}${octave}`;
+  // Función para determinar si una nota debe tener borde
+  const hasNoteColor = (note) => {
+    return noteColors[note] && noteColors[note] !== 'transparent';
   };
-
-  // Determinar el rango de octavas según el dispositivo
-  const startOctave = isMobile ? 4 : 4;
-  const endOctave = isMobile ? 5 : 6;
-
-  // Generamos el teclado para el rango de octavas
-  const keyboard = [];
-  for (let octave = startOctave; octave <= endOctave; octave++) {
-    notesTemplate.forEach((n) => {
-      const fullNote = `${n.note}${octave}`;
-      keyboard.push({ ...n, fullNote });
-    });
-  }
-
-  // Normalizamos las notas a resaltar
-  const normalizedNoteColors = {};
-  if (noteColors && typeof noteColors === 'object') {
-    for (const [note, color] of Object.entries(noteColors)) {
-      const normalized = getNormalizedNote(note);
-      normalizedNoteColors[normalized] = color;
-    }
-  }
 
   return (
-    <div className="piano-keyboard">
-      {keyboard.map((key, index) => {
-        // Buscamos el color para la nota actual
-        const colorClass = normalizedNoteColors[key.fullNote] || '';
-
-        return (
-          <div
-            key={`${key.fullNote}-${index}`}
-            className={`piano-key ${key.type} ${colorClass}`}
-            onClick={() => onKeyPress(key.fullNote)}
-          />
-        );
-      })}
+    <div className="piano-container">
+      <div className="piano">
+        {/* Teclas blancas */}
+        <div className="white-keys">
+          {whiteNotes.map((note) => (
+            <div 
+              key={note}
+              className={`white-key ${hasNoteColor(note) ? 'highlighted' : ''}`}
+              style={{
+                backgroundColor: hasNoteColor(note) ? getNoteColor(note) : 'white',
+                borderColor: hasNoteColor(note) ? getNoteColor(note) : '#ccc'
+              }}
+              onClick={() => onKeyPress(note)}
+            >
+              <span className="key-label">{note}</span>
+            </div>
+          ))}
+        </div>
+        
+        {/* Teclas negras (sostenidos) */}
+        <Sostenidos 
+          noteColors={noteColors}
+          onKeyPress={onKeyPress}
+          getNoteColor={getNoteColor}
+          hasNoteColor={hasNoteColor}
+        />
+      </div>
+      
+      {/* Indicador de notas activas */}
+      {Object.keys(noteColors).length > 0 && (
+        <div className="active-notes-indicator">
+          <h4>Notas resaltadas:</h4>
+          <div className="notes-container">
+            {Object.entries(noteColors).map(([note, color]) => (
+              <div key={note} className="note-item">
+                <div 
+                  className="note-color-box" 
+                  style={{ backgroundColor: color }}
+                ></div>
+                <span className="note-name">{note}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
