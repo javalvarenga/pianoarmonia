@@ -7,29 +7,41 @@ import { collections } from '../data/collections.js';
 function ScaleCollection() {
   const { note } = useParams();
   
-  // Mapear nombres de notas en español a inglés
+  // Mapeo de notas en español a IDs de colecciones
   const noteMap = {
-    'do': 'C',
-    're': 'D',
-    'mi': 'E',
-    'fa': 'F',
-    'sol': 'G',
-    'la': 'A',
-    'si': 'B'
+    'do': 'c-major',
+    're': 'd-major',
+    'mi': 'e-major',
+    'fa': 'f-major',
+    'sol': 'g-major',
+    'la': 'a-major',
+    'si': 'b-major'
   };
   
-  const englishNote = noteMap[note.toLowerCase()];
+  // Obtener el ID de la colección basado en la nota
+  const collectionId = noteMap[note];
   
-  // Filtrar colecciones por la nota seleccionada
-  const noteCollections = collections.filter(collection => 
-    collection.id.startsWith(englishNote.toLowerCase())
+  // Filtrar colecciones basadas en la nota seleccionada
+  const filteredCollections = collections.filter(collection => 
+    collection.id === collectionId || collection.id === `${collectionId.replace('-major', '-minor')}`
   );
+  
+  // Si no hay coincidencias exactas, buscamos por prefijo
+  if (filteredCollections.length === 0) {
+    const prefix = collectionId?.split('-')[0];
+    if (prefix) {
+      collections.forEach(collection => {
+        if (collection.id.startsWith(prefix)) {
+          filteredCollections.push(collection);
+        }
+      });
+    }
+  }
   
   return (
     <Layout>
       <div className="collections-container">
-        <h2>Escalas de {note.toUpperCase()}</h2>
-        <CollectionList data={noteCollections} />
+        <CollectionList data={filteredCollections} />
       </div>
     </Layout>
   );
