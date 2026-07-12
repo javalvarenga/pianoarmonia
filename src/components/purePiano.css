@@ -14,16 +14,6 @@
   --highlight-border: #d33682;
 }
 
-/* Contenedor principal */
-.piano-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
-  width: 100%;
-  max-width: 800px;
-}
-
 /* Piano */
 .piano {
   position: relative;

@@ -45,8 +45,8 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
   };
 
   return (
-    <div className="piano-container">
-      <div className="piano">
+    <>
+      <div className="piano" role="region" aria-label="Piano interactivo">
         {/* Teclas blancas */}
         <div className="white-keys">
           {whiteNotes.map((note) => (
@@ -61,6 +61,7 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
               aria-label={`Tecla ${note}`}
               role="button"
               tabIndex="0"
+              aria-pressed={hasNoteColor(note) ? 'true' : 'false'}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   onKeyPress(note);
@@ -87,6 +88,7 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
               aria-label={`Tecla ${note}`}
               role="button"
               tabIndex="0"
+              aria-pressed={hasNoteColor(note) ? 'true' : 'false'}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   onKeyPress(note);
@@ -100,7 +102,7 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
       </div>
       
       {Object.keys(noteColors).length > 0 && (
-        <div className="active-notes-indicator">
+        <div className="active-notes-indicator" aria-live="polite">
           <h4>Notas resaltadas:</h4>
           <div className="notes-container">
             {Object.entries(noteColors).map(([note, color]) => (
@@ -115,7 +117,7 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

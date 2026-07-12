@@ -1,6 +1,7 @@
 import React from 'react';
 import PurePiano from './PurePiano.jsx';
 import * as Tone from 'tone';
+import './pianoShared.css';
 
 const PianoKeyboard = () => {
   // Definimos un sintetizador simple de Tone.js
@@ -21,10 +22,10 @@ const PianoKeyboard = () => {
   };
 
   return (
-    <div className="piano-keyboard-section" style={{ width: '100%', margin: '20px 0', textAlign: 'center' }}>
-      <h2 style={{ color: '#2c3e50' }}>Teclado Interactivo</h2>
-      <p>Haz clic en las teclas para sonar</p>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <div className="piano-wrapper">
+      <div className="piano-keyboard-section">
+        <h2>Teclado Interactivo</h2>
+        <p>Haz clic en las teclas para sonar</p>
         <PurePiano 
           onKeyPress={handleKeyClick}
         />

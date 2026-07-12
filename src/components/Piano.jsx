@@ -1,6 +1,7 @@
 import React from 'react';
 import PurePiano from './PurePiano.jsx';
 import './Piano.css';
+import './pianoShared.css';
 
 /**
  * Componente Piano que actúa como envoltorio para PurePiano,
@@ -8,8 +9,10 @@ import './Piano.css';
  */
 const Piano = ({ noteColors = {} }) => {
   return (
-    <div className="piano-container">
-      <PurePiano noteColors={noteColors} />
+    <div className="piano-wrapper">
+      <div className="piano-container">
+        <PurePiano noteColors={noteColors} />
+      </div>
     </div>
   );
 };

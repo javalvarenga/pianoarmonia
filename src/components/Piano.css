@@ -1,9 +1,5 @@
+/* Estilos específicos del piano que no están en pianoShared.css */
 .piano-container {
-  margin-top: 10px; /* Mobile-first: margen reducido */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: var(--bg-secondary);
   border-radius: 10px; /* Mobile-first: radio reducido */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Mobile-first: sombra reducida */
@@ -16,7 +12,6 @@
 /* Desktop styles */
 @media (min-width: 769px) {
   .piano-container {
-    margin-top: 20px; /* En desktop, margen normal */
     border-radius: 15px; /* En desktop, radio normal */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* En desktop, sombra normal */
     padding: 20px; /* En desktop, padding normal */

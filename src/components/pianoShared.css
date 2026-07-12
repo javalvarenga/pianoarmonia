@@ -1,0 +1,59 @@
+/* Variables CSS compartidas para el piano */
+:root {
+  --text-secondary: #7f8c8d;
+}
+
+.piano-wrapper {
+  --piano-wrapper-width: 100%;
+  --piano-wrapper-display: flex;
+  --piano-wrapper-flex-direction: column;
+  --piano-wrapper-align-items: center;
+  --piano-wrapper-justify-content: center;
+  --piano-wrapper-margin-top: 20px;
+  --piano-wrapper-margin-bottom: 20px;
+  --piano-wrapper-max-width: 800px;
+  
+  margin: var(--piano-wrapper-margin-top) auto;
+  margin-bottom: var(--piano-wrapper-margin-bottom);
+  max-width: var(--piano-wrapper-max-width);
+  width: var(--piano-wrapper-width);
+  display: var(--piano-wrapper-display);
+  flex-direction: var(--piano-wrapper-flex-direction);
+  align-items: var(--piano-wrapper-align-items);
+  justify-content: var(--piano-wrapper-justify-content);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .piano-wrapper {
+    --piano-wrapper-margin-top: 10px;
+    --piano-wrapper-margin-bottom: 10px;
+    --piano-wrapper-max-width: 100%;
+  }
+}
+
+.piano-keyboard-section {
+  width: 100%;
+  text-align: center;
+}
+
+.piano-keyboard-section h2 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.piano-keyboard-section p {
+  margin-top: 0;
+  color: var(--text-secondary);
+}
+
+/* Estilos responsivos para el contenedor del piano */
+@media (max-width: 768px) {
+  .piano-keyboard-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .piano-keyboard-section p {
+    font-size: 0.9rem;
+  }
+}
