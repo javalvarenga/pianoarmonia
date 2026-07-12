@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <Layout>
       <h1>¡Bienvenido!</h1>
-      <CollectionList collections={recentCollections} title="Colecciones recientes" />
+      <CollectionList data={recentCollections} title="Colecciones recientes" />
     </Layout>
   );
 };
