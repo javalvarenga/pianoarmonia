@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './purePiano.css';
-import { Sostenidos } from './Sostenidos'; // Importación añadida
+import Sostenidos from './Sostenidos.jsx'; // Importación corregida
 
 /**
  * Componente PurePiano que renderiza un teclado de piano básico.
@@ -27,9 +27,6 @@ const PurePiano = ({ noteColors = {}, onKeyPress = () => {} }) => {
   // Notas naturales (blancas) en una octava
   const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   
-  // Notas con sostenido
-  const sharpNotes = ['C#', 'D#', 'F#', 'G#', 'A#'];
-
   // Función para obtener el color de una nota
   const getNoteColor = (note) => {
     return noteColors[note] || 'transparent';
