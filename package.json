@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tonaljs/tonal": "^4.10.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-piano": "^3.1.3",

@@ -1,6 +1,7 @@
 import React from 'react';
 import Piano from './Piano.jsx';
 import './CollectionList.css';
+import { Chord } from '@tonaljs/tonal';
 
 /**
  * Componente CollectionList que renderiza una lista de colecciones musicales
@@ -26,39 +27,70 @@ const CollectionList = ({ data = [] }) => {
     return colorMap[degree] || '#CCCCCC'; // Gris por defecto
   };
 
+  // Filtrar colecciones que tienen acordes
+  const filteredData = data.filter(collection => 
+    collection.chords && 
+    Array.isArray(collection.chords) && 
+    collection.chords.length > 0 &&
+    collection.chords.some(rootNoteGroup => 
+      rootNoteGroup.chords && 
+      Array.isArray(rootNoteGroup.chords) && 
+      rootNoteGroup.chords.length > 0
+    )
+  );
+
   return (
     <div className="collection-list">
       <h2>
         Colecciones Musicales
       </h2>
       
-      {!data || data.length === 0 ? (
+      {!filteredData || filteredData.length === 0 ? (
         <p className="empty-message">No hay colecciones disponibles.</p>
       ) : (
-        data.map((collection, colIndex) => (
+        filteredData.map((collection, colIndex) => (
           <div key={`col-${colIndex}`} className="collection-item">
             <h3>
               {collection?.name || 'Colección sin nombre'}
             </h3>
             
-            {collection.chords && Array.isArray(collection.chords) ? (
+            {collection.chords && Array.isArray(collection.chords) && collection.chords.length > 0 ? (
               collection.chords.map((rootNoteGroup, rootIndex) => (
                 <div key={`root-${rootIndex}`} className="root-note-section">
                   <h4 className="root-note-title">
                     Raíz: {rootNoteGroup.note}
                   </h4>
                   
-                  {rootNoteGroup.chords && Array.isArray(rootNoteGroup.chords) ? (
+                  {rootNoteGroup.chords && Array.isArray(rootNoteGroup.chords) && rootNoteGroup.chords.length > 0 ? (
                     rootNoteGroup.chords.map((chord, chordIndex) => {
+                      // Obtener notas del acorde usando Tonal
+                      const chordSymbol = `${rootNoteGroup.note}${chord.quality}`;
+                      const chordData = Chord.get(chordSymbol);
+                      const notes = chordData.notes;
+                      
+                      // Si no hay notas, mostrar mensaje de error
+                      if (!notes || notes.length === 0) {
+                        return (
+                          <div key={`chord-${chordIndex}`} className="chord-item">
+                            <div className="chord-header">
+                              <h5 className="chord-name">
+                                {chord.quality || 'Acorde sin nombre'}
+                              </h5>
+                              <p className="chord-notes error-message">
+                                No hay notas definidas para este acorde.
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      }
+                      
                       // Crear un objeto para mapear notas a colores
                       const noteColors = {};
-                      if (Array.isArray(chord.notes)) {
-                        chord.notes.forEach((note, index) => {
-                          // Asignar colores según el grado de la nota en el acorde
-                          const degree = (index % 12) + 1;
-                          noteColors[note] = getColorByDegree(degree);
-                        });
-                      }
+                      notes.forEach((note, index) => {
+                        // Asignar colores según el grado de la nota en el acorde
+                        const degree = (index % 12) + 1;
+                        noteColors[note] = getColorByDegree(degree);
+                      });
                       
                       return (
                         <div key={`chord-${chordIndex}`} className="chord-item">
@@ -70,9 +102,7 @@ const CollectionList = ({ data = [] }) => {
                             <p className="chord-notes">
                               <strong className="notes-label">
                                 Notas:
-                              </strong> {Array.isArray(chord.notes) && chord.notes.length > 0 
-                                ? chord.notes.join(', ') 
-                                : 'Sin notas definidas'}
+                              </strong> {notes.join(', ')}
                             </p>
                           </div>
                           
