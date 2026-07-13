@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import './Piano.css';
+import RetroKeyboard from './RetroKeyboard.jsx';
 
 const Piano = ({ noteColors = {} }) => {
   const [pressedKeys, setPressedKeys] = useState(new Set());
@@ -36,11 +37,10 @@ const Piano = ({ noteColors = {} }) => {
     { note: 'A#', position: 12.5 },
   ];
 
-  const handleKeyClick = (note) => {
-    if (typeof window !== 'undefined' && window.onKeyPress) {
-      window.onKeyPress(note);
-    }
-  };
+  // Determinar color para una nota
+  const getNoteColor = useCallback((note) => {
+    return noteColors[note] || '';
+  }, [noteColors]);
 
   const handleKeyDown = (note) => {
     setPressedKeys(prev => new Set(prev).add(note));
@@ -55,87 +55,71 @@ const Piano = ({ noteColors = {} }) => {
   };
 
   return (
-    <div className="retro-piano-container">
-      <div className="piano-keys">
-        {/* Teclas blancas */}
-        {whiteNotes.map((key) => {
-          const isActive = pressedKeys.has(key.note);
-          const isColored = noteColors[key.note];
-          const backgroundColor = isColored ? noteColors[key.note] : '';
-          
-          return (
-            <div
-              key={key.note + key.position}
-              className={`key white ${isActive ? 'active' : ''} ${isColored ? 'note-colored' : ''}`}
-              data-note={key.note}
-              style={backgroundColor ? { '--note-color': backgroundColor } : {}}
-              onClick={() => handleKeyClick(key.note)}
-              onMouseDown={() => handleKeyDown(key.note)}
-              onMouseUp={() => handleKeyUp(key.note)}
-              onMouseLeave={() => handleKeyUp(key.note)}
-              onTouchStart={(e) => {
-                e.preventDefault();
-                handleKeyDown(key.note);
-              }}
-              onTouchEnd={() => handleKeyUp(key.note)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+    <div className="piano-container">
+      <h3 className="piano-title">Piano Interactivo</h3>
+      <div className="piano-keyboard-section">
+        <h4>Teclado de Piano</h4>
+        <div className="piano-keys">
+          {/* Teclas blancas */}
+          {whiteNotes.map((key) => {
+            const isActive = pressedKeys.has(key.note);
+            const backgroundColor = getNoteColor(key.note);
+            
+            return (
+              <div
+                key={`white-${key.note}-${key.position}`}
+                className={`piano-key white-key ${isActive ? 'active' : ''}`}
+                style={{
+                  '--note-color': backgroundColor,
+                  left: `calc(${key.position} * var(--key-width))`,
+                }}
+                onMouseDown={() => handleKeyDown(key.note)}
+                onMouseUp={() => handleKeyUp(key.note)}
+                onMouseLeave={() => handleKeyUp(key.note)}
+                onTouchStart={(e) => {
+                  e.preventDefault();
                   handleKeyDown(key.note);
-                }
-              }}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleKeyUp(key.note);
-                }
-              }}
-              aria-label={`Tecla ${key.note}`}
-            >
-              {key.note}
-            </div>
-          );
-        })}
-        
-        {/* Teclas negras */}
-        {blackNotes.map((key) => {
-          const isActive = pressedKeys.has(key.note);
-          const isColored = noteColors[key.note];
-          const backgroundColor = isColored ? noteColors[key.note] : '';
+                }}
+                onTouchEnd={() => handleKeyUp(key.note)}
+              >
+                <span className="note-label">{key.note}</span>
+              </div>
+            );
+          })}
           
-          return (
-            <div
-              key={key.note + key.position}
-              className={`key black ${isActive ? 'active' : ''} ${isColored ? 'note-colored' : ''}`}
-              data-note={key.note}
-              style={backgroundColor ? { '--note-color': backgroundColor } : {}}
-              onClick={() => handleKeyClick(key.note)}
-              onMouseDown={() => handleKeyDown(key.note)}
-              onMouseUp={() => handleKeyUp(key.note)}
-              onMouseLeave={() => handleKeyUp(key.note)}
-              onTouchStart={(e) => {
-                e.preventDefault();
-                handleKeyDown(key.note);
-              }}
-              onTouchEnd={() => handleKeyUp(key.note)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+          {/* Teclas negras */}
+          {blackNotes.map((key) => {
+            const isActive = pressedKeys.has(key.note);
+            const backgroundColor = getNoteColor(key.note);
+            
+            return (
+              <div
+                key={`black-${key.note}-${key.position}`}
+                className={`piano-key black-key ${isActive ? 'active' : ''}`}
+                style={{
+                  '--note-color': backgroundColor,
+                  left: `calc(${key.position} * var(--key-width))`,
+                }}
+                onMouseDown={() => handleKeyDown(key.note)}
+                onMouseUp={() => handleKeyUp(key.note)}
+                onMouseLeave={() => handleKeyUp(key.note)}
+                onTouchStart={(e) => {
+                  e.preventDefault();
                   handleKeyDown(key.note);
-                }
-              }}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleKeyUp(key.note);
-                }
-              }}
-              aria-label={`Tecla ${key.note}`}
-            >
-              {key.note}
-            </div>
-          );
-        })}
+                }}
+                onTouchEnd={() => handleKeyUp(key.note)}
+              >
+                <span className="note-label">{key.note}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      
+      {/* Sección del teclado retro */}
+      <div className="piano-keyboard-section">
+        <h4>Teclado Retro</h4>
+        <RetroKeyboard activeNotes={Object.keys(noteColors)} />
       </div>
     </div>
   );

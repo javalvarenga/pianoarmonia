@@ -206,6 +206,10 @@
   --piano-wrapper-margin-top: 20px;
   --piano-wrapper-margin-bottom: 20px;
   --piano-wrapper-max-width: 800px;
+  /* Retro keyboard variables */
+  --white-key-width: 60px;
+  --black-key-width: 36px;
+  --keyboard-margin: 20px;
 }
 
 @media (max-width: 768px) {
@@ -216,6 +220,10 @@
     --piano-wrapper-margin-top: 10px;
     --piano-wrapper-margin-bottom: 10px;
     --piano-wrapper-max-width: 100%;
+    /* Retro keyboard variables */
+    --white-key-width: 40px;
+    --black-key-width: 24px;
+    --keyboard-margin: 10px;
   }
 }
 
