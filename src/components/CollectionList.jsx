@@ -1,5 +1,6 @@
 import React from 'react';
 import Piano from './Piano.jsx';
+import Acorde from './Acorde.jsx';
 import './CollectionList.css';
 import { Chord } from '@tonaljs/tonal';
 

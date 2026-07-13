@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import CollectionList from '../components/CollectionList.jsx';
 import Layout from '../components/Layout.jsx';
+import CollectionList from '../components/CollectionList.jsx';
 import { collections } from '../data/collections.js';
 
-function ScaleCollection() {
+const ScaleCollection = () => {
   const { note } = useParams();
   
-  // Mapeo de notas en español a IDs de colecciones
+  // Mapeo de notas en español a IDs de colección
   const noteMap = {
     'do': 'c-major',
     're': 'd-major',
@@ -21,20 +21,27 @@ function ScaleCollection() {
   // Obtener el ID de la colección basado en la nota
   const collectionId = noteMap[note];
   
-  // Filtrar colecciones basadas en la nota seleccionada
-  const filteredCollections = collections.filter(collection => 
-    collection.id === collectionId || collection.id === `${collectionId.replace('-major', '-minor')}`
-  );
+  // Filtrar colecciones
+  let filteredCollections = [];
   
-  // Si no hay coincidencias exactas, buscamos por prefijo
-  if (filteredCollections.length === 0) {
-    const prefix = collectionId?.split('-')[0];
-    if (prefix) {
-      collections.forEach(collection => {
-        if (collection.id.startsWith(prefix)) {
-          filteredCollections.push(collection);
-        }
-      });
+  if (collectionId) {
+    // Buscar la colección exacta
+    const exactCollection = collections.find(c => c.id === collectionId);
+    if (exactCollection) {
+      filteredCollections.push(exactCollection);
+    }
+    
+    // También buscar la versión menor
+    const minorId = collectionId.replace('-major', '-minor');
+    const minorCollection = collections.find(c => c.id === minorId);
+    if (minorCollection) {
+      filteredCollections.push(minorCollection);
+    }
+    
+    // Si no hay coincidencias exactas, buscar por prefijo
+    if (filteredCollections.length === 0) {
+      const prefix = collectionId.split('-')[0];
+      filteredCollections = collections.filter(c => c.id.startsWith(prefix));
     }
   }
   
@@ -45,6 +52,6 @@ function ScaleCollection() {
       </div>
     </Layout>
   );
-}
+};
 
 export default ScaleCollection;

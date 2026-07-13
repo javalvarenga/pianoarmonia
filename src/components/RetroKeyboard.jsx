@@ -1,79 +1,68 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import './RetroKeyboard.css';
 
-const RetroKeyboard = ({ activeNotes = [] }) => {
-  const [pressedKeys, setPressedKeys] = useState(new Set());
-
+const RetroKeyboard = ({ 
+  noteColors = {}, 
+  pressedKeys = new Set(), 
+  onKeyPress = () => {}, 
+  onKeyRelease = () => {} 
+}) => {
   // Definir las notas del teclado (2 octavas completas)
   const notes = useMemo(() => [
-    { note: 'C', type: 'white', position: 0 },
-    { note: 'C#', type: 'black', position: 0.5 },
-    { note: 'D', type: 'white', position: 1 },
-    { note: 'D#', type: 'black', position: 1.5 },
-    { note: 'E', type: 'white', position: 2 },
-    { note: 'F', type: 'white', position: 3 },
-    { note: 'F#', type: 'black', position: 3.5 },
-    { note: 'G', type: 'white', position: 4 },
-    { note: 'G#', type: 'black', position: 4.5 },
-    { note: 'A', type: 'white', position: 5 },
-    { note: 'A#', type: 'black', position: 5.5 },
-    { note: 'B', type: 'white', position: 6 },
-    { note: 'C', position: 7, type: 'white' },
-    { note: 'C#', position: 7.5, type: 'black' },
-    { note: 'D', position: 8, type: 'white' },
-    { note: 'D#', position: 8.5, type: 'black' },
-    { note: 'E', position: 9, type: 'white' },
-    { note: 'F', position: 10, type: 'white' },
-    { note: 'F#', position: 10.5, type: 'black' },
-    { note: 'G', position: 11, type: 'white' },
-    { note: 'G#', position: 11.5, type: 'black' },
-    { note: 'A', position: 12, type: 'white' },
-    { note: 'A#', position: 12.5, type: 'black' },
-    { note: 'B', position: 13, type: 'white' },
-    { note: 'C', position: 14, type: 'white' }
+    { note: 'C4', type: 'white', position: 0 },
+    { note: 'C#4', type: 'black', position: 0.5 },
+    { note: 'D4', type: 'white', position: 1 },
+    { note: 'D#4', type: 'black', position: 1.5 },
+    { note: 'E4', type: 'white', position: 2 },
+    { note: 'F4', type: 'white', position: 3 },
+    { note: 'F#4', type: 'black', position: 3.5 },
+    { note: 'G4', type: 'white', position: 4 },
+    { note: 'G#4', type: 'black', position: 4.5 },
+    { note: 'A4', type: 'white', position: 5 },
+    { note: 'A#4', type: 'black', position: 5.5 },
+    { note: 'B4', type: 'white', position: 6 },
+    { note: 'C5', type: 'white', position: 7 },
+    { note: 'C#5', type: 'black', position: 7.5 },
+    { note: 'D5', type: 'white', position: 8 },
+    { note: 'D#5', type: 'black', position: 8.5 },
+    { note: 'E5', type: 'white', position: 9 },
+    { note: 'F5', type: 'white', position: 10 },
+    { note: 'F#5', type: 'black', position: 10.5 },
+    { note: 'G5', type: 'white', position: 11 },
+    { note: 'G#5', type: 'black', position: 11.5 },
+    { note: 'A5', type: 'white', position: 12 },
+    { note: 'A#5', type: 'black', position: 12.5 },
+    { note: 'B5', type: 'white', position: 13 },
+    { note: 'C6', type: 'white', position: 14 },
   ], []);
 
-  // Mapeo de colores para las notas
-  const getNoteColor = useCallback((note) => {
-    if (!activeNotes.includes(note)) return '';
-    
-    const colorMap = {
-      'C': '#ff6b6b',
-      'D': '#4ecdc4',
-      'E': '#45b7d1',
-      'F': '#96ceb4',
-      'G': '#feca57',
-      'A': '#ff9ff3',
-      'B': '#54a0ff',
-      'C#': '#ff6348',
-      'D#': '#00d2d3',
-      'F#': '#ff9f43',
-      'G#': '#c44569',
-      'A#': '#5f27cd',
-    };
-    
-    return colorMap[note] || '#b58900';
-  }, [activeNotes]);
+  // Calcular posiciones de las teclas negras
+  const getBlackKeyPosition = useCallback((index) => {
+    const positions = [0.5, 1.5, 3.5, 4.5, 5.5, 7.5, 8.5, 10.5, 11.5, 12.5];
+    return positions[index] || 0;
+  }, []);
 
-  const handleKeyDown = (note) => {
-    setPressedKeys(prev => new Set(prev).add(note));
-  };
+  // Manejar eventos de teclado
+  const handleKeyDown = useCallback((note) => {
+    onKeyPress(note);
+  }, [onKeyPress]);
 
-  const handleKeyUp = (note) => {
-    setPressedKeys(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(note);
-      return newSet;
-    });
-  };
+  const handleKeyUp = useCallback((note) => {
+    onKeyRelease(note);
+  }, [onKeyRelease]);
 
   return (
     <div className="retro-keyboard-container">
       <div className="retro-keyboard">
         {notes.map((key, index) => {
           const isActive = pressedKeys.has(key.note);
-          const isColored = activeNotes.includes(key.note);
-          const backgroundColor = getNoteColor(key.note);
+          const isColored = noteColors[key.note];
+          const backgroundColor = noteColors[key.note] || '';
+          
+          // Para teclas negras, calcular posición especial
+          const position = key.type === 'black' 
+            ? getBlackKeyPosition(index - 1) // Ajustar índice para teclas negras
+            : key.position;
           
           return (
             <div
@@ -81,7 +70,7 @@ const RetroKeyboard = ({ activeNotes = [] }) => {
               className={`key ${key.type}-key ${isActive ? 'active' : ''} ${isColored ? 'colored' : ''}`}
               style={{
                 '--note-color': backgroundColor,
-                left: `calc(${key.position} * var(--white-key-width))`,
+                left: `calc(${position} * var(--white-key-width))`,
               }}
               onMouseDown={() => handleKeyDown(key.note)}
               onMouseUp={() => handleKeyUp(key.note)}

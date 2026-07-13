@@ -1,34 +1,75 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import CollectionList from './components/CollectionList.jsx';
-import Layout from './components/Layout.jsx';
-import Home from './pages/Home.jsx';
-import ScaleCollection from './pages/ScaleCollection.jsx';
-import { collections } from './data/collections.js';
-
-function CMayorScale() {
-  // Filtrar solo la colección de Do Mayor
-  const cMajorCollection = collections.filter(collection => collection.id === "c-major");
-  
-  return (
-    <Layout>
-      <div className="collections-container">
-        <CollectionList data={cMajorCollection} />
-      </div>
-    </Layout>
-  );
-}
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import Piano from './components/Piano.jsx';
+import ScaleSelector from './components/ScaleSelector.jsx';
+import ChordSelector from './components/ChordSelector.jsx';
+import NoteDisplay from './components/NoteDisplay.jsx';
+import * as Tone from 'tone';
 
 function App() {
+  const [currentScale, setCurrentScale] = useState('C major');
+  const [currentChord, setCurrentChord] = useState('C');
+  const [activeNotes, setActiveNotes] = useState([]);
+  const [synth, setSynth] = useState(null);
+
+  useEffect(() => {
+    const newSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+    setSynth(newSynth);
+    
+    return () => {
+      newSynth.dispose();
+    };
+  }, []);
+
+  const handlePlayNote = (note) => {
+    if (synth) {
+      synth.triggerAttackRelease(note, '8n');
+    }
+  };
+
+  const handleStopNote = (note) => {
+    if (synth) {
+      synth.triggerRelease(note);
+    }
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/c-major" element={<CMayorScale />} />
-        <Route path="/scale/:note" element={<ScaleCollection />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <header className="app-header">
+        <h1>Piano Armonía</h1>
+        <p>Explora escalas y acordes musicales</p>
+      </header>
+      
+      <main className="app-main">
+        <div className="selectors-container">
+          <ScaleSelector 
+            currentScale={currentScale} 
+            onScaleChange={setCurrentScale} 
+          />
+          <ChordSelector 
+            currentChord={currentChord} 
+            onChordChange={setCurrentChord} 
+          />
+        </div>
+        
+        <NoteDisplay 
+          scale={currentScale} 
+          chord={currentChord} 
+        />
+        
+        <Piano 
+          onPlayNote={handlePlayNote}
+          onStopNote={handleStopNote}
+          activeNotes={activeNotes}
+          scale={currentScale}
+          chord={currentChord}
+        />
+      </main>
+      
+      <footer className="app-footer">
+        <p>© 2023 Piano Armonía - Explora la música</p>
+      </footer>
+    </div>
   );
 }
 
