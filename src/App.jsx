@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import './components/Selector.css';
 import Piano from './components/Piano.jsx';
 import ScaleSelector from './components/ScaleSelector.jsx';
 import ChordSelector from './components/ChordSelector.jsx';
 import NoteDisplay from './components/NoteDisplay.jsx';
+import Selector from './components/Selector.jsx';
 import * as Tone from 'tone';
 
 function App() {

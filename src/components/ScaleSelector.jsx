@@ -12,7 +12,7 @@ const ScaleSelector = ({ currentScale, onScaleChange }) => {
         id="scale-select"
         value={currentScale} 
         onChange={(e) => onScaleChange(e.target.value)}
-        className="selector"
+        className="selector vintage-selector"
       >
         {scales.map(scale => (
           <option key={scale} value={scale}>{scale}</option>

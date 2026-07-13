@@ -1,149 +1,150 @@
 .collection-list {
-  padding: 10px; /* Mobile-first: padding reducido */
-  max-width: 100%; /* Mobile-first: ancho completo */
+  padding: 10px;
+  max-width: 100%;
   margin: 0 auto;
-  font-family: 'Georgia', 'Times New Roman', serif;
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
+  font-family: var(--vintage-font);
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--card-bg);
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .collection-list {
-    padding: 20px; /* En desktop, padding normal */
-    max-width: 800px; /* En desktop, ancho limitado */
+    padding: 20px;
+    max-width: 800px;
   }
 }
 
 .collection-list h2 {
   text-align: center;
-  color: var(--text-primary);
-  margin-bottom: 1rem; /* Mobile-first: margen reducido */
+  color: var(--accent);
+  margin-bottom: 1rem;
   font-weight: normal;
   font-style: italic;
-  font-size: 1.5rem; /* Mobile-first: tamaño reducido */
+  font-size: 1.5rem;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .collection-list h2 {
-    margin-bottom: 2rem; /* En desktop, margen normal */
-    font-size: 2rem; /* En desktop, tamaño normal */
+    margin-bottom: 2rem;
+    font-size: 2rem;
   }
 }
 
 .collection-item {
-  margin-bottom: 20px; /* Mobile-first: margen reducido */
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .collection-item {
-    margin-bottom: 40px; /* En desktop, margen normal */
+    margin-bottom: 40px;
   }
 }
 
 .collection-item h3 {
   text-align: center;
-  font-size: 1.5rem; /* Mobile-first: tamaño reducido */
-  margin-bottom: 1rem; /* Mobile-first: margen reducido */
-  color: var(--text-primary);
-  border-bottom: 2px solid var(--accent); /* Mobile-first: borde reducido */
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
   display: block;
-  padding-bottom: 8px; /* Mobile-first: padding reducido */
+  padding-bottom: 8px;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .collection-item h3 {
-    font-size: 2rem; /* En desktop, tamaño normal */
-    margin-bottom: 2rem; /* En desktop, margen normal */
-    border-bottom: 3px solid var(--accent); /* En desktop, borde normal */
-    padding-bottom: 10px; /* En desktop, padding normal */
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 10px;
   }
 }
 
 .root-note-section {
-  margin-bottom: 1.5rem; /* Mobile-first: margen reducido */
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
+  margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .root-note-section {
-    margin-bottom: 3rem; /* En desktop, margen normal */
+    margin-bottom: 3rem;
   }
 }
 
 .root-note-title {
-  border-bottom: 1px solid var(--card-border); /* Mobile-first: borde reducido */
-  padding-bottom: 8px; /* Mobile-first: padding reducido */
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 8px;
   text-align: center;
   color: var(--text-secondary);
   font-style: italic;
-  font-size: 1.1rem; /* Mobile-first: tamaño reducido */
+  font-size: 1.1rem;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .root-note-title {
-    border-bottom: 2px solid var(--card-border); /* En desktop, borde normal */
-    padding-bottom: 10px; /* En desktop, padding normal */
-    font-size: 1.2rem; /* En desktop, tamaño normal */
+    border-bottom: 2px solid var(--card-border);
+    padding-bottom: 10px;
+    font-size: 1.2rem;
   }
 }
 
 .chords-grid {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Mobile-first: gap reducido */
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .chords-grid {
-    gap: 20px; /* En desktop, gap normal */
+    gap: 20px;
   }
 }
 
 .degree-card {
   text-align: center;
-  background: var(--card-bg);
-  padding: 1rem; /* Mobile-first: padding reducido */
-  border-radius: 8px; /* Mobile-first: radio reducido */
+  background: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: 8px;
   border: 1px solid var(--card-border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Mobile-first: sombra reducida */
-  margin-bottom: 10px; /* Mobile-first: margen reducido */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 10px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .degree-card {
-    padding: 1.5rem; /* En desktop, padding normal */
-    border-radius: 12px; /* En desktop, radio normal */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* En desktop, sombra normal */
-    margin-bottom: 20px; /* En desktop, margen normal */
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
   }
 }
 
 .degree-card:hover {
-  transform: translateY(-1px); /* Mobile-first: transformación reducida */
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Mobile-first: sombra aumentada ligeramente */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .degree-card:hover {
-    transform: translateY(-2px); /* En desktop, transformación normal */
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1); /* En desktop, sombra normal */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
   }
 }
 
@@ -151,15 +152,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px; /* Mobile-first: margen reducido */
-  flex-wrap: wrap; /* Permitir wrap en móvil */
+  margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .card-header {
-    margin-bottom: 10px; /* En desktop, margen normal */
-    flex-wrap: nowrap; /* En desktop, no wrap */
+    margin-bottom: 10px;
+    flex-wrap: nowrap;
   }
 }
 
@@ -167,8 +168,8 @@
   margin: 0;
   color: var(--text-primary);
   font-weight: bold;
-  font-size: 1.1rem; /* Mobile-first: tamaño reducido */
-  width: 100%; /* En móvil, ocupar todo el ancho */
+  font-size: 1.1rem;
+  width: 100%;
   text-align: center;
   margin-bottom: 5px;
 }
@@ -176,19 +177,19 @@
 /* Desktop styles */
 @media (min-width: 769px) {
   .degree-card h4 {
-    font-size: 1.25rem; /* En desktop, tamaño normal */
-    width: auto; /* En desktop, ancho automático */
+    font-size: 1.25rem;
+    width: auto;
     text-align: left;
     margin-bottom: 0;
   }
 }
 
 .quality-display {
-  font-size: 0.7rem; /* Mobile-first: tamaño reducido */
+  font-size: 0.7rem;
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
-  padding: 2px 6px; /* Mobile-first: padding reducido */
-  border-radius: 3px; /* Mobile-first: radio reducido */
+  padding: 2px 6px;
+  border-radius: 3px;
   text-transform: uppercase;
   font-weight: bold;
   border: 1px solid var(--card-border);
@@ -199,39 +200,39 @@
 /* Desktop styles */
 @media (min-width: 769px) {
   .quality-display {
-    font-size: 0.75rem; /* En desktop, tamaño normal */
-    padding: 2px 8px; /* En desktop, padding normal */
-    border-radius: 4px; /* En desktop, radio normal */
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
     margin: 0;
   }
 }
 
 .piano-wrapper {
-  margin-bottom: 8px; /* Mobile-first: margen reducido */
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
+  margin-bottom: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .piano-wrapper {
-    margin-bottom: 10px; /* En desktop, margen normal */
+    margin-bottom: 10px;
   }
 }
 
 .notes-info {
-  font-size: 0.8rem; /* Mobile-first: tamaño reducido */
+  font-size: 0.8rem;
   color: var(--text-secondary);
   margin-bottom: 0;
-  width: 100%; /* Asegurar ancho completo */
-  box-sizing: border-box; /* Incluir padding en el ancho */
-  word-wrap: break-word; /* Romper palabras largas */
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .notes-info {
-    font-size: 0.9rem; /* En desktop, tamaño normal */
+    font-size: 0.9rem;
   }
 }
 
@@ -240,14 +241,14 @@
 .empty-collection-message {
   text-align: center;
   color: var(--text-secondary);
-  font-size: 0.9rem; /* Mobile-first: tamaño reducido */
+  font-size: 0.9rem;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .empty-message,
   .empty-collection-message {
-    font-size: 1rem; /* En desktop, tamaño normal */
+    font-size: 1rem;
   }
 }
 
@@ -255,13 +256,13 @@
   color: #999;
   font-style: italic;
   text-align: center;
-  font-size: 0.9rem; /* Mobile-first: tamaño reducido */
+  font-size: 0.9rem;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
   .empty-chord-message {
-    font-size: 1rem; /* En desktop, tamaño normal */
+    font-size: 1rem;
   }
 }
 

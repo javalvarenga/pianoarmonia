@@ -6,13 +6,14 @@
   justify-content: space-between;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: var(--vintage-font);
   overflow-x: hidden;
 }
 
 .app-header {
   padding: 1rem;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   border-bottom: 1px solid var(--card-border);
 }
 
@@ -50,10 +51,10 @@
 
 .app-footer {
   padding: 1rem;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   border-top: 1px solid var(--card-border);
   font-size: 0.9rem;
-  color: var(--text-secondary);
 }
 
 /* Desktop styles */

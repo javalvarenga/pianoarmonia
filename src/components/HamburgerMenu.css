@@ -1,5 +1,5 @@
 .hamburger-menu {
-  display: none; /* Oculto por defecto en desktop */
+  display: none;
   flex-direction: column;
   justify-content: space-around;
   width: 40px;
@@ -12,6 +12,11 @@
   position: fixed;
   top: 1rem;
   left: 1rem;
+  transition: background 0.3s ease;
+}
+
+.hamburger-menu:hover {
+  background: var(--bg-secondary);
 }
 
 .hamburger-bar {

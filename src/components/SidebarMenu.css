@@ -1,21 +1,21 @@
 :root {
-  --sidebar-bg: #2c2c2c;
-  --sidebar-text: #e0d8c3;
-  --sidebar-accent: #d4af37;
-  --sidebar-hover-bg: #fdf6e3;
-  --sidebar-hover-text: #586e75;
-  --sidebar-border: #3d3d3d;
+  --sidebar-bg: #3a3224; /* Cuero envejecido oscuro */
+  --sidebar-text: #f0e6d2; /* Pergamino claro */
+  --sidebar-accent: #b8860b; /* Dorado antiguo */
+  --sidebar-hover-bg: #f5f1e6; /* Pergamino muy claro */
+  --sidebar-hover-text: #4a402f; /* Tinta oscura */
+  --sidebar-border: #5d4d35; /* Línea de cuero */
 }
 
 .sidebar-menu {
   width: 260px;
-  height: 100vh; /* Asegura que el sidebar ocupe toda la altura de la ventana */
-  background-color: var(--sidebar-bg);
-  color: var(--sidebar-text);
-  font-family: 'Georgia', 'Times New Roman', serif;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--vintage-font);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--sidebar-border);
+  border-right: 1px solid var(--card-border);
   box-sizing: border-box;
   position: sticky;
   top: 0;
@@ -51,30 +51,34 @@
 .sidebar-header {
   padding: 2rem 1.5rem;
   text-align: center;
-  border-bottom: 1px solid var(--sidebar-border);
+  border-bottom: 1px solid var(--card-border);
 }
 
 .sidebar-header h2 {
   margin: 0;
   font-size: 1.5rem;
   font-style: italic;
-  color: var(--sidebar-accent);
+  color: var(--accent);
   letter-spacing: 1px;
+  font-family: var(--vintage-font);
 }
 
 .menu-container {
   flex: 1;
   padding: 1rem 0;
+  font-family: var(--vintage-font);
 }
 
 .menu-container ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  font-family: var(--vintage-font);
 }
 
 .menu-section {
   margin-bottom: 1.5rem;
+  font-family: var(--vintage-font);
 }
 
 .menu-level-1 {
@@ -83,29 +87,32 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-bottom: 1px solid var(--sidebar-border);
+  border-bottom: 1px solid var(--card-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--sidebar-text);
+  color: var(--text-primary);
   text-decoration: none;
+  font-family: var(--vintage-font);
 }
 
 .menu-level-1:hover {
-  background-color: var(--sidebar-hover-bg);
-  color: var(--sidebar-hover-text);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .menu-text {
   white-space: normal;
   word-break: break-word;
   flex: 1;
+  font-family: var(--vintage-font);
 }
 
 .chevron-icon {
   transition: transform 0.3s ease;
   font-size: 0.8rem;
   margin-left: 10px;
+  font-family: var(--vintage-font);
 }
 
 .chevron-icon.open {
@@ -121,14 +128,16 @@
   overflow: hidden;
   transition: max-height 0.3s ease;
   max-height: 0;
+  font-family: var(--vintage-font);
 }
 
 .menu-level-2-container.open {
-  max-height: 500px; /* Ajusta según la cantidad de elementos */
+  max-height: 500px;
 }
 
 .menu-level-2-container div {
   list-style: none;
+  font-family: var(--vintage-font);
 }
 
 .menu-level-2 {
@@ -138,18 +147,19 @@
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: var(--sidebar-text);
+  color: var(--text-primary);
   text-decoration: none;
   opacity: 0.8;
   list-style: none;
   margin: 0;
   white-space: normal;
   word-break: break-word;
+  font-family: var(--vintage-font);
 }
 
 .menu-level-2:hover {
-  background-color: var(--sidebar-hover-bg);
-  color: var(--sidebar-hover-text);
+  background-color: var(--card-border);
+  color: var(--accent);
   opacity: 1;
   padding-left: 2.7rem;
 }

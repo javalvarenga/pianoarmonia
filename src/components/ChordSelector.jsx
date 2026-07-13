@@ -14,7 +14,7 @@ const ChordSelector = ({ currentChord, onChordChange }) => {
         id="chord-select"
         value={currentChord} 
         onChange={(e) => onChordChange(e.target.value)}
-        className="selector"
+        className="selector vintage-selector"
       >
         {chords.map(chord => (
           <option key={chord} value={chord}>{chord}</option>

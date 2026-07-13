@@ -1,20 +1,58 @@
-import { Scale } from '@tonaljs/tonal';
+import { Scale, Note, Interval } from '@tonaljs/tonal';
 
-/**
- * Genera las notas de una escala musical utilizando la librería tonal
- * @param root - La nota raíz de la escala (ej: "C", "D#", "Bb")
- * @param scaleName - El nombre de la escala (ej: "major", "minor", "dorian")
- * @returns Un arreglo de nombres de notas que componen la escala
- */
-export function generateScale(root: string, scaleName: string): string[] {
+export interface ScaleInfo {
+  name: string;
+  notes: string[];
+  intervals: string[];
+  degrees: string[];
+}
+
+export function generateScaleInfo(tonic: string, scaleName: string): ScaleInfo | null {
   try {
-    // Utiliza la librería tonal para obtener las notas de la escala
-    const scale = Scale.get(`${root} ${scaleName}`);
-    return scale.notes;
+    const scale = Scale.get(`${tonic} ${scaleName}`);
+    
+    if (!scale.notes || scale.notes.length === 0) {
+      return null;
+    }
+    
+    // Obtener los intervalos desde la tónica
+    const intervals = scale.notes.map(note => {
+      const interval = Interval.distance(tonic, note);
+      return interval || '';
+    });
+    
+    // Generar los grados (I, II, III, etc.)
+    const degrees = scale.notes.map((_, index) => {
+      const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+      return romanNumerals[index] || '';
+    });
+    
+    return {
+      name: scale.name,
+      notes: scale.notes,
+      intervals,
+      degrees
+    };
   } catch (error) {
-    console.error(`Error generando la escala ${root} ${scaleName}:`, error);
-    return [];
+    console.error(`Error generando información de escala para ${tonic} ${scaleName}:`, error);
+    return null;
   }
 }
 
-export default generateScale;
+export function getAllScalesForTonic(tonic: string): ScaleInfo[] {
+  const scaleNames = Scale.names();
+  const scales: ScaleInfo[] = [];
+  
+  for (const scaleName of scaleNames) {
+    const scaleInfo = generateScaleInfo(tonic, scaleName);
+    if (scaleInfo) {
+      scales.push(scaleInfo);
+    }
+  }
+  
+  return scales;
+}
+
+export function getNoteWithOctave(note: string, octave: number): string {
+  return Note.pitchClass(note) + octave;
+}
