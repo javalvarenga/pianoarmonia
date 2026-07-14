@@ -1,4 +1,4 @@
-import { generateScaleChords } from '../utils/scaleGenerator.js';
+import { generateScaleChords } from '../utils/scaleGenerator.ts';
 
 // Generar acordes para cada escala
 const cMajorChords = generateScaleChords('C', 'major');
