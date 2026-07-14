@@ -1,57 +1,57 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Chord } from '@tonaljs/tonal';
 import './Piano.css';
 import RetroKeyboard from './RetroKeyboard.jsx';
 
-const Piano = ({ scale, chord, notas = [] }) => {
-  // Obtener las notas del acorde usando Tonal
-  const chordNotes = chord ? Chord.get(chord).notes : [];
-  
-  // Extraer la nota raíz del acorde (ejemplo: de "Cmaj" obtener "C")
-  const rootNote = chord ? chord.match(/^([A-G][#b]?)/)?.[1] : null;
-  
-  // Definir el orden de notas
-  const noteOrder = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-  
-  // Mapear cada nota del arreglo chordNotes a una nota con octava
-  const chordNotesWithOctave = rootNote ? chordNotes.map((note, index) => {
-    const rootIndex = noteOrder.indexOf(rootNote);
-    const noteIndex = noteOrder.indexOf(note);
-    
-    // Si el índice de la nota es mayor o igual al índice de la raíz, usar octava 4
-    // De lo contrario, usar octava 5
-    const octave = noteIndex >= rootIndex ? 4 : 5;
-    return `${note}${octave}`;
-  }) : [];
-  
-  // Combinar notas del acorde con notas proporcionadas
-  const allNotesToHighlight = [...new Set([...chordNotesWithOctave, ...notas])];
-  
-  // Determinar si una nota pertenece al acorde actual
-  const isChordNote = (noteWithOctave) => {
-    // Extraer solo el nombre de la nota sin la octava
-    const noteName = noteWithOctave.replace(/\d+$/, '');
-    return chordNotes.includes(noteName);
-  };
+const NOTE_ORDER = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-  // Determinar color para las notas del acorde
-  const getNoteColor = (noteWithOctave) => {
-    // Verificar si la nota con octava está en la lista de notas a resaltar
-    if (notas.includes(noteWithOctave)) {
-      // Usar un solo color para todas las notas del acorde
-      return '#45b7d1'; // Azul turquesa
-    }
-    return '';
-  };
+/**
+ * Asigna octava a cada nota del acorde: empieza en la 1ª octava del teclado (4);
+ * si una nota queda "antes" de la raíz en el cromático, sube a la octava 5.
+ */
+function notesWithOctaves(chordNotes, rootNote, baseOctave = 4) {
+  if (!rootNote || chordNotes.length === 0) return [];
+  const rootIndex = NOTE_ORDER.indexOf(rootNote);
+  if (rootIndex < 0) return [];
+
+  return chordNotes.map((note) => {
+    const noteIndex = NOTE_ORDER.indexOf(note);
+    const octave = noteIndex >= rootIndex ? baseOctave : baseOctave + 1;
+    return `${note}${octave}`;
+  });
+}
+
+const Piano = ({ scale, chord, notas = [] }) => {
+  const chordNotes = useMemo(
+    () => (chord ? Chord.get(chord).notes ?? [] : []),
+    [chord],
+  );
+
+  const rootNote = useMemo(() => {
+    if (!chord) return null;
+    return chord.match(/^([A-G][#b]?)/)?.[1] ?? null;
+  }, [chord]);
+
+  const highlighted = useMemo(() => {
+    const fromChord = notesWithOctaves(chordNotes, rootNote, 4);
+    return [...new Set([...fromChord, ...notas])];
+  }, [chordNotes, rootNote, notas]);
+
+  const isChordNote = (noteWithOctave) => highlighted.includes(noteWithOctave);
+
+  const getNoteColor = (noteWithOctave) =>
+    highlighted.includes(noteWithOctave) ? '#5b9bd5' : '';
 
   return (
     <div className="piano-container">
       <h3 className="piano-title">Piano Interactivo</h3>
+      {scale ? (
+        <p className="piano-scale-label">Escala: {scale}</p>
+      ) : null}
       <div className="piano-keyboard-section">
-        <RetroKeyboard 
+        <RetroKeyboard
           getNoteColor={getNoteColor}
           isChordNote={isChordNote}
-          notas={allNotesToHighlight}
         />
       </div>
     </div>

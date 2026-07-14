@@ -1,66 +1,91 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './RetroKeyboard.css';
 
-const RetroKeyboard = ({ getNoteColor, isChordNote, notas = [] }) => {
-  // Generar notas del piano (2 octavas completas)
-  const generateNotes = () => {
-    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-    const notes = [];
-    
-    // Generar dos octavas (C4 a B5)
+const NATURAL = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+/** Índice de la tecla blanca a la izquierda de cada negra (por octava). */
+const BLACK_AFTER_WHITE = {
+  'C#': 0, // entre C y D
+  'D#': 1, // entre D y E
+  'F#': 3, // entre F y G
+  'G#': 4, // entre G y A
+  'A#': 5, // entre A y B
+};
+
+/**
+ * Teclado de 2 octavas (C4–B5): 14 blancas + 10 negras en disposición real.
+ * Las teclas base son blanco/negro; el resaltado de acorde es opcional.
+ */
+const RetroKeyboard = ({ getNoteColor, isChordNote }) => {
+  const keys = useMemo(() => {
+    const list = [];
+    let whiteIndex = 0;
+
     for (let octave = 4; octave <= 5; octave++) {
-      for (let i = 0; i < noteNames.length; i++) {
-        const noteName = noteNames[i];
-        const position = (octave - 4) * 12 + i;
-        
-        // Determinar si es nota negra
-        const isBlack = noteName.includes('#');
-        
-        notes.push({
-          note: `${noteName}${octave}`,
-          type: isBlack ? 'black' : 'white',
-          position: position
+      for (const name of NATURAL) {
+        list.push({
+          note: `${name}${octave}`,
+          type: 'white',
+          whiteIndex,
+        });
+        whiteIndex += 1;
+      }
+
+      const octaveWhiteBase = (octave - 4) * 7;
+      for (const [sharp, after] of Object.entries(BLACK_AFTER_WHITE)) {
+        list.push({
+          note: `${sharp}${octave}`,
+          type: 'black',
+          // Centro de la negra = borde entre blanca `after` y la siguiente
+          whiteIndex: octaveWhiteBase + after,
         });
       }
     }
-    
-    return notes;
-  };
 
-  const notes = generateNotes();
+    return list;
+  }, []);
 
-  const [pressedKeys, setPressedKeys] = useState(new Set());
+  const whiteCount = 14;
+  const [pressedKeys, setPressedKeys] = useState(() => new Set());
 
   const handleKeyDown = (note) => {
-    setPressedKeys(prev => new Set(prev).add(note));
+    setPressedKeys((prev) => new Set(prev).add(note));
   };
 
   const handleKeyUp = (note) => {
-    setPressedKeys(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(note);
-      return newSet;
+    setPressedKeys((prev) => {
+      const next = new Set(prev);
+      next.delete(note);
+      return next;
     });
   };
 
   return (
     <div className="retro-keyboard-container">
-      <div className="piano-keys">
-        {notes.map((key, index) => {
+      <div
+        className="piano-keys"
+        style={{ '--white-count': whiteCount }}
+      >
+        {keys.map((key) => {
           const isPressed = pressedKeys.has(key.note);
-          const color = getNoteColor ? getNoteColor(key.note) : '';
           const isChord = isChordNote ? isChordNote(key.note) : false;
-          
+          const color = getNoteColor ? getNoteColor(key.note) : '';
+
           return (
             <div
-              key={`${key.note}-${index}`}
-              className={`key ${key.type} ${isPressed ? 'active' : ''} ${isChord ? 'chord-note' : ''}`}
+              key={key.note}
+              className={`key ${key.type}-key${isPressed ? ' active' : ''}${isChord ? ' chord-note' : ''}`}
               style={{
-                '--position': key.position,
-                '--note-color': color
+                '--white-index': key.whiteIndex,
+                ...(color ? { '--note-color': color } : {}),
               }}
-              onClick={() => handleKeyDown(key.note)}
+              onMouseDown={() => handleKeyDown(key.note)}
+              onMouseUp={() => handleKeyUp(key.note)}
               onMouseLeave={() => handleKeyUp(key.note)}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleKeyDown(key.note);
+              }}
+              onTouchEnd={() => handleKeyUp(key.note)}
             >
               <span className="key-label">{key.note}</span>
             </div>
