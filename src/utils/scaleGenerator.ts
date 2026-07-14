@@ -45,9 +45,11 @@ export function generateScaleChords(tonic: string, mode: string = 'major') {
     // Obtener las notas de la escala
     const scaleNotes = Scale.get(`${tonic} major`).notes;
     
-    // Generar los acordes
+    // Generar los acordes con el grado en números romanos
+    const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+    
     return scaleNotes.map((note, index) => ({
-      degree: index + 1,
+      degree: romanNumerals[index],
       note: note,
       quality: chordQualities[index] || '',
       chordSymbol: `${note}${chordQualities[index] || ''}`
