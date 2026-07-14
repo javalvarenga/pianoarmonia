@@ -18,26 +18,41 @@ const ScaleCollection = () => {
     'si': `b-${mode}`
   };
   
+  // Mapeo de notas en español a mayúsculas para filtrado
+  const noteToUpperCaseMap = {
+    'do': 'C',
+    're': 'D',
+    'mi': 'E',
+    'fa': 'F',
+    'sol': 'G',
+    'la': 'A',
+    'si': 'B'
+  };
+  
   // Obtener el ID de la colección basado en la nota y el modo
   const collectionId = noteMap[note] || '';
-  
-  // Filtrar colecciones
-  const filteredCollections = collections.filter(c => c.id === collectionId);
   
   // Encontrar la colección específica
   const collection = collections.find(c => c.id === collectionId);
   
-  // Obtener el primer acorde de la colección
-  const firstRoot = collection?.chords?.[0];
+  // Filtrar acordes por la nota raíz seleccionada
+  const rootNoteUpper = noteToUpperCaseMap[note];
+  const filteredCollection = collection ? {
+    ...collection,
+    chords: collection.chords.filter(root => root.note === rootNoteUpper)
+  } : null;
+  
+  // Obtener el primer acorde de la colección filtrada
+  const firstRoot = filteredCollection?.chords?.[0];
   const firstChord = firstRoot?.chords?.[0];
   const scaleProp = firstRoot ? `${firstRoot.note} ${mode}` : `${note} ${mode}`;
   const chordProp = firstChord ? `${firstRoot.note}${firstChord.quality}` : undefined;
   
   return (
     <div className="collections-container">
-      {collection ? (
+      {filteredCollection ? (
         <>
-          <CollectionList data={[collection]} />
+          <CollectionList data={[filteredCollection]} />
           <div className="piano-highlight-container">
             <Piano 
               scale={scaleProp}

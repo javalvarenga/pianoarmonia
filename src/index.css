@@ -123,6 +123,11 @@ header h1 {
   text-align: center;
 }
 
+main {
+  width: 100%;
+  display: block;
+}
+
 .piano-container, .piano-highlight-container {
   margin: 10px auto;
   max-width: 100%;
