@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Scale, Chord } from 'tonal';
+import './RetroKeyboard.css';
 
 const RetroKeyboard = ({ scale, chord, getNoteColor }) => {
   const [pressedKeys, setPressedKeys] = useState(new Set());
@@ -30,107 +31,125 @@ const RetroKeyboard = ({ scale, chord, getNoteColor }) => {
   // Combinar notas destacadas
   const highlightedNotes = [...new Set([...scaleNotes, ...chordNotes])];
   
-  // Crear objeto de colores para las notas
+  // Crear objeto de colores para las notas (clave es la nota sin octava)
   const noteColors = {};
   highlightedNotes.forEach(note => {
-    noteColors[note] = getNoteColor(note);
+    const baseNote = note.replace(/[0-9]/g, '');
+    noteColors[baseNote] = getNoteColor(baseNote);
   });
   
-  const handleKeyDown = useCallback((note) => {
-    setPressedKeys(prev => new Set(prev).add(note));
-  }, []);
-
-  const handleKeyUp = useCallback((note) => {
-    setPressedKeys(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(note);
-      return newSet;
-    });
-  }, []);
-
-  // Determinar si una nota es negra (sostenida/bemol)
-  const isBlackKey = (note) => {
-    return note.includes('#') || note.includes('b');
-  };
-
   // Calcular la posición de las teclas
   const getPosition = (note) => {
-    const noteBase = note.replace(/[0-9]/g, '');
-    const baseIndex = baseNotes.indexOf(noteBase);
-    const octave = parseInt(note.match(/[0-9]/)[0]);
-    return (octave - 3) * 12 + baseIndex;
+    const noteWithoutOctave = note.replace(/[0-9]/g, '');
+    const octave = parseInt(note.slice(-1));
+    
+    // Encontrar el índice de la nota base
+    const baseIndex = baseNotes.indexOf(noteWithoutOctave);
+    
+    // Calcular posición considerando la octava
+    return baseIndex + (octave - 3) * 12;
   };
-
+  
   // Renderizar teclas blancas
   const renderWhiteKeys = () => {
+    // Notas blancas
+    const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    
     return allNotes
-      .filter(note => !isBlackKey(note))
-      .map((note, index) => {
-        const position = getPosition(note);
-        const isHighlighted = highlightedNotes.includes(note.replace(/[0-9]/g, ''));
+      .filter(note => whiteNotes.includes(note.replace(/[0-9]/g, '')))
+      .map((note) => {
         const isPressed = pressedKeys.has(note);
-        const color = isHighlighted ? noteColors[note.replace(/[0-9]/g, '')] : '';
+        const noteWithoutOctave = note.replace(/[0-9]/g, '');
+        const isHighlighted = highlightedNotes.some(highlighted => 
+          highlighted.replace(/[0-9]/g, '') === noteWithoutOctave
+        );
+        
+        // Obtener color si está resaltada
+        const color = noteColors[noteWithoutOctave] || '';
         
         return (
-          <div 
+          <div
             key={note}
-            className={`key white ${isHighlighted ? 'note-colored' : ''} ${isPressed ? 'active' : ''}`}
+            className={`key white-key ${isPressed ? 'active' : ''} ${isHighlighted ? 'colored' : ''}`}
             style={{
-              '--position': position,
+              '--position': getPosition(note),
               '--note-color': color
             }}
-            onMouseDown={() => handleKeyDown(note)}
-            onMouseUp={() => handleKeyUp(note)}
-            onMouseLeave={() => isPressed && handleKeyUp(note)}
-            onTouchStart={(e) => {
-              e.preventDefault();
-              handleKeyDown(note);
+            onMouseDown={() => setPressedKeys(prev => new Set(prev).add(note))}
+            onMouseUp={() => setPressedKeys(prev => {
+              const newSet = new Set(prev);
+              newSet.delete(note);
+              return newSet;
+            })}
+            onMouseLeave={() => {
+              if (isPressed) {
+                setPressedKeys(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(note);
+                  return newSet;
+                });
+              }
             }}
-            onTouchEnd={() => handleKeyUp(note)}
           >
-            <span className="note-label">{note.replace(/[0-9]/g, '')}</span>
+            <span className="key-label">{note}</span>
           </div>
         );
       });
   };
-
+  
   // Renderizar teclas negras
   const renderBlackKeys = () => {
+    // Notas negras
+    const blackNotes = ['C#', 'D#', 'F#', 'G#', 'A#'];
+    
     return allNotes
-      .filter(note => isBlackKey(note))
-      .map((note, index) => {
-        const position = getPosition(note);
-        const isHighlighted = highlightedNotes.includes(note.replace(/[0-9]/g, ''));
+      .filter(note => blackNotes.includes(note.replace(/[0-9]/g, '')))
+      .map((note) => {
         const isPressed = pressedKeys.has(note);
-        const color = isHighlighted ? noteColors[note.replace(/[0-9]/g, '')] : '';
+        const noteWithoutOctave = note.replace(/[0-9]/g, '');
+        const isHighlighted = highlightedNotes.some(highlighted => 
+          highlighted.replace(/[0-9]/g, '') === noteWithoutOctave
+        );
+        
+        // Obtener color si está resaltada
+        const color = noteColors[noteWithoutOctave] || '';
         
         return (
-          <div 
+          <div
             key={note}
-            className={`key black ${isHighlighted ? 'note-colored' : ''} ${isPressed ? 'active' : ''}`}
+            className={`key black-key ${isPressed ? 'active' : ''} ${isHighlighted ? 'colored' : ''}`}
             style={{
-              '--position': position,
+              '--position': getPosition(note),
               '--note-color': color
             }}
-            onMouseDown={() => handleKeyDown(note)}
-            onMouseUp={() => handleKeyUp(note)}
-            onMouseLeave={() => isPressed && handleKeyUp(note)}
-            onTouchStart={(e) => {
-              e.preventDefault();
-              handleKeyDown(note);
+            onMouseDown={() => setPressedKeys(prev => new Set(prev).add(note))}
+            onMouseUp={() => setPressedKeys(prev => {
+              const newSet = new Set(prev);
+              newSet.delete(note);
+              return newSet;
+            })}
+            onMouseLeave={() => {
+              if (isPressed) {
+                setPressedKeys(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(note);
+                  return newSet;
+                });
+              }
             }}
-            onTouchEnd={() => handleKeyUp(note)}
           >
-            <span className="note-label">{note.replace(/[0-9]/g, '')}</span>
+            <span className="key-label">{note}</span>
           </div>
         );
       });
   };
-
+  
   return (
-    <div className="piano-keys">
-      {renderWhiteKeys()}
-      {renderBlackKeys()}
+    <div className="retro-keyboard-container">
+      <div className="retro-keyboard">
+        {renderWhiteKeys()}
+        {renderBlackKeys()}
+      </div>
     </div>
   );
 };
