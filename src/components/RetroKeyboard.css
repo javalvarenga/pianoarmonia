@@ -17,11 +17,6 @@
 
 @media (max-width: 768px) {
   .retro-keyboard-container {
-    --white-key-width: 28px;
-    --white-key-height: 140px;
-    --black-key-width: 20px;
-    --black-key-height: 85px;
-    --keyboard-margin: 5px;
     padding: 10px;
     margin: 10px 0;
   }

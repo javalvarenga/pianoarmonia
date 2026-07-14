@@ -1,0 +1,57 @@
+.sidebar {
+  width: 250px;
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  position: fixed;
+  overflow-y: auto;
+}
+
+.sidebar h2, .sidebar h3 {
+  margin-top: 0;
+}
+
+.scale-selector, .key-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.scale-selector button, .key-selector button {
+  padding: 10px;
+  background: #34495e;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.scale-selector button:hover, .key-selector button:hover {
+  background: #3d566e;
+}
+
+.scale-selector button.active, .key-selector button.active {
+  background: #3498db;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .scale-selector, .key-selector {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .scale-selector button, .key-selector button {
+    flex: 1 1 45%;
+    margin: 2px;
+  }
+}

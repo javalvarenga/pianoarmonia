@@ -1,17 +1,21 @@
 import React from 'react';
-import { collections } from '../data/collections.js';
-import Layout from '../components/Layout.jsx';
-import CollectionList from '../components/CollectionList.jsx';
 
 const Home = () => {
-  // Tomar las primeras 5 colecciones
-  const recentCollections = collections.slice(0, 5);
-
   return (
-    <Layout>
-      <h1>¡Bienvenido!</h1>
-      <CollectionList data={recentCollections} title="Colecciones recientes" />
-    </Layout>
+    <div className="home-container">
+      <h2>Bienvenido a PianoArmonia</h2>
+      <p>Explora las escalas musicales y sus acordes en el piano interactivo.</p>
+      <p>Selecciona una escala en el menú lateral para comenzar:</p>
+      <ul>
+        <li>DO Mayor / Menor</li>
+        <li>RE Mayor / Menor</li>
+        <li>MI Mayor / Menor</li>
+        <li>FA Mayor / Menor</li>
+        <li>SOL Mayor / Menor</li>
+        <li>LA Mayor / Menor</li>
+        <li>SI Mayor / Menor</li>
+      </ul>
+    </div>
   );
 };
 

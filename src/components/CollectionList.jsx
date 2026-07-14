@@ -72,12 +72,10 @@ const CollectionList = ({ data = [] }) => {
                             </span>
                           </div>
                           <div className="piano-wrapper">
-                            <Piano noteColors={
-                              chordDetails.notes.reduce((acc, note) => {
-                                acc[note] = chordColor;
-                                return acc;
-                              }, {})
-                            } />
+                            <Piano 
+                              scale={`${rootNote.note} ${chord.quality}`}
+                              chord={chordSymbol}
+                            />
                           </div>
                           <div className="notes-info">
                             <span className="notes-label">Notas:</span> 

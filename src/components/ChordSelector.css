@@ -1,0 +1,54 @@
+.chord-selector {
+  background: #2c3e50;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 250px;
+  color: white;
+}
+
+.chord-selector h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #ecf0f1;
+}
+
+.chord-buttons, .scale-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chord-button, .scale-button {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: #34495e;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.chord-button:hover, .scale-button:hover {
+  background: #3d566e;
+  transform: translateY(-2px);
+}
+
+.chord-button.active, .scale-button.active {
+  background: #3498db;
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+.scale-buttons {
+  margin-top: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.scale-button {
+  flex: 1;
+  margin: 0 5px;
+}

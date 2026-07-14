@@ -1,56 +1,32 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../components/Layout.jsx';
 import CollectionList from '../components/CollectionList.jsx';
 import { collections } from '../data/collections.js';
 
 const ScaleCollection = () => {
-  const { note } = useParams();
+  const { note, mode } = useParams();
   
   // Mapeo de notas en español a IDs de colección
   const noteMap = {
-    'do': 'c-major',
-    're': 'd-major',
-    'mi': 'e-major',
-    'fa': 'f-major',
-    'sol': 'g-major',
-    'la': 'a-major',
-    'si': 'b-major'
+    'do': `c-${mode}`,
+    're': `d-${mode}`,
+    'mi': `e-${mode}`,
+    'fa': `f-${mode}`,
+    'sol': `g-${mode}`,
+    'la': `a-${mode}`,
+    'si': `b-${mode}`
   };
   
-  // Obtener el ID de la colección basado en la nota
-  const collectionId = noteMap[note];
+  // Obtener el ID de la colección basado en la nota y el modo
+  const collectionId = noteMap[note] || '';
   
   // Filtrar colecciones
-  let filteredCollections = [];
-  
-  if (collectionId) {
-    // Buscar la colección exacta
-    const exactCollection = collections.find(c => c.id === collectionId);
-    if (exactCollection) {
-      filteredCollections.push(exactCollection);
-    }
-    
-    // También buscar la versión menor
-    const minorId = collectionId.replace('-major', '-minor');
-    const minorCollection = collections.find(c => c.id === minorId);
-    if (minorCollection) {
-      filteredCollections.push(minorCollection);
-    }
-    
-    // Si no hay coincidencias exactas, buscar por prefijo
-    if (filteredCollections.length === 0) {
-      const prefix = collectionId.split('-')[0];
-      filteredCollections = collections.filter(c => c.id.startsWith(prefix));
-    }
-  }
+  const filteredCollections = collections.filter(c => c.id === collectionId);
   
   return (
-    <Layout>
-      <div className="collections-container">
-        <CollectionList data={filteredCollections} />
-      </div>
-    </Layout>
+    <div className="collections-container">
+      <CollectionList data={filteredCollections} />
+    </div>
   );
 };
 
