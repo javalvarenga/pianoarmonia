@@ -52,12 +52,7 @@ const PianoRetro = ({ activeNotes = [] }) => {
       <div className="piano-keyboard-section">
         <h2>Piano Retro</h2>
         <p>Haz clic en las teclas para tocar notas</p>
-        <RetroKeyboard 
-          noteColors={noteColors}
-          pressedKeys={pressedKeys}
-          onKeyPress={handleKeyDown}
-          onKeyRelease={handleKeyUp}
-        />
+        <RetroKeyboard />
       </div>
     </div>
   );

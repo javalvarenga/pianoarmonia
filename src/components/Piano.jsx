@@ -1,27 +1,25 @@
 import React from 'react';
+import { Chord } from '@tonaljs/tonal';
 import './Piano.css';
 import RetroKeyboard from './RetroKeyboard.jsx';
 
 const Piano = ({ scale, chord }) => {
+  // Obtener las notas del acorde usando Tonal
+  const chordNotes = chord ? Chord.get(chord).notes : [];
+  
+  // Determinar si una nota pertenece al acorde actual
+  const isChordNote = (note) => {
+    return chordNotes.includes(note);
+  };
+
   // Determinar color para las notas del acorde
   const getNoteColor = (note) => {
-    // Colores para diferentes notas del acorde
-    const colorMap = {
-      'C': '#ff6b6b',
-      'D': '#4ecdc4',
-      'E': '#45b7d1',
-      'F': '#96ceb4',
-      'G': '#feca57',
-      'A': '#ff9ff3',
-      'B': '#54a0ff',
-      'C#': '#ff6348',
-      'D#': '#00d2d3',
-      'F#': '#ff9f43',
-      'G#': '#c44569',
-      'A#': '#5f27cd',
-    };
-    
-    return colorMap[note] || '#b58900';
+    // Solo aplicar color si es una nota del acorde
+    if (isChordNote(note)) {
+      // Usar un solo color para todas las notas del acorde
+      return '#45b7d1'; // Azul turquesa
+    }
+    return '';
   };
 
   return (
@@ -29,9 +27,8 @@ const Piano = ({ scale, chord }) => {
       <h3 className="piano-title">Piano Interactivo</h3>
       <div className="piano-keyboard-section">
         <RetroKeyboard 
-          scale={scale}
-          chord={chord}
           getNoteColor={getNoteColor}
+          isChordNote={isChordNote}
         />
       </div>
     </div>
