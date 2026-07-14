@@ -1,7 +1,15 @@
+:root {
+  --sidebar-bg: #1a2530; /* Más oscuro para mejor contraste */
+  --sidebar-text: #f0f0f0; /* Texto claro */
+  --sidebar-button-bg: #34495e; /* Fondo botones */
+  --sidebar-button-hover: #3d566e; /* Hover botones */
+  --sidebar-button-active: #3498db; /* Botones activos */
+}
+
 .sidebar {
   width: 250px;
-  background: #2c3e50;
-  color: white;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
   padding: 20px;
   height: 100vh;
   box-shadow: 2px 0 5px rgba(0,0,0,0.3);
@@ -11,6 +19,7 @@
 
 .sidebar h2, .sidebar h3 {
   margin-top: 0;
+  color: var(--sidebar-text);
 }
 
 .scale-selector, .key-selector {
@@ -22,20 +31,21 @@
 
 .scale-selector button, .key-selector button {
   padding: 10px;
-  background: #34495e;
+  background: var(--sidebar-button-bg);
   border: none;
   border-radius: 5px;
-  color: white;
+  color: var(--sidebar-text);
   cursor: pointer;
   transition: background 0.3s;
+  font-family: inherit;
 }
 
 .scale-selector button:hover, .key-selector button:hover {
-  background: #3d566e;
+  background: var(--sidebar-button-hover);
 }
 
 .scale-selector button.active, .key-selector button.active {
-  background: #3498db;
+  background: var(--sidebar-button-active);
 }
 
 @media (max-width: 768px) {
