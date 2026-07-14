@@ -35,11 +35,10 @@ const ScaleCollection = () => {
   // Encontrar la colección específica
   const collection = collections.find(c => c.id === collectionId);
   
-  // Filtrar acordes por la nota raíz seleccionada
-  const rootNoteUpper = noteToUpperCaseMap[note];
+  // Eliminamos el filtro por root.note para mostrar todos los acordes de la escala
   const filteredCollection = collection ? {
     ...collection,
-    chords: collection.chords.filter(root => root.note === rootNoteUpper)
+    chords: collection.chords
   } : null;
   
   // Obtener el primer acorde de la colección filtrada

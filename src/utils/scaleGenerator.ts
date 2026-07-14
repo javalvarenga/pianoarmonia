@@ -1,58 +1,59 @@
-import * as Tonal from '@tonaljs/tonal';
+import { Note, Scale, Chord, Interval } from '@tonaljs/tonal';
 
-export interface ScaleInfo {
-  name: string;
-  notes: string[];
-  intervals: string[];
-  degrees: string[];
-}
-
-export function generateScaleInfo(tonic: string, scaleName: string): ScaleInfo | null {
-  try {
-    const scale = Tonal.Scale.get(`${tonic} ${scaleName}`);
+// Función para obtener el nombre del acorde basado en la nota y el grado
+export function getChordName(tonic: string, mode: string, degree: number): string {
+  // Solo implementamos la lógica para la escala mayor por ahora
+  if (mode === 'major') {
+    const chords = [
+      '',    // I - Mayor
+      'm',   // II - Menor
+      'm',   // III - Menor
+      '',    // IV - Mayor
+      '',    // V - Mayor
+      'm',   // VI - Menor
+      'dim'  // VII - Disminuido
+    ];
     
-    if (!scale.notes || scale.notes.length === 0) {
-      return null;
-    }
+    // Obtener las notas de la escala
+    const scale = Scale.get(`${tonic} major`).notes;
     
-    // Obtener los intervalos desde la tónica
-    const intervals = scale.notes.map(note => {
-      const interval = Tonal.Interval.distance(tonic, note);
-      return interval || '';
-    });
-    
-    // Generar los grados (I, II, III, etc.)
-    const degrees = scale.notes.map((_, index) => {
-      const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
-      return romanNumerals[index] || '';
-    });
-    
-    return {
-      name: scale.name,
-      notes: scale.notes,
-      intervals,
-      degrees
-    };
-  } catch (error) {
-    console.error(`Error generando información de escala para ${tonic} ${scaleName}:`, error);
-    return null;
-  }
-}
-
-export function getAllScalesForTonic(tonic: string): ScaleInfo[] {
-  const scaleNames = Tonal.Scale.names();
-  const scales: ScaleInfo[] = [];
-  
-  for (const scaleName of scaleNames) {
-    const scaleInfo = generateScaleInfo(tonic, scaleName);
-    if (scaleInfo) {
-      scales.push(scaleInfo);
+    // Asegurarnos de que tenemos la escala correcta
+    if (scale.length >= degree) {
+      const rootNote = scale[degree - 1];
+      return `${rootNote}${chords[degree - 1] || ''}`;
     }
   }
   
-  return scales;
+  // Fallback: retornar la nota tónica si no se puede determinar
+  return tonic;
 }
 
-export function getNoteWithOctave(note: string, octave: number): string {
-  return Tonal.Note.pitchClass(note) + octave;
+// Función para generar los acordes de una escala
+export function generateScaleChords(tonic: string, mode: string = 'major') {
+  if (mode === 'major') {
+    // Definir los acordes para la escala mayor
+    const chordQualities = [
+      '',    // I - Mayor
+      'm',   // II - Menor
+      'm',   // III - Menor
+      '',    // IV - Mayor
+      '',    // V - Mayor
+      'm',   // VI - Menor
+      'dim'  // VII - Disminuido
+    ];
+    
+    // Obtener las notas de la escala
+    const scaleNotes = Scale.get(`${tonic} major`).notes;
+    
+    // Generar los acordes
+    return scaleNotes.map((note, index) => ({
+      degree: index + 1,
+      note: note,
+      quality: chordQualities[index] || '',
+      chordSymbol: `${note}${chordQualities[index] || ''}`
+    }));
+  }
+  
+  // Para otras escalas, retornar un array vacío por ahora
+  return [];
 }
