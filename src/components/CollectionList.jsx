@@ -3,6 +3,7 @@ import Piano from './Piano.jsx';
 import Acorde from './Acorde.jsx';
 import './CollectionList.css';
 import { Chord } from '@tonaljs/tonal';
+import { getChordName } from '../utils/scaleGenerator.js';
 
 /**
  * Componente CollectionList que renderiza una lista de colecciones musicales
@@ -55,7 +56,7 @@ const CollectionList = ({ data = [] }) => {
                   rootNote.chords && rootNote.chords.length > 0 ? (
                     rootNote.chords.map((chord, chordIndex) => {
                       // Crear el acorde usando Tonal
-                      const chordSymbol = `${rootNote.note}${chord.quality}`;
+                      const chordSymbol = chord.chordSymbol || getChordName(rootNote.note, collection.mode, chord.degree);
                       const chordDetails = Chord.get(chordSymbol);
                       
                       // Usar el color del acorde si está definido, de lo contrario calcular por grado

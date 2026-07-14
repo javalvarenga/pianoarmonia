@@ -23,7 +23,7 @@
   --white-w: clamp(16px, calc((100% - 16px) / var(--white-count)), 30px);
   --black-w: calc(var(--white-w) * 0.58);
   --black-h: calc(var(--keyboard-h) * 0.62);
-  min-width: calc(14 * clamp(16px, calc((100% - 16px) / var(--white-count)), 30px));
+  min-width: calc(14 * var(--white-w));
 }
 
 .key {
@@ -132,7 +132,6 @@
     --white-count: 14;
     height: clamp(100px, 24vw, 180px);
     --keyboard-h: calc(100% - 16px);
-    --white-w: clamp(16px, calc((100% - 16px) / var(--white-count)), 24px);
     --black-w: calc(var(--white-w) * 0.58);
     --black-h: calc(var(--keyboard-h) * 0.62);
   }
