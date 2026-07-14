@@ -1,9 +1,9 @@
 .retro-keyboard-container {
-  --white-key-width: 40px;
-  --white-key-height: 180px;
-  --black-key-width: 28px;
-  --black-key-height: 110px;
-  --keyboard-margin: 10px;
+  --white-key-width: 60px;
+  --white-key-height: 260px;
+  --black-key-width: 42px;
+  --black-key-height: 160px;
+  --keyboard-margin: 20px;
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -25,15 +25,19 @@
     font-size: 8px;
     padding-bottom: 3px;
   }
-}
-
-@media (min-width: 769px) {
-  .retro-keyboard-container {
-    --white-key-width: 60px;
-    --white-key-height: 260px;
-    --black-key-width: 42px;
-    --black-key-height: 160px;
-    --keyboard-margin: 20px;
+  
+  .retro-keyboard {
+    width: calc(15 * 40px);
+  }
+  
+  .white-key {
+    width: 40px;
+    height: 180px;
+  }
+  
+  .black-key {
+    width: 28px;
+    height: 110px;
   }
 }
 
