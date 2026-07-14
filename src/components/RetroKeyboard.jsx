@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Scale, Note } from 'tonal';
+import { Scale, Chord } from 'tonal';
 
 const RetroKeyboard = ({ scale, chord, getNoteColor }) => {
   const [pressedKeys, setPressedKeys] = useState(new Set());
@@ -18,10 +18,10 @@ const RetroKeyboard = ({ scale, chord, getNoteColor }) => {
   // Obtener notas de la escala
   const scaleNotes = Scale.get(scale).notes || [];
   
-  // Obtener notas del acorde
+  // Obtener notas del acorde usando Chord en lugar de Note
   const chordNotes = [];
   if (chord) {
-    const chordObj = Note.chord(chord);
+    const chordObj = Chord.get(chord);
     if (chordObj && chordObj.notes) {
       chordNotes.push(...chordObj.notes);
     }
