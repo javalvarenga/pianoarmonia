@@ -98,9 +98,9 @@
 }
 
 .chords-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   width: 100%;
   box-sizing: border-box;
 }
@@ -108,6 +108,7 @@
 /* Desktop styles */
 @media (min-width: 769px) {
   .chords-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
   }
 }
