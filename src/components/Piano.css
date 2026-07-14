@@ -64,4 +64,6 @@
 .piano-keyboard-section {
   width: 100%;
   text-align: center;
+  overflow-x: auto;
+  padding: 0;
 }

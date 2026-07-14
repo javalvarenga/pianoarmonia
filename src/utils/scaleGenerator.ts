@@ -1,4 +1,4 @@
-import { Scale, Note, Interval } from '@tonaljs/tonal';
+import * as Tonal from '@tonaljs/tonal';
 
 export interface ScaleInfo {
   name: string;
@@ -9,7 +9,7 @@ export interface ScaleInfo {
 
 export function generateScaleInfo(tonic: string, scaleName: string): ScaleInfo | null {
   try {
-    const scale = Scale.get(`${tonic} ${scaleName}`);
+    const scale = Tonal.Scale.get(`${tonic} ${scaleName}`);
     
     if (!scale.notes || scale.notes.length === 0) {
       return null;
@@ -17,7 +17,7 @@ export function generateScaleInfo(tonic: string, scaleName: string): ScaleInfo |
     
     // Obtener los intervalos desde la tónica
     const intervals = scale.notes.map(note => {
-      const interval = Interval.distance(tonic, note);
+      const interval = Tonal.Interval.distance(tonic, note);
       return interval || '';
     });
     
@@ -40,7 +40,7 @@ export function generateScaleInfo(tonic: string, scaleName: string): ScaleInfo |
 }
 
 export function getAllScalesForTonic(tonic: string): ScaleInfo[] {
-  const scaleNames = Scale.names();
+  const scaleNames = Tonal.Scale.names();
   const scales: ScaleInfo[] = [];
   
   for (const scaleName of scaleNames) {
@@ -54,5 +54,5 @@ export function getAllScalesForTonic(tonic: string): ScaleInfo[] {
 }
 
 export function getNoteWithOctave(note: string, octave: number): string {
-  return Note.pitchClass(note) + octave;
+  return Tonal.Note.pitchClass(note) + octave;
 }

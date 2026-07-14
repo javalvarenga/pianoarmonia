@@ -5,22 +5,25 @@
   box-sizing: border-box;
   padding: 0.75rem 0;
   background: transparent;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .piano-keys {
   --white-count: 14;
   position: relative;
   width: 100%;
-  height: clamp(140px, 28vw, 220px);
+  height: clamp(100px, 24vw, 220px);
   background: #111;
   border-radius: 6px;
   padding: 8px;
   box-sizing: border-box;
   /* Alto interno para teclas blancas */
   --keyboard-h: calc(100% - 16px);
-  --white-w: calc((100% - 16px) / var(--white-count));
+  --white-w: clamp(16px, calc((100% - 16px) / var(--white-count)), 30px);
   --black-w: calc(var(--white-w) * 0.58);
   --black-h: calc(var(--keyboard-h) * 0.62);
+  min-width: calc(14 * clamp(16px, calc((100% - 16px) / var(--white-count)), 30px));
 }
 
 .key {
@@ -40,7 +43,7 @@
 .key-label {
   pointer-events: none;
   font-family: 'Courier New', monospace;
-  font-size: clamp(0.55rem, 1.4vw, 0.75rem);
+  font-size: clamp(0.45rem, 1.1vw, 0.75rem);
   font-weight: 600;
   padding-bottom: 6px;
   opacity: 0.55;
@@ -117,4 +120,20 @@
 .black-key.chord-note .key-label {
   opacity: 0.9;
   font-weight: 700;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 480px) {
+  .key-label {
+    font-size: 0.45rem;
+  }
+  
+  .piano-keys {
+    --white-count: 14;
+    height: clamp(100px, 24vw, 180px);
+    --keyboard-h: calc(100% - 16px);
+    --white-w: clamp(16px, calc((100% - 16px) / var(--white-count)), 24px);
+    --black-w: calc(var(--white-w) * 0.58);
+    --black-h: calc(var(--keyboard-h) * 0.62);
+  }
 }
