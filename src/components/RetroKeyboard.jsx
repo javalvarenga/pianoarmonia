@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
 import './RetroKeyboard.css';
 
-const RetroKeyboard = ({ getNoteColor, isChordNote }) => {
-  // Notas del piano (2 octavas completas)
-  const notes = [
-    { note: 'C', type: 'white', position: 0 },
-    { note: 'C#', type: 'black', position: 0.5 },
-    { note: 'D', type: 'white', position: 1 },
-    { note: 'D#', type: 'black', position: 1.5 },
-    { note: 'E', type: 'white', position: 2 },
-    { note: 'F', type: 'white', position: 3 },
-    { note: 'F#', type: 'black', position: 3.5 },
-    { note: 'G', type: 'white', position: 4 },
-    { note: 'G#', type: 'black', position: 4.5 },
-    { note: 'A', type: 'white', position: 5 },
-    { note: 'A#', type: 'black', position: 5.5 },
-    { note: 'B', type: 'white', position: 6 },
-    { note: 'C', type: 'white', position: 7 },
-    { note: 'C#', type: 'black', position: 7.5 },
-    { note: 'D', type: 'white', position: 8 },
-    { note: 'D#', type: 'black', position: 8.5 },
-    { note: 'E', type: 'white', position: 9 },
-    { note: 'F', type: 'white', position: 10 },
-    { note: 'F#', type: 'black', position: 10.5 },
-    { note: 'G', type: 'white', position: 11 },
-    { note: 'G#', type: 'black', position: 11.5 },
-    { note: 'A', type: 'white', position: 12 },
-    { note: 'A#', type: 'black', position: 12.5 },
-    { note: 'B', type: 'white', position: 13 },
-    { note: 'C', type: 'white', position: 14 }
-  ];
+const RetroKeyboard = ({ getNoteColor, isChordNote, notas = [] }) => {
+  // Generar notas del piano (2 octavas completas)
+  const generateNotes = () => {
+    const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const notes = [];
+    
+    // Generar dos octavas (C4 a B5)
+    for (let octave = 4; octave <= 5; octave++) {
+      for (let i = 0; i < noteNames.length; i++) {
+        const noteName = noteNames[i];
+        const position = (octave - 4) * 12 + i;
+        
+        // Determinar si es nota negra
+        const isBlack = noteName.includes('#');
+        
+        notes.push({
+          note: `${noteName}${octave}`,
+          type: isBlack ? 'black' : 'white',
+          position: position
+        });
+      }
+    }
+    
+    return notes;
+  };
+
+  const notes = generateNotes();
 
   const [pressedKeys, setPressedKeys] = useState(new Set());
 
