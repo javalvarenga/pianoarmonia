@@ -39,7 +39,6 @@ const SidebarMenu = ({ isOpen, toggleMenu }) => {
       // Construir la ruta como /scale/${routeNote}/${child.quality}
       navigate(`/scale/${routeNote}/${child.quality}`);
     }
-    toggleMenu();
   };
 
   return (

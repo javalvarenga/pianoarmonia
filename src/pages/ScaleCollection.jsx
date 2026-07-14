@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import CollectionList from '../components/CollectionList.jsx';
+import Piano from '../components/Piano.jsx';
 import { collections } from '../data/collections.js';
 
 const ScaleCollection = () => {
@@ -23,9 +24,26 @@ const ScaleCollection = () => {
   // Filtrar colecciones
   const filteredCollections = collections.filter(c => c.id === collectionId);
   
+  // Encontrar la colección específica
+  const collection = collections.find(c => c.id === collectionId);
+  
   return (
     <div className="collections-container">
-      <CollectionList data={filteredCollections} />
+      {collection ? (
+        <>
+          <CollectionList data={[collection]} />
+          <div className="piano-highlight-container">
+            <Piano 
+              notes={collection.chords.flatMap(chord => chord.notes)} 
+              title={`Piano - Escala de ${note.toUpperCase()} ${mode.charAt(0).toUpperCase() + mode.slice(1)}`}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="empty-collection-message">
+          <p>No se encontraron acordes para la escala seleccionada.</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import Piano from '../components/Piano.jsx';
 
 const Home = () => {
   return (
@@ -15,6 +16,9 @@ const Home = () => {
         <li>LA Mayor / Menor</li>
         <li>SI Mayor / Menor</li>
       </ul>
+      <div className="piano-container">
+        <Piano title="Piano de muestra" />
+      </div>
     </div>
   );
 };
