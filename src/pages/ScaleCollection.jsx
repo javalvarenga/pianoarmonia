@@ -27,6 +27,12 @@ const ScaleCollection = () => {
   // Encontrar la colección específica
   const collection = collections.find(c => c.id === collectionId);
   
+  // Obtener el primer acorde de la colección
+  const firstRoot = collection?.chords?.[0];
+  const firstChord = firstRoot?.chords?.[0];
+  const scaleProp = firstRoot ? `${firstRoot.note} ${mode}` : `${note} ${mode}`;
+  const chordProp = firstChord ? `${firstRoot.note}${firstChord.quality}` : undefined;
+  
   return (
     <div className="collections-container">
       {collection ? (
@@ -34,8 +40,8 @@ const ScaleCollection = () => {
           <CollectionList data={[collection]} />
           <div className="piano-highlight-container">
             <Piano 
-              notes={collection.chords.flatMap(chord => chord.notes)} 
-              title={`Piano - Escala de ${note.toUpperCase()} ${mode.charAt(0).toUpperCase() + mode.slice(1)}`}
+              scale={scaleProp}
+              chord={chordProp}
             />
           </div>
         </>

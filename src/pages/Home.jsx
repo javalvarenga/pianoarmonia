@@ -17,7 +17,7 @@ const Home = () => {
         <li>SI Mayor / Menor</li>
       </ul>
       <div className="piano-container">
-        <Piano title="Piano de muestra" />
+        <Piano scale="C major" chord="C" />
       </div>
     </div>
   );
