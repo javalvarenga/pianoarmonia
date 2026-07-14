@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Chord } from '@tonaljs/tonal';
+import { normalizeNote } from '../utils/scaleGenerator.ts';
 import './Piano.css';
 import RetroKeyboard from './RetroKeyboard.jsx';
 
@@ -8,16 +9,19 @@ const NOTE_ORDER = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 /**
  * Asigna octava a cada nota del acorde: empieza en la 1ª octava del teclado (4);
  * si una nota queda "antes" de la raíz en el cromático, sube a la octava 5.
+ * Normaliza bemoles a sostenidos para que coincidan con NOTE_ORDER.
  */
 function notesWithOctaves(chordNotes, rootNote, baseOctave = 4) {
   if (!rootNote || chordNotes.length === 0) return [];
-  const rootIndex = NOTE_ORDER.indexOf(rootNote);
+  const normalizedRoot = normalizeNote(rootNote);
+  const rootIndex = NOTE_ORDER.indexOf(normalizedRoot);
   if (rootIndex < 0) return [];
 
   return chordNotes.map((note) => {
-    const noteIndex = NOTE_ORDER.indexOf(note);
+    const normalized = normalizeNote(note);
+    const noteIndex = NOTE_ORDER.indexOf(normalized);
     const octave = noteIndex >= rootIndex ? baseOctave : baseOctave + 1;
-    return `${note}${octave}`;
+    return `${normalized}${octave}`;
   });
 }
 
@@ -34,7 +38,8 @@ const Piano = ({ scale, chord, notas = [] }) => {
 
   const highlighted = useMemo(() => {
     const fromChord = notesWithOctaves(chordNotes, rootNote, 4);
-    return [...new Set([...fromChord, ...notas])];
+    const normalizedNotas = notas.map((n) => normalizeNote(n));
+    return [...new Set([...fromChord, ...normalizedNotas])];
   }, [chordNotes, rootNote, notas]);
 
   // Pasar las notas del acorde a RetroKeyboard para que las resalte

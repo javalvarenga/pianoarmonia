@@ -1,5 +1,32 @@
 import { Note, Scale, Chord, Interval } from '@tonaljs/tonal';
 
+// Mapeo de bemoles (y enarmónicos) a su equivalente en sostenidos
+const FLAT_TO_SHARP: Record<string, string> = {
+  'Db': 'C#',
+  'Eb': 'D#',
+  'Gb': 'F#',
+  'Ab': 'G#',
+  'Bb': 'A#',
+  'Cb': 'B',
+  'Fb': 'E',
+  'E#': 'F',
+  'B#': 'C',
+};
+
+/**
+ * Normaliza un nombre de nota a su representación con sostenidos.
+ * Acepta notas con o sin octava (ej: "Eb", "Eb4", "Bb2").
+ * Esto permite que notas con bemol coincidan con el layout del teclado
+ * que está basado en sostenidos (C#, D#, F#, G#, A#).
+ */
+export function normalizeNote(note: string): string {
+  const match = note.match(/^([A-G][#b]?)(.*)$/);
+  if (!match) return note;
+  const [, noteName, rest] = match;
+  const normalized = FLAT_TO_SHARP[noteName] || noteName;
+  return `${normalized}${rest}`;
+}
+
 // Cualidades de acordes por grado para cada modo
 const CHORD_QUALITIES: Record<string, string[]> = {
   major: ['', 'm', 'm', '', '', 'm', 'dim'],

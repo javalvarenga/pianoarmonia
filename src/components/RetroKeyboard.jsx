@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { normalizeNote } from '../utils/scaleGenerator.ts';
 import './RetroKeyboard.css';
 
 // Mapeo de nombres de nota a índice de tecla blanca y si tiene negra adyacente
@@ -32,18 +33,14 @@ const CHORD_COLORS = [
  *
  * Las chordNotes llegan con octava (p.ej. "C4", "E4", "G4"). Solo se marca
  * la tecla cuyo nombre completo coincide, evitando duplicar el resaltado
- * en ambas octavas.
+ * en ambas octavas. Las notas con bemol se normalizan a sostenido.
  */
 function buildKeys(chordNotes, color) {
   const keys = [];
+  // Normalizar bemoles a sostenidos para que coincidan con el layout
+  const normalizedChordNotes = chordNotes.map((n) => normalizeNote(n));
   // Conjunto de nombres completos (con octava) para marcar una sola vez
-  const noteSet = new Set(chordNotes);
-  // Mapa de nombre sin octava → nombre con octava, para extraer el label
-  const noteLabelMap = new Map();
-  chordNotes.forEach((n) => {
-    const bare = n.replace(/[0-9]/g, '');
-    noteLabelMap.set(bare, n);
-  });
+  const noteSet = new Set(normalizedChordNotes);
 
   for (let octave = 0; octave < 2; octave++) {
     NOTE_LAYOUT.forEach((entry) => {
