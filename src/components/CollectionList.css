@@ -27,7 +27,7 @@
   box-sizing: border-box;
 }
 
-/* Lista vertical: cada fila es un acorde con su piano */
+/* Lista vertical: cada fila es un acorde con su piano a ancho completo */
 .chords-list {
   display: flex;
   flex-direction: column;
@@ -36,8 +36,7 @@
   box-sizing: border-box;
 }
 
-/* Fila de acorde: info arriba, piano a ancho completo abajo
-   (maximiza el espacio del piano para teclas más grandes) */
+/* Fila de acorde: info arriba, piano a ancho completo abajo */
 .chord-row {
   display: flex;
   flex-direction: column;
@@ -126,8 +125,8 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   overflow-x: auto;
   overflow-y: hidden;
 }
@@ -135,89 +134,6 @@
 /* Tarjeta de grado: mantiene espacio interno */
 .degree-card {
   padding: 0.5rem;
-}
-
-/* ===== Teclas del piano más grandes ===== */
-/* Contenedor del piano: fila de teclas blancas con teclas
-   negras superpuestas (disposición de piano real) */
-.chord-row .piano-wrapper .piano,
-.chord-row .piano-wrapper .piano-container,
-.chord-row .piano-wrapper .piano-highlight-container {
-  display: flex;
-  position: relative;
-  width: max-content;
-  max-width: 100%;
-  overflow: visible;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0 auto;
-}
-
-/* Teclas blancas: más anchas y altas */
-.chord-row .piano-wrapper .white-key,
-.chord-row .piano-wrapper .piano-white-key,
-.chord-row .piano-wrapper .key.white {
-  width: 56px;
-  min-width: 56px;
-  height: 200px;
-  background: #ffffff;
-  border: 1px solid #333333;
-  border-radius: 0 0 6px 6px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-}
-
-/* Teclas blancas resaltadas */
-.chord-row .piano-wrapper .white-key.active,
-.chord-row .piano-wrapper .white-key.highlighted,
-.chord-row .piano-wrapper .piano-white-key.active,
-.chord-row .piano-wrapper .piano-white-key.highlighted,
-.chord-row .piano-wrapper .key.white.active,
-.chord-row .piano-wrapper .key.white.highlighted {
-  background: var(--accent);
-}
-
-/* Teclas negras: más anchas y altas, superpuestas (disposición real) */
-.chord-row .piano-wrapper .black-key,
-.chord-row .piano-wrapper .piano-black-key,
-.chord-row .piano-wrapper .key.black {
-  width: 36px;
-  min-width: 36px;
-  height: 125px;
-  background: #1a1a1a;
-  border: 1px solid #000000;
-  border-radius: 0 0 4px 4px;
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 2;
-  flex-shrink: 0;
-}
-
-/* Teclas negras resaltadas */
-.chord-row .piano-wrapper .black-key.active,
-.chord-row .piano-wrapper .black-key.highlighted,
-.chord-row .piano-wrapper .piano-black-key.active,
-.chord-row .piano-wrapper .piano-black-key.highlighted,
-.chord-row .piano-wrapper .key.black.active,
-.chord-row .piano-wrapper .key.black.highlighted {
-  background: var(--highlight);
-}
-
-/* Etiquetas de notas en las teclas */
-.chord-row .piano-wrapper .white-key span,
-.chord-row .piano-wrapper .piano-white-key span,
-.chord-row .piano-wrapper .key.white span {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.chord-row .piano-wrapper .black-key span,
-.chord-row .piano-wrapper .piano-black-key span,
-.chord-row .piano-wrapper .key.black span {
-  font-size: 0.75rem;
-  color: #ddd;
 }
 
 /* Móvil: ajustes de padding y tipografía */
@@ -258,22 +174,5 @@
 
   .notes-info {
     text-align: center;
-  }
-
-  /* Teclas ligeramente más pequeñas en móvil pero siguen siendo grandes */
-  .chord-row .piano-wrapper .white-key,
-  .chord-row .piano-wrapper .piano-white-key,
-  .chord-row .piano-wrapper .key.white {
-    width: 44px;
-    min-width: 44px;
-    height: 160px;
-  }
-
-  .chord-row .piano-wrapper .black-key,
-  .chord-row .piano-wrapper .piano-black-key,
-  .chord-row .piano-wrapper .key.black {
-    width: 28px;
-    min-width: 28px;
-    height: 100px;
   }
 }

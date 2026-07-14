@@ -24,10 +24,10 @@
 }
 
 .piano-row-label {
-  font-family: 'Courier New', monospace;
+  font-family: var(--vintage-font);
   font-size: clamp(0.95rem, 2.2vw, 1.25rem);
   font-weight: 700;
-  color: #ddd;
+  color: var(--text-primary);
   margin-bottom: 0.4rem;
   text-align: left;
   padding-left: 0.25rem;
@@ -35,20 +35,28 @@
 
 .piano-keys {
   --white-count: 14;
-  /* Fuente única para --pad: clamp responde al viewport sin duplicar definiciones */
-  --pad: clamp(8px, 1.5vw, 10px);
+  --pad: clamp(6px, 1vw, 10px);
   position: relative;
   width: 100%;
-  height: clamp(520px, 92vw, 1040px);
+  /* Altura grande pero proporcional, sin romper el viewport */
+  height: clamp(220px, 36vh, 340px);
   background: #111;
   border-radius: 8px;
   padding: var(--pad);
   box-sizing: border-box;
-  /* Alto interno para teclas blancas */
   --keyboard-h: calc(100% - var(--pad) * 2);
-  --white-w: clamp(80px, calc((100% - var(--pad) * 2) / var(--white-count)), 360px);
-  --black-w: calc(var(--white-w) * 0.6);
-  --black-h: calc(var(--keyboard-h) * 0.64);
+  /*
+   * Única fuente de verdad para --white-w.
+   * El valor medio intenta llenar el ancho disponible;
+   * el máximo escala con el viewport (clamp anidado) para
+   * evitar redefinir la variable en cada media query.
+   *   Desktop  (>1200px): 12vw ≈ 144px → tope 160px
+   *   Tablet   (768px):   12vw ≈ 92px
+   *   Móvil    (480px):   12vw ≈ 57px → suelo 80px
+   */
+  --white-w: clamp(38px, calc((100% - var(--pad) * 2) / var(--white-count)), clamp(80px, 12vw, 160px));
+  --black-w: calc(var(--white-w) * 0.62);
+  --black-h: calc(var(--keyboard-h) * 0.62);
 }
 
 .key {
@@ -67,10 +75,10 @@
 
 .key-label {
   pointer-events: none;
-  font-family: 'Courier New', monospace;
-  font-size: clamp(1rem, 2.4vw, 1.85rem);
+  font-family: var(--vintage-font);
+  font-size: clamp(0.85rem, 1.6vw, 1.3rem);
   font-weight: 600;
-  padding-bottom: 30px;
+  padding-bottom: 12px;
   opacity: 0.55;
 }
 
@@ -114,8 +122,8 @@
 
 .black-key .key-label {
   opacity: 0.7;
-  font-size: clamp(0.9rem, 2vw, 1.55rem);
-  padding-bottom: 22px;
+  font-size: clamp(0.75rem, 1.3vw, 1.05rem);
+  padding-bottom: 10px;
 }
 
 .black-key:hover {
@@ -148,19 +156,31 @@
   font-weight: 700;
 }
 
-/* Responsividad para pantallas pequeñas */
-@media (max-width: 480px) {
-  .key-label {
-    font-size: 0.9rem;
-    padding-bottom: 22px;
+/* Responsividad: tablet — ya no redefine --white-w */
+@media (max-width: 768px) {
+  .piano-keys {
+    height: clamp(180px, 30vh, 280px);
   }
 
+  .key-label {
+    font-size: 0.75rem;
+    padding-bottom: 10px;
+  }
+
+  .black-key .key-label {
+    font-size: 0.65rem;
+    padding-bottom: 8px;
+  }
+}
+
+/* Responsividad: móvil — ya no redefine --white-w */
+@media (max-width: 480px) {
   .piano-rows {
     gap: 0.75rem;
   }
 
   .piano-keys {
-    height: clamp(420px, 74vw, 720px);
+    height: clamp(160px, 26vh, 240px);
   }
 
   .key {
