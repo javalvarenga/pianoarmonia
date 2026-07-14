@@ -1,99 +1,163 @@
-import React, { useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './RetroKeyboard.css';
 
-const NATURAL = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-/** Índice de la tecla blanca a la izquierda de cada negra (por octava). */
-const BLACK_AFTER_WHITE = {
-  'C#': 0, // entre C y D
-  'D#': 1, // entre D y E
-  'F#': 3, // entre F y G
-  'G#': 4, // entre G y A
-  'A#': 5, // entre A y B
-};
+// Mapeo de nombres de nota a índice de tecla blanca y si tiene negra adyacente
+const NOTE_LAYOUT = [
+  { note: 'C', whiteIndex: 0, hasBlack: true, blackNote: 'C#' },
+  { note: 'D', whiteIndex: 1, hasBlack: true, blackNote: 'D#' },
+  { note: 'E', whiteIndex: 2, hasBlack: false },
+  { note: 'F', whiteIndex: 3, hasBlack: true, blackNote: 'F#' },
+  { note: 'G', whiteIndex: 4, hasBlack: true, blackNote: 'G#' },
+  { note: 'A', whiteIndex: 5, hasBlack: true, blackNote: 'A#' },
+  { note: 'B', whiteIndex: 6, hasBlack: false },
+];
+
+const WHITE_COUNT = 14; // 2 octavas
+
+// Colores para resaltar acordes
+const CHORD_COLORS = [
+  '#5b9bd5',
+  '#e07b5b',
+  '#5bbd72',
+  '#b85bd5',
+  '#d5c25b',
+  '#5bd5c0',
+  '#d55b8a',
+  '#8b9b5b',
+];
 
 /**
- * Teclado de 2 octavas (C4–B5): 14 blancas + 10 negras en disposición real.
- * Las teclas base son blanco/negro; el resaltado de acorde es opcional.
+ * Genera las teclas (blancas y negras) para una octava inicial + segunda octava.
+ * Cada nota puede marcarse como chord-note con un color.
  */
-const RetroKeyboard = ({ getNoteColor, isChordNote }) => {
-  const keys = useMemo(() => {
-    const list = [];
-    let whiteIndex = 0;
+function buildKeys(chordNotes, color) {
+  const keys = [];
+  const noteSet = new Set(chordNotes.map(n => n.replace(/[0-9]/g, '')));
 
-    for (let octave = 4; octave <= 5; octave++) {
-      for (const name of NATURAL) {
-        list.push({
-          note: `${name}${octave}`,
-          type: 'white',
-          whiteIndex,
-        });
-        whiteIndex += 1;
-      }
+  for (let octave = 0; octave < 2; octave++) {
+    NOTE_LAYOUT.forEach((entry) => {
+      const globalWhiteIndex = octave * 7 + entry.whiteIndex;
+      const noteName = entry.note + (octave + 4); // octava 4 y 5
+      const isChordNote = noteSet.has(entry.note);
 
-      const octaveWhiteBase = (octave - 4) * 7;
-      for (const [sharp, after] of Object.entries(BLACK_AFTER_WHITE)) {
-        list.push({
-          note: `${sharp}${octave}`,
+      keys.push({
+        type: 'white',
+        note: noteName,
+        whiteIndex: globalWhiteIndex,
+        isChordNote,
+        color,
+        label: isChordNote ? entry.note : '',
+      });
+
+      if (entry.hasBlack) {
+        const blackNoteName = entry.blackNote + (octave + 4);
+        const isBlackChord = noteSet.has(entry.blackNote);
+        keys.push({
           type: 'black',
-          // Centro de la negra = borde entre blanca `after` y la siguiente
-          whiteIndex: octaveWhiteBase + after,
+          note: blackNoteName,
+          whiteIndex: globalWhiteIndex,
+          isChordNote: isBlackChord,
+          color,
+          label: isBlackChord ? entry.blackNote : '',
         });
       }
-    }
-
-    return list;
-  }, []);
-
-  const whiteCount = 14;
-  const [pressedKeys, setPressedKeys] = useState(() => new Set());
-
-  const handleKeyDown = (note) => {
-    setPressedKeys((prev) => new Set(prev).add(note));
-  };
-
-  const handleKeyUp = (note) => {
-    setPressedKeys((prev) => {
-      const next = new Set(prev);
-      next.delete(note);
-      return next;
     });
-  };
+  }
+
+  return keys;
+}
+
+function PianoRow({ chordName, chordNotes, color, onNotePress, activeNotes }) {
+  const keys = buildKeys(chordNotes, color);
 
   return (
-    <div className="retro-keyboard-container">
+    <div className="piano-row">
+      {chordName && <div className="piano-row-label">{chordName}</div>}
       <div
         className="piano-keys"
-        style={{ '--white-count': whiteCount }}
+        style={{ '--white-count': WHITE_COUNT }}
       >
         {keys.map((key) => {
-          const isPressed = pressedKeys.has(key.note);
-          const isChord = isChordNote ? isChordNote(key.note) : false;
-          const color = getNoteColor ? getNoteColor(key.note) : '';
+          const isActive = activeNotes && activeNotes.has(key.note);
+          const className = [
+            'key',
+            key.type === 'white' ? 'white-key' : 'black-key',
+            key.isChordNote ? 'chord-note' : '',
+            isActive ? 'active' : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
 
           return (
             <div
               key={key.note}
-              className={`key ${key.type}-key${isPressed ? ' active' : ''}${isChord ? ' chord-note' : ''}`}
+              className={className}
               style={{
                 '--white-index': key.whiteIndex,
-                ...(color ? { '--note-color': color } : {}),
+                '--note-color': key.color,
               }}
-              onMouseDown={() => handleKeyDown(key.note)}
-              onMouseUp={() => handleKeyUp(key.note)}
-              onMouseLeave={() => handleKeyUp(key.note)}
+              onMouseDown={() => onNotePress && onNotePress(key.note)}
               onTouchStart={(e) => {
                 e.preventDefault();
-                handleKeyDown(key.note);
+                onNotePress && onNotePress(key.note);
               }}
-              onTouchEnd={() => handleKeyUp(key.note)}
             >
-              <span className="key-label">{key.note}</span>
+              {key.label && <span className="key-label">{key.label}</span>}
             </div>
           );
         })}
       </div>
     </div>
   );
-};
+}
 
-export default RetroKeyboard;
+/**
+ * RetroKeyboard soporta dos modos:
+ * 1. chords: array de { name, notes } → renderiza una fila por acorde
+ * 2. chords vacío / sin chords → renderiza un solo teclado
+ */
+export default function RetroKeyboard({
+  chords = [],
+  onNotePress,
+  activeNotes,
+}) {
+  const containerRef = useRef(null);
+  const [activeSet, setActiveSet] = useState(activeNotes || new Set());
+
+  useEffect(() => {
+    if (activeNotes) setActiveSet(activeNotes);
+  }, [activeNotes]);
+
+  // Modo multi-fila: cada acorde es una fila de piano
+  if (chords.length > 0) {
+    return (
+      <div className="retro-keyboard-container" ref={containerRef}>
+        <div className="piano-rows">
+          {chords.map((chord, index) => (
+            <PianoRow
+              key={chord.name || index}
+              chordName={chord.name}
+              chordNotes={chord.notes || []}
+              color={CHORD_COLORS[index % CHORD_COLORS.length]}
+              onNotePress={onNotePress}
+              activeNotes={activeSet}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Modo single: un solo teclado completo
+  return (
+    <div className="retro-keyboard-container" ref={containerRef}>
+      <PianoRow
+        chordName=""
+        chordNotes={[]}
+        color="#5b9bd5"
+        onNotePress={onNotePress}
+        activeNotes={activeSet}
+      />
+    </div>
+  );
+}

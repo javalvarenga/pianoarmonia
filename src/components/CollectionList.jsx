@@ -51,7 +51,7 @@ const CollectionList = ({ data = [] }) => {
           <h3 className="collection-title">{collection.name}</h3>
           <div className="collection-content">
             {collection.chords && collection.chords.length > 0 ? (
-              <div className="chords-grid">
+              <div className="chords-list">
                 {collection.chords.map((rootNote) => (
                   rootNote.chords && rootNote.chords.length > 0 ? (
                     rootNote.chords.map((chord, chordIndex) => {
@@ -63,24 +63,26 @@ const CollectionList = ({ data = [] }) => {
                       const chordColor = chord.color || getColorByDegree(chord.degree || (chordIndex % 12) + 1);
                       
                       return (
-                        <div key={`${collection.id}-${rootNote.note}-${chord.quality}`} className="degree-card">
-                          <div className="card-header">
-                            <h4 className="chord-name" style={{ color: chordColor }}>
-                              {chordDetails.name || chordSymbol}
-                            </h4>
-                            <span className="quality-display">
-                              {chord.quality}
-                            </span>
+                        <div key={`${collection.id}-${rootNote.note}-${chord.quality}`} className="chord-row">
+                          <div className="chord-info">
+                            <div className="card-header">
+                              <h4 className="chord-name" style={{ color: chordColor }}>
+                                {chordDetails.name || chordSymbol}
+                              </h4>
+                              <span className="quality-display">
+                                {chord.quality}
+                              </span>
+                            </div>
+                            <div className="notes-info">
+                              <span className="notes-label">Notas:</span> 
+                              <span className="notes-list">{chordDetails.notes.join(', ')}</span>
+                            </div>
                           </div>
                           <div className="piano-wrapper">
                             <Piano 
                               scale={`${rootNote.note} ${chord.quality}`}
                               chord={chordSymbol}
                             />
-                          </div>
-                          <div className="notes-info">
-                            <span className="notes-label">Notas:</span> 
-                            <span className="notes-list">{chordDetails.notes.join(', ')}</span>
                           </div>
                         </div>
                       );

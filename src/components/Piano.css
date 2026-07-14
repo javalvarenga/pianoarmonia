@@ -13,7 +13,7 @@
   .piano-container {
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding: 20px;
+    padding: 15px;
   }
 }
 
@@ -24,13 +24,6 @@
   color: var(--text-primary);
 }
 
-.piano-title {
-  font-size: 1rem;
-  font-style: italic;
-  margin-bottom: 6px;
-  text-align: center;
-}
-
 .piano-scale-label {
   margin: 0 0 10px;
   text-align: center;
@@ -39,25 +32,9 @@
 }
 
 @media (min-width: 769px) {
-  .piano-title {
-    font-size: 1.2rem;
+  .piano-scale-label {
+    font-size: 1rem;
     margin-bottom: 8px;
-  }
-}
-
-.piano-wrapper {
-  margin: 20px auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-  .piano-wrapper {
-    margin: 10px auto;
   }
 }
 
@@ -69,3 +46,8 @@
   display: flex;
   justify-content: center;
 }
+
+/*
+ * .piano-wrapper se define en CollectionList.css para el contexto de filas
+ * de acorde. No se reDefine aquí para evitar duplicación de variables.
+ */

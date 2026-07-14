@@ -37,22 +37,19 @@ const Piano = ({ scale, chord, notas = [] }) => {
     return [...new Set([...fromChord, ...notas])];
   }, [chordNotes, rootNote, notas]);
 
-  const isChordNote = (noteWithOctave) => highlighted.includes(noteWithOctave);
-
-  const getNoteColor = (noteWithOctave) =>
-    highlighted.includes(noteWithOctave) ? '#5b9bd5' : '';
+  // Pasar las notas del acorde a RetroKeyboard para que las resalte
+  const chordsForKeyboard = useMemo(
+    () => (highlighted.length > 0 ? [{ name: '', notes: highlighted }] : []),
+    [highlighted],
+  );
 
   return (
     <div className="piano-container">
-      <h3 className="piano-title">Piano Interactivo</h3>
       {scale ? (
         <p className="piano-scale-label">Escala: {scale}</p>
       ) : null}
       <div className="piano-keyboard-section">
-        <RetroKeyboard
-          getNoteColor={getNoteColor}
-          isChordNote={isChordNote}
-        />
+        <RetroKeyboard chords={chordsForKeyboard} />
       </div>
     </div>
   );

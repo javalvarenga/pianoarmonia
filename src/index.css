@@ -93,6 +93,11 @@ h1, h2, h3, h4, p, span, div, label, select, option, button {
   }
 }
 
+header {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .app-header {
   text-align: center;
   color: var(--accent);
@@ -131,7 +136,7 @@ main {
 .piano-container, .piano-highlight-container {
   margin: 10px auto;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   width: 100%;
   box-sizing: border-box;
 }
@@ -167,4 +172,112 @@ main {
 
 .degree-card:hover {
   transform: translateY(-2px);
+}
+
+/* ===== Piano: teclas grandes con disposición real ===== */
+/* Contenedor del piano: fila horizontal de teclas */
+.piano {
+  display: flex;
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  overflow: visible;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Teclas blancas: dimensiones grandes */
+.white-key,
+.piano-white-key,
+.key.white {
+  width: 56px;
+  min-width: 56px;
+  height: 200px;
+  background: #ffffff;
+  border: 1px solid #333333;
+  border-radius: 0 0 6px 6px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.white-key.active,
+.white-key.highlighted,
+.piano-white-key.active,
+.piano-white-key.highlighted,
+.key.white.active,
+.key.white.highlighted {
+  background: var(--accent);
+}
+
+/* Teclas negras: superpuestas (disposición de piano real) */
+.black-key,
+.piano-black-key,
+.key.black {
+  width: 36px;
+  min-width: 36px;
+  height: 125px;
+  background: #1a1a1a;
+  border: 1px solid #000000;
+  border-radius: 0 0 4px 4px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 2;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.black-key.active,
+.black-key.highlighted,
+.piano-black-key.active,
+.piano-black-key.highlighted,
+.key.black.active,
+.key.black.highlighted {
+  background: var(--highlight);
+}
+
+/* Etiquetas de nota en teclas */
+.white-key span,
+.piano-white-key span,
+.key.white span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.black-key span,
+.piano-black-key span,
+.key.black span {
+  font-size: 0.75rem;
+  color: #dddddd;
+}
+
+/* Móvil: teclas algo más pequeñas pero aún grandes */
+@media (max-width: 768px) {
+  .white-key,
+  .piano-white-key,
+  .key.white {
+    width: 44px;
+    min-width: 44px;
+    height: 160px;
+  }
+
+  .black-key,
+  .piano-black-key,
+  .key.black {
+    width: 28px;
+    min-width: 28px;
+    height: 100px;
+  }
 }

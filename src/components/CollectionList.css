@@ -1,282 +1,279 @@
 .collection-list {
-  padding: 10px;
-  max-width: 100%;
+  padding: 20px;
+  max-width: 1400px;
   margin: 0 auto;
-  font-family: var(--vintage-font);
   width: 100%;
   box-sizing: border-box;
-  background: var(--card-bg);
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .collection-list {
-    padding: 20px;
-    max-width: 800px;
-  }
-}
-
-.collection-list h2 {
-  text-align: center;
-  color: var(--accent);
-  margin-bottom: 1rem;
-  font-weight: normal;
-  font-style: italic;
-  font-size: 1.5rem;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .collection-list h2 {
-    margin-bottom: 2rem;
-    font-size: 2rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .collection-item {
-  margin-bottom: 20px;
   width: 100%;
   box-sizing: border-box;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .collection-item {
-    margin-bottom: 40px;
-  }
+  margin-bottom: 2rem;
 }
 
 .collection-item h3 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-  display: block;
-  padding-bottom: 8px;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px;
+  color: var(--text-primary);
+  font-size: 1.6rem;
 }
 
-/* Desktop styles */
-@media (min-width: 769px) {
-  .collection-item h3 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    border-bottom: 3px solid var(--accent);
-    padding-bottom: 10px;
-  }
-}
-
-.root-note-section {
-  margin-bottom: 1.5rem;
+.collection-content {
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Desktop styles */
-@media (min-width: 769px) {
-  .root-note-section {
-    margin-bottom: 3rem;
-  }
+/* Lista vertical: cada fila es un acorde con su piano */
+.chords-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.root-note-title {
-  border-bottom: 1px solid var(--card-border);
-  padding-bottom: 8px;
-  text-align: center;
-  color: var(--text-secondary);
-  font-style: italic;
-  font-size: 1.1rem;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .root-note-title {
-    border-bottom: 2px solid var(--card-border);
-    padding-bottom: 10px;
-    font-size: 1.2rem;
-  }
-}
-
-.chords-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+/* Fila de acorde: info arriba, piano a ancho completo abajo
+   (maximiza el espacio del piano para teclas más grandes) */
+.chord-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 1rem;
   width: 100%;
   box-sizing: border-box;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .chords-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
-}
-
-.degree-card {
-  text-align: center;
-  background: var(--bg-secondary);
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--card-border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  margin-bottom: 10px;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
+}
+
+.chord-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Columna de información del acorde (arriba, ancho natural) */
+.chord-row .chord-info {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
   box-sizing: border-box;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .degree-card {
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-  }
-}
-
-.degree-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .degree-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  }
+  width: 100%;
 }
 
 .card-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 8px;
   flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-/* Desktop styles */
-@media (min-width: 769px) {
-  .card-header {
-    margin-bottom: 10px;
-    flex-wrap: nowrap;
-  }
-}
-
-.degree-card h4 {
+.chord-name {
   margin: 0;
+  width: auto;
   color: var(--text-primary);
-  font-weight: bold;
-  font-size: 1.1rem;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 5px;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .degree-card h4 {
-    font-size: 1.25rem;
-    width: auto;
-    text-align: left;
-    margin-bottom: 0;
-  }
+  font-size: 1.4rem;
 }
 
 .quality-display {
-  font-size: 0.7rem;
-  background-color: var(--bg-secondary);
-  color: var(--text-secondary);
-  padding: 2px 6px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: bold;
-  border: 1px solid var(--card-border);
+  padding: 4px 12px;
   width: fit-content;
-  margin: 0 auto;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .quality-display {
-    font-size: 0.75rem;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin: 0;
-  }
-}
-
-.piano-wrapper {
-  margin-bottom: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .piano-wrapper {
-    margin-bottom: 10px;
-  }
+  margin: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
 
 .notes-info {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  margin-bottom: 0;
   width: 100%;
   box-sizing: border-box;
-  word-wrap: break-word;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .notes-info {
-    font-size: 0.9rem;
-  }
-}
-
-/* Nuevas clases para eliminar estilos inline */
-.empty-message,
-.empty-collection-message {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .empty-message,
-  .empty-collection-message {
-    font-size: 1rem;
-  }
-}
-
-.empty-chord-message {
-  color: #999;
-  font-style: italic;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-/* Desktop styles */
-@media (min-width: 769px) {
-  .empty-chord-message {
-    font-size: 1rem;
-  }
+  text-align: left;
 }
 
 .notes-label {
-  font-weight: bold;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-/* Mapeo de colores para las etiquetas de notas */
-.label-degree-0 { color: #e74c3c; }
-.label-degree-1 { color: #3498db; }
-.label-degree-2 { color: #2ecc71; }
-.label-degree-3 { color: #f1c40f; }
-.label-degree-4 { color: #9b59b6; }
-.label-degree-5 { color: #e67e22; }
-.label-degree-6 { color: #1abc9c; }
-.label-degree-7 { color: #34985e; }
+.notes-list {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Columna del piano: ancho completo para teclas grandes.
+   overflow-x: auto permite scroll horizontal si las teclas
+   grandes exceden el ancho disponible. */
+.chord-row .piano-wrapper {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Tarjeta de grado: mantiene espacio interno */
+.degree-card {
+  padding: 0.5rem;
+}
+
+/* ===== Teclas del piano más grandes ===== */
+/* Contenedor del piano: fila de teclas blancas con teclas
+   negras superpuestas (disposición de piano real) */
+.chord-row .piano-wrapper .piano,
+.chord-row .piano-wrapper .piano-container,
+.chord-row .piano-wrapper .piano-highlight-container {
+  display: flex;
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  overflow: visible;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 auto;
+}
+
+/* Teclas blancas: más anchas y altas */
+.chord-row .piano-wrapper .white-key,
+.chord-row .piano-wrapper .piano-white-key,
+.chord-row .piano-wrapper .key.white {
+  width: 56px;
+  min-width: 56px;
+  height: 200px;
+  background: #ffffff;
+  border: 1px solid #333333;
+  border-radius: 0 0 6px 6px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+/* Teclas blancas resaltadas */
+.chord-row .piano-wrapper .white-key.active,
+.chord-row .piano-wrapper .white-key.highlighted,
+.chord-row .piano-wrapper .piano-white-key.active,
+.chord-row .piano-wrapper .piano-white-key.highlighted,
+.chord-row .piano-wrapper .key.white.active,
+.chord-row .piano-wrapper .key.white.highlighted {
+  background: var(--accent);
+}
+
+/* Teclas negras: más anchas y altas, superpuestas (disposición real) */
+.chord-row .piano-wrapper .black-key,
+.chord-row .piano-wrapper .piano-black-key,
+.chord-row .piano-wrapper .key.black {
+  width: 36px;
+  min-width: 36px;
+  height: 125px;
+  background: #1a1a1a;
+  border: 1px solid #000000;
+  border-radius: 0 0 4px 4px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* Teclas negras resaltadas */
+.chord-row .piano-wrapper .black-key.active,
+.chord-row .piano-wrapper .black-key.highlighted,
+.chord-row .piano-wrapper .piano-black-key.active,
+.chord-row .piano-wrapper .piano-black-key.highlighted,
+.chord-row .piano-wrapper .key.black.active,
+.chord-row .piano-wrapper .key.black.highlighted {
+  background: var(--highlight);
+}
+
+/* Etiquetas de notas en las teclas */
+.chord-row .piano-wrapper .white-key span,
+.chord-row .piano-wrapper .piano-white-key span,
+.chord-row .piano-wrapper .key.white span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.chord-row .piano-wrapper .black-key span,
+.chord-row .piano-wrapper .piano-black-key span,
+.chord-row .piano-wrapper .key.black span {
+  font-size: 0.75rem;
+  color: #ddd;
+}
+
+/* Móvil: ajustes de padding y tipografía */
+@media (max-width: 768px) {
+  .collection-list {
+    padding: 10px;
+  }
+
+  .chord-row {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .chord-row .chord-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .chord-name {
+    font-size: 1.1rem;
+  }
+
+  .quality-display {
+    padding: 2px 8px;
+    font-size: 0.85rem;
+  }
+
+  .notes-label {
+    font-size: 0.85rem;
+  }
+
+  .notes-info {
+    text-align: center;
+  }
+
+  /* Teclas ligeramente más pequeñas en móvil pero siguen siendo grandes */
+  .chord-row .piano-wrapper .white-key,
+  .chord-row .piano-wrapper .piano-white-key,
+  .chord-row .piano-wrapper .key.white {
+    width: 44px;
+    min-width: 44px;
+    height: 160px;
+  }
+
+  .chord-row .piano-wrapper .black-key,
+  .chord-row .piano-wrapper .piano-black-key,
+  .chord-row .piano-wrapper .key.black {
+    width: 28px;
+    min-width: 28px;
+    height: 100px;
+  }
+}

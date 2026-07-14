@@ -9,26 +9,51 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* —— Layout multi-fila: cada fila es un piano con un acorde —— */
+.piano-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.piano-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.piano-row-label {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+  font-weight: 700;
+  color: #ddd;
+  margin-bottom: 0.4rem;
+  text-align: left;
+  padding-left: 0.25rem;
+}
+
 .piano-keys {
   --white-count: 14;
+  /* Fuente única para --pad: clamp responde al viewport sin duplicar definiciones */
+  --pad: clamp(8px, 1.5vw, 10px);
   position: relative;
   width: 100%;
-  height: clamp(100px, 24vw, 220px);
+  height: clamp(520px, 92vw, 1040px);
   background: #111;
-  border-radius: 6px;
-  padding: 8px;
+  border-radius: 8px;
+  padding: var(--pad);
   box-sizing: border-box;
   /* Alto interno para teclas blancas */
-  --keyboard-h: calc(100% - 16px);
-  --white-w: clamp(16px, calc((100% - 16px) / var(--white-count)), 30px);
-  --black-w: calc(var(--white-w) * 0.58);
-  --black-h: calc(var(--keyboard-h) * 0.62);
-  min-width: calc(14 * var(--white-w));
+  --keyboard-h: calc(100% - var(--pad) * 2);
+  --white-w: clamp(80px, calc((100% - var(--pad) * 2) / var(--white-count)), 360px);
+  --black-w: calc(var(--white-w) * 0.6);
+  --black-h: calc(var(--keyboard-h) * 0.64);
 }
 
 .key {
   position: absolute;
-  top: 8px;
+  top: var(--pad);
   box-sizing: border-box;
   cursor: pointer;
   display: flex;
@@ -36,22 +61,22 @@
   justify-content: center;
   user-select: none;
   -webkit-user-select: none;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 8px 8px;
   transition: transform 0.06s ease, filter 0.1s ease;
 }
 
 .key-label {
   pointer-events: none;
   font-family: 'Courier New', monospace;
-  font-size: clamp(0.45rem, 1.1vw, 0.75rem);
+  font-size: clamp(1rem, 2.4vw, 1.85rem);
   font-weight: 600;
-  padding-bottom: 6px;
+  padding-bottom: 30px;
   opacity: 0.55;
 }
 
 /* —— Teclas blancas —— */
 .white-key {
-  left: calc(8px + var(--white-index) * var(--white-w));
+  left: calc(var(--pad) + var(--white-index) * var(--white-w));
   width: var(--white-w);
   height: var(--keyboard-h);
   z-index: 1;
@@ -59,7 +84,7 @@
   border: 1px solid #222;
   border-top: none;
   color: #222;
-  box-shadow: 0 2px 0 #bbb, inset 0 -2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 0 #bbb, inset 0 -4px 0 rgba(0, 0, 0, 0.06);
 }
 
 .white-key:hover {
@@ -67,7 +92,7 @@
 }
 
 .white-key.active {
-  transform: translateY(2px);
+  transform: translateY(4px);
   background: #eee;
   box-shadow: 0 1px 0 #999;
 }
@@ -76,7 +101,7 @@
 .black-key {
   /* Anclada al borde derecho de la blanca `whiteIndex`, centrada en la juntura */
   left: calc(
-    8px + (var(--white-index) + 1) * var(--white-w) - var(--black-w) / 2
+    var(--pad) + (var(--white-index) + 1) * var(--white-w) - var(--black-w) / 2
   );
   width: var(--black-w);
   height: var(--black-h);
@@ -84,12 +109,13 @@
   background: #111;
   border: 1px solid #000;
   color: #ddd;
-  box-shadow: 0 3px 0 #000, inset 0 -3px 6px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 5px 0 #000, inset 0 -5px 10px rgba(255, 255, 255, 0.08);
 }
 
 .black-key .key-label {
   opacity: 0.7;
-  font-size: clamp(0.45rem, 1.1vw, 0.65rem);
+  font-size: clamp(0.9rem, 2vw, 1.55rem);
+  padding-bottom: 22px;
 }
 
 .black-key:hover {
@@ -97,7 +123,7 @@
 }
 
 .black-key.active {
-  transform: translateY(2px);
+  transform: translateY(4px);
   background: #222;
   box-shadow: 0 1px 0 #000;
 }
@@ -108,12 +134,12 @@
  */
 .white-key.chord-note {
   background: color-mix(in srgb, var(--note-color, #5b9bd5) 55%, #fff);
-  box-shadow: 0 2px 0 #888, inset 0 0 0 2px var(--note-color, #5b9bd5);
+  box-shadow: 0 4px 0 #888, inset 0 0 0 4px var(--note-color, #5b9bd5);
 }
 
 .black-key.chord-note {
   background: color-mix(in srgb, var(--note-color, #5b9bd5) 70%, #111);
-  box-shadow: 0 3px 0 #000, inset 0 0 0 2px var(--note-color, #5b9bd5);
+  box-shadow: 0 5px 0 #000, inset 0 0 0 4px var(--note-color, #5b9bd5);
 }
 
 .white-key.chord-note .key-label,
@@ -125,14 +151,19 @@
 /* Responsividad para pantallas pequeñas */
 @media (max-width: 480px) {
   .key-label {
-    font-size: 0.45rem;
+    font-size: 0.9rem;
+    padding-bottom: 22px;
   }
-  
+
+  .piano-rows {
+    gap: 0.75rem;
+  }
+
   .piano-keys {
-    --white-count: 14;
-    height: clamp(100px, 24vw, 180px);
-    --keyboard-h: calc(100% - 16px);
-    --black-w: calc(var(--white-w) * 0.58);
-    --black-h: calc(var(--keyboard-h) * 0.62);
+    height: clamp(420px, 74vw, 720px);
+  }
+
+  .key {
+    border-radius: 0 0 6px 6px;
   }
 }
