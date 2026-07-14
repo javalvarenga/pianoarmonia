@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import HamburgerMenu from './HamburgerMenu.jsx';
 import SidebarMenu from './SidebarMenu.jsx';
 import '../index.css';
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -19,7 +20,7 @@ const Layout = ({ children }) => {
           <h1 className="app-header">PianoArmonia</h1>
         </header>
         <main>
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

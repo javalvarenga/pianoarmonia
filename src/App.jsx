@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}{.../* El layout ya maneja la estructura completa de la app */}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="scale/:note/:mode" element={<ScaleCollection />} />
           <Route path="*" element={<Navigate to="/" replace />} />
