@@ -29,16 +29,27 @@ const CHORD_COLORS = [
 /**
  * Genera las teclas (blancas y negras) para una octava inicial + segunda octava.
  * Cada nota puede marcarse como chord-note con un color.
+ *
+ * Las chordNotes llegan con octava (p.ej. "C4", "E4", "G4"). Solo se marca
+ * la tecla cuyo nombre completo coincide, evitando duplicar el resaltado
+ * en ambas octavas.
  */
 function buildKeys(chordNotes, color) {
   const keys = [];
-  const noteSet = new Set(chordNotes.map(n => n.replace(/[0-9]/g, '')));
+  // Conjunto de nombres completos (con octava) para marcar una sola vez
+  const noteSet = new Set(chordNotes);
+  // Mapa de nombre sin octava → nombre con octava, para extraer el label
+  const noteLabelMap = new Map();
+  chordNotes.forEach((n) => {
+    const bare = n.replace(/[0-9]/g, '');
+    noteLabelMap.set(bare, n);
+  });
 
   for (let octave = 0; octave < 2; octave++) {
     NOTE_LAYOUT.forEach((entry) => {
       const globalWhiteIndex = octave * 7 + entry.whiteIndex;
       const noteName = entry.note + (octave + 4); // octava 4 y 5
-      const isChordNote = noteSet.has(entry.note);
+      const isChordNote = noteSet.has(noteName);
 
       keys.push({
         type: 'white',
@@ -51,7 +62,7 @@ function buildKeys(chordNotes, color) {
 
       if (entry.hasBlack) {
         const blackNoteName = entry.blackNote + (octave + 4);
-        const isBlackChord = noteSet.has(entry.blackNote);
+        const isBlackChord = noteSet.has(blackNoteName);
         keys.push({
           type: 'black',
           note: blackNoteName,
