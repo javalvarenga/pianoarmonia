@@ -1,9 +1,9 @@
 :root {
-  --sidebar-bg: #1a2530; /* Más oscuro para mejor contraste */
-  --sidebar-text: #f0f0f0; /* Texto claro */
-  --sidebar-button-bg: #34495e; /* Fondo botones */
-  --sidebar-button-hover: #3d566e; /* Hover botones */
-  --sidebar-button-active: #3498db; /* Botones activos */
+  --sidebar-bg: #1e1810;
+  --sidebar-text: #e8dcc4;
+  --sidebar-button-bg: #2a2218;
+  --sidebar-button-hover: #3a2c18;
+  --sidebar-button-active: #d4882a;
 }
 
 .sidebar {
@@ -12,14 +12,16 @@
   color: var(--sidebar-text);
   padding: 20px;
   height: 100vh;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
   position: fixed;
   overflow-y: auto;
+  border-right: 2px solid var(--card-border);
 }
 
 .sidebar h2, .sidebar h3 {
   margin-top: 0;
-  color: var(--sidebar-text);
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--glow-accent);
 }
 
 .scale-selector, .key-selector {
@@ -32,20 +34,23 @@
 .scale-selector button, .key-selector button {
   padding: 10px;
   background: var(--sidebar-button-bg);
-  border: none;
+  border: 1px solid var(--card-border);
   border-radius: 5px;
   color: var(--sidebar-text);
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
   font-family: inherit;
 }
 
 .scale-selector button:hover, .key-selector button:hover {
   background: var(--sidebar-button-hover);
+  border-color: var(--accent);
 }
 
 .scale-selector button.active, .key-selector button.active {
   background: var(--sidebar-button-active);
+  color: var(--bg-primary);
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 @media (max-width: 768px) {

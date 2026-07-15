@@ -5,7 +5,8 @@
 
 .chord-display h2 {
   margin-bottom: 20px;
-  color: #2c3e50;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--glow-accent);
 }
 
 .chord-list {
@@ -15,7 +16,8 @@
 
 .chord-list h2 {
   margin-bottom: 15px;
-  color: #2c3e50;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--glow-accent);
 }
 
 .chord-buttons {
@@ -27,20 +29,25 @@
 
 .chord-buttons button {
   padding: 10px 15px;
-  background: #3498db;
-  border: none;
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
   border-radius: 5px;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .chord-buttons button:hover {
-  background: #2980b9;
+  background: var(--card-border);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--glow-accent);
 }
 
 .chord-buttons button.active {
-  background: #2c3e50;
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--highlight);
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
 @media (max-width: 768px) {

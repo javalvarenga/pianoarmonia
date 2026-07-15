@@ -1,29 +1,37 @@
+/* Reglas legacy actualizadas al tema retro dark.
+   La app usa principalmente .app-layout / .app-main-content en index.css.
+   Estas clases se mantienen por compatibilidad con referencias residuales,
+   pero sin el patrón obsoleto de margin-left fijo del sidebar. */
+
 .app {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--vintage-font);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .main-content {
   flex: 1;
-  margin-left: 250px;
-  padding: 20px;
-  background: #ecf0f1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .main-content h1 {
-  color: #2c3e50;
+  color: var(--accent);
   text-align: center;
   margin-bottom: 30px;
+  text-shadow: 0 0 8px var(--glow-accent);
 }
 
-@media (max-width: 768px) {
-  .app {
-    flex-direction: column;
-  }
-  
+@media (min-width: 769px) {
   .main-content {
-    margin-left: 0;
-    margin-top: 0;
+    padding: 2rem;
   }
 }

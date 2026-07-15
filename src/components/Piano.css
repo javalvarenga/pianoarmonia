@@ -2,7 +2,7 @@
 .piano-container {
   background-color: var(--bg-secondary);
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(212, 136, 42, 0.1);
   padding: 10px;
   border: 1px solid var(--card-border);
   width: 100%;
@@ -12,7 +12,7 @@
 @media (min-width: 769px) {
   .piano-container {
     border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(212, 136, 42, 0.1);
     padding: 15px;
   }
 }
@@ -49,5 +49,5 @@
 
 /*
  * .piano-wrapper se define en CollectionList.css para el contexto de filas
- * de acorde. No se reDefine aquí para evitar duplicación de variables.
+ * de acorde. No se redefine aquí para evitar duplicación de variables.
  */

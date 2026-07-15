@@ -17,4 +17,10 @@
 .vintage-selector:hover {
   background: var(--card-bg);
   cursor: pointer;
+  border-color: var(--accent);
+}
+
+.vintage-selector option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }

@@ -1,17 +1,19 @@
 .chord-selector {
-  background: #2c3e50;
+  background: var(--bg-secondary);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--card-border);
   width: 250px;
-  color: white;
+  color: var(--text-primary);
 }
 
 .chord-selector h3 {
   margin-top: 0;
   margin-bottom: 15px;
   text-align: center;
-  color: #ecf0f1;
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--glow-accent);
 }
 
 .chord-buttons, .scale-buttons {
@@ -22,10 +24,10 @@
 
 .chord-button, .scale-button {
   padding: 12px;
-  border: none;
+  border: 1px solid var(--card-border);
   border-radius: 5px;
-  background: #34495e;
-  color: white;
+  background: var(--card-bg);
+  color: var(--text-primary);
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -33,13 +35,17 @@
 }
 
 .chord-button:hover, .scale-button:hover {
-  background: #3d566e;
+  background: var(--card-border);
+  border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 0 8px var(--glow-accent);
 }
 
 .chord-button.active, .scale-button.active {
-  background: #3498db;
-  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--highlight);
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
 .scale-buttons {
