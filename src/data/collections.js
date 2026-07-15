@@ -27,6 +27,15 @@ const gBluesChords = generateScaleChords('G', 'blues');
 const aBluesChords = generateScaleChords('A', 'blues');
 const bBluesChords = generateScaleChords('B', 'blues');
 
+// Generar acordes para cada escala armónica
+const cHarmonicChords = generateScaleChords('C', 'harmonic');
+const dHarmonicChords = generateScaleChords('D', 'harmonic');
+const eHarmonicChords = generateScaleChords('E', 'harmonic');
+const fHarmonicChords = generateScaleChords('F', 'harmonic');
+const gHarmonicChords = generateScaleChords('G', 'harmonic');
+const aHarmonicChords = generateScaleChords('A', 'harmonic');
+const bHarmonicChords = generateScaleChords('B', 'harmonic');
+
 export const collections = [
   // ===== Escalas Mayores =====
   {
@@ -259,6 +268,84 @@ export const collections = [
       {
         note: 'B',
         chords: bBluesChords
+      }
+    ]
+  },
+  // ===== Escalas Harmónicas =====
+  {
+    id: 'c-harmonic',
+    name: 'Escala Harmónica de DO',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'C',
+        chords: cHarmonicChords
+      }
+    ]
+  },
+  {
+    id: 'd-harmonic',
+    name: 'Escala Harmónica de RE',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'D',
+        chords: dHarmonicChords
+      }
+    ]
+  },
+  {
+    id: 'e-harmonic',
+    name: 'Escala Harmónica de MI',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'E',
+        chords: eHarmonicChords
+      }
+    ]
+  },
+  {
+    id: 'f-harmonic',
+    name: 'Escala Harmónica de FA',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'F',
+        chords: fHarmonicChords
+      }
+    ]
+  },
+  {
+    id: 'g-harmonic',
+    name: 'Escala Harmónica de SOL',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'G',
+        chords: gHarmonicChords
+      }
+    ]
+  },
+  {
+    id: 'a-harmonic',
+    name: 'Escala Harmónica de LA',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'A',
+        chords: aHarmonicChords
+      }
+    ]
+  },
+  {
+    id: 'b-harmonic',
+    name: 'Escala Harmónica de SI',
+    mode: 'harmonic',
+    chords: [
+      {
+        note: 'B',
+        chords: bHarmonicChords
       }
     ]
   }

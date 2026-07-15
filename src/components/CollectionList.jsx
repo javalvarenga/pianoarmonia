@@ -3,7 +3,7 @@ import Piano from './Piano.jsx';
 import Acorde from './Acorde.jsx';
 import './CollectionList.css';
 import { Chord, Scale } from '@tonaljs/tonal';
-import { getChordName } from '../utils/scaleGenerator.ts';
+import { getChordName, getTonalScaleName } from '../utils/scaleGenerator.ts';
 
 /**
  * Componente CollectionList que renderiza una lista de colecciones musicales
@@ -50,7 +50,7 @@ const CollectionList = ({ data = [] }) => {
         // Obtener las notas de la escala para mostrarlas en el piano inicial
         const tonic = collection.chords[0]?.note;
         const scaleNotes = tonic && collection.mode
-          ? Scale.get(`${tonic} ${collection.mode}`).notes
+          ? Scale.get(`${tonic} ${getTonalScaleName(collection.mode)}`).notes
           : [];
         const scaleLabel = tonic && collection.mode
           ? `${tonic} ${collection.mode}`

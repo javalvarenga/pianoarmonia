@@ -4,7 +4,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   },
   {
@@ -12,7 +13,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   },
   {
@@ -20,7 +22,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   },
   {
@@ -28,7 +31,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   },
   {
@@ -36,7 +40,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   },
   {
@@ -44,7 +49,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   },
   {
@@ -52,7 +58,8 @@
     "submenus": [
       { "label": "Mayor", "quality": "major" },
       { "label": "Menor", "quality": "minor" },
-      { "label": "Blues", "quality": "blues" }
+      { "label": "Blues", "quality": "blues" },
+      { "label": "Harmónica", "quality": "harmonic" }
     ]
   }
 ]

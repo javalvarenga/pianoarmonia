@@ -48,12 +48,29 @@ export function normalizeNote(note: string): string {
   return `${normalized}${rest}`;
 }
 
+// Mapeo de nombres de modo (usados en la app) a nombres de escala que entiende Tonal
+const TONAL_SCALE_MAP: Record<string, string> = {
+  major: 'major',
+  minor: 'minor',
+  blues: 'blues',
+  harmonic: 'harmonic minor',
+};
+
+/**
+ * Devuelve el nombre de escala que Tonal reconoce para un modo dado.
+ */
+export function getTonalScaleName(mode: string): string {
+  return TONAL_SCALE_MAP[mode] || mode;
+}
+
 // Cualidades de acordes por grado para cada modo
 const CHORD_QUALITIES: Record<string, string[]> = {
   major: ['', 'm', 'm', '', '', 'm', 'dim'],
   minor: ['m', 'dim', '', 'm', 'm', '', ''],
   // Escala de blues (6 grados): I7, IIm, III7, IVdim, V7, VIm
   blues: ['7', 'm', '7', 'dim', '7', 'm'],
+  // Escala armónica (menor armónica): Im, II°, bIII+, IVm, V, bVI, VII°
+  harmonic: ['m', 'dim', 'aug', 'm', '', '', 'dim'],
 };
 
 // Función para obtener el nombre del acorde basado en la nota y el grado
@@ -61,7 +78,7 @@ export function getChordName(tonic: string, mode: string, degree: number): strin
   const qualities = CHORD_QUALITIES[mode];
   if (!qualities) return tonic;
 
-  const scale = Scale.get(`${tonic} ${mode}`).notes;
+  const scale = Scale.get(`${tonic} ${getTonalScaleName(mode)}`).notes;
   if (scale.length >= degree) {
     const rootNote = scale[degree - 1];
     return `${rootNote}${qualities[degree - 1] || ''}`;
@@ -78,7 +95,7 @@ export function generateScaleChords(tonic: string, mode: string = 'major') {
   if (!qualities) return [];
 
   // Obtener las notas de la escala mediante tonal
-  const scaleNotes = Scale.get(`${tonic} ${mode}`).notes;
+  const scaleNotes = Scale.get(`${tonic} ${getTonalScaleName(mode)}`).notes;
 
   // Numeración romana para los grados
   const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
