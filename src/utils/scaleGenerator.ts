@@ -54,6 +54,7 @@ const TONAL_SCALE_MAP: Record<string, string> = {
   minor: 'minor',
   blues: 'blues',
   harmonic: 'harmonic minor',
+  bebop: 'bebop',
 };
 
 /**
@@ -71,6 +72,8 @@ const CHORD_QUALITIES: Record<string, string[]> = {
   blues: ['7', 'm', '7', 'dim', '7', 'm'],
   // Escala armónica (menor armónica): Im, II°, bIII+, IVm, V, bVI, VII°
   harmonic: ['m', 'dim', 'aug', 'm', '', '', 'dim'],
+  // Escala bebop dominant (8 grados): I7, IIm7, IIIm7b5, IVMaj7, V7, VIm7, VII°7, bVIIMaj7
+  bebop: ['7', 'm7', 'm7b5', 'maj7', '7', 'm7', 'dim7', 'maj7'],
 };
 
 // Función para obtener el nombre del acorde basado en la nota y el grado
@@ -97,8 +100,8 @@ export function generateScaleChords(tonic: string, mode: string = 'major') {
   // Obtener las notas de la escala mediante tonal
   const scaleNotes = Scale.get(`${tonic} ${getTonalScaleName(mode)}`).notes;
 
-  // Numeración romana para los grados
-  const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+  // Numeración romana para los grados (incluye VIII para escalas de 8 notas como bebop)
+  const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
 
   return scaleNotes.map((note, index) => {
     const quality = qualities[index] || '';

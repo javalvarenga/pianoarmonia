@@ -36,6 +36,15 @@ const gHarmonicChords = generateScaleChords('G', 'harmonic');
 const aHarmonicChords = generateScaleChords('A', 'harmonic');
 const bHarmonicChords = generateScaleChords('B', 'harmonic');
 
+// Generar acordes para cada escala bebop
+const cBebopChords = generateScaleChords('C', 'bebop');
+const dBebopChords = generateScaleChords('D', 'bebop');
+const eBebopChords = generateScaleChords('E', 'bebop');
+const fBebopChords = generateScaleChords('F', 'bebop');
+const gBebopChords = generateScaleChords('G', 'bebop');
+const aBebopChords = generateScaleChords('A', 'bebop');
+const bBebopChords = generateScaleChords('B', 'bebop');
+
 export const collections = [
   // ===== Escalas Mayores =====
   {
@@ -346,6 +355,84 @@ export const collections = [
       {
         note: 'B',
         chords: bHarmonicChords
+      }
+    ]
+  },
+  // ===== Escalas Bebop =====
+  {
+    id: 'c-bebop',
+    name: 'Escala Bebop de DO',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'C',
+        chords: cBebopChords
+      }
+    ]
+  },
+  {
+    id: 'd-bebop',
+    name: 'Escala Bebop de RE',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'D',
+        chords: dBebopChords
+      }
+    ]
+  },
+  {
+    id: 'e-bebop',
+    name: 'Escala Bebop de MI',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'E',
+        chords: eBebopChords
+      }
+    ]
+  },
+  {
+    id: 'f-bebop',
+    name: 'Escala Bebop de FA',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'F',
+        chords: fBebopChords
+      }
+    ]
+  },
+  {
+    id: 'g-bebop',
+    name: 'Escala Bebop de SOL',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'G',
+        chords: gBebopChords
+      }
+    ]
+  },
+  {
+    id: 'a-bebop',
+    name: 'Escala Bebop de LA',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'A',
+        chords: aBebopChords
+      }
+    ]
+  },
+  {
+    id: 'b-bebop',
+    name: 'Escala Bebop de SI',
+    mode: 'bebop',
+    chords: [
+      {
+        note: 'B',
+        chords: bBebopChords
       }
     ]
   }
