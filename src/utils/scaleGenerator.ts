@@ -1,6 +1,6 @@
-import { Note, Scale, Chord, Interval } from '@tonaljs/tonal';
+import { Note, Scale, Chord, Interval } from 'tonal';
 
-// Mapeo de bemoles (y enarmónicos) a su equivalente en sostenidos
+// Mapeo de bemoles simples (y enarmónicos) a su equivalente en sostenidos
 const FLAT_TO_SHARP: Record<string, string> = {
   'Db': 'C#',
   'Eb': 'D#',
@@ -13,16 +13,37 @@ const FLAT_TO_SHARP: Record<string, string> = {
   'B#': 'C',
 };
 
+// Mapeo de dobles bemoles a su equivalente cromático en sostenidos
+// Doble bemol = 2 semitonos atrás de la nota
+const DOUBLE_FLAT_TO_SHARP: Record<string, string> = {
+  'Cbb': 'A#', // C - 2 semitonos = Bb = A#
+  'Dbb': 'C',  // D - 2 semitonos = C
+  'Ebb': 'D',  // E - 2 semitonos = D
+  'Fbb': 'D#', // F - 2 semitonos = Eb = D#
+  'Gbb': 'F',  // G - 2 semitonos = F
+  'Abb': 'G',  // A - 2 semitonos = G
+  'Bbb': 'A',  // B - 2 semitonos = A
+};
+
 /**
  * Normaliza un nombre de nota a su representación con sostenidos.
- * Acepta notas con o sin octava (ej: "Eb", "Eb4", "Bb2").
- * Esto permite que notas con bemol coincidan con el layout del teclado
- * que está basado en sostenidos (C#, D#, F#, G#, A#).
+ * Acepta notas con o sin octava (ej: "Eb", "Eb4", "Bb2", "Bbb", "Dbb4").
+ * Soporta dobles bemoles (bb) = 2 semitonos atrás.
+ * Esto permite que notas con bemol o doble bemol coincidan con el layout
+ * del teclado que está basado en sostenidos (C#, D#, F#, G#, A#).
  */
 export function normalizeNote(note: string): string {
-  const match = note.match(/^([A-G][#b]?)(.*)$/);
+  // Regex que captura la nota con su alteración: bb (doble bemol), b (bemol) o # (sostenido)
+  const match = note.match(/^([A-G](?:bb|b|#)?)(.*)$/);
   if (!match) return note;
   const [, noteName, rest] = match;
+
+  // Primero intentar doble bemol
+  if (DOUBLE_FLAT_TO_SHARP[noteName]) {
+    return `${DOUBLE_FLAT_TO_SHARP[noteName]}${rest}`;
+  }
+
+  // Luego bemol simple o enarmónico
   const normalized = FLAT_TO_SHARP[noteName] || noteName;
   return `${normalized}${rest}`;
 }
