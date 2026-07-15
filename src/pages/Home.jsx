@@ -8,13 +8,13 @@ const Home = () => {
       <p>Explora las escalas musicales y sus acordes en el piano interactivo.</p>
       <p>Selecciona una escala en el menú lateral para comenzar:</p>
       <ul>
-        <li>DO Mayor / Menor</li>
-        <li>RE Mayor / Menor</li>
-        <li>MI Mayor / Menor</li>
-        <li>FA Mayor / Menor</li>
-        <li>SOL Mayor / Menor</li>
-        <li>LA Mayor / Menor</li>
-        <li>SI Mayor / Menor</li>
+        <li>DO Mayor / Menor / Blues</li>
+        <li>RE Mayor / Menor / Blues</li>
+        <li>MI Mayor / Menor / Blues</li>
+        <li>FA Mayor / Menor / Blues</li>
+        <li>SOL Mayor / Menor / Blues</li>
+        <li>LA Mayor / Menor / Blues</li>
+        <li>SI Mayor / Menor / Blues</li>
       </ul>
       <div className="piano-container">
         <Piano scale="C major" chord="C" />

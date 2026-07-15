@@ -28,6 +28,18 @@
   text-shadow: 0 0 6px var(--glow-accent);
 }
 
+/* Piano de escala al inicio de cada colección */
+.collection-scale-piano {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1.5rem;
+}
+
+.collection-scale-piano .piano-container {
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 12px var(--glow-accent);
+}
+
 .collection-content {
   width: 100%;
   box-sizing: border-box;
@@ -146,6 +158,10 @@
 @media (max-width: 768px) {
   .collection-list {
     padding: 10px;
+  }
+
+  .collection-scale-piano {
+    margin-bottom: 1rem;
   }
 
   .chord-row {

@@ -18,6 +18,15 @@ const gMinorChords = generateScaleChords('G', 'minor');
 const aMinorChords = generateScaleChords('A', 'minor');
 const bMinorChords = generateScaleChords('B', 'minor');
 
+// Generar acordes para cada escala de blues
+const cBluesChords = generateScaleChords('C', 'blues');
+const dBluesChords = generateScaleChords('D', 'blues');
+const eBluesChords = generateScaleChords('E', 'blues');
+const fBluesChords = generateScaleChords('F', 'blues');
+const gBluesChords = generateScaleChords('G', 'blues');
+const aBluesChords = generateScaleChords('A', 'blues');
+const bBluesChords = generateScaleChords('B', 'blues');
+
 export const collections = [
   // ===== Escalas Mayores =====
   {
@@ -172,6 +181,84 @@ export const collections = [
       {
         note: 'B',
         chords: bMinorChords
+      }
+    ]
+  },
+  // ===== Escalas de Blues =====
+  {
+    id: 'c-blues',
+    name: 'Escala de Blues de DO',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'C',
+        chords: cBluesChords
+      }
+    ]
+  },
+  {
+    id: 'd-blues',
+    name: 'Escala de Blues de RE',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'D',
+        chords: dBluesChords
+      }
+    ]
+  },
+  {
+    id: 'e-blues',
+    name: 'Escala de Blues de MI',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'E',
+        chords: eBluesChords
+      }
+    ]
+  },
+  {
+    id: 'f-blues',
+    name: 'Escala de Blues de FA',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'F',
+        chords: fBluesChords
+      }
+    ]
+  },
+  {
+    id: 'g-blues',
+    name: 'Escala de Blues de SOL',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'G',
+        chords: gBluesChords
+      }
+    ]
+  },
+  {
+    id: 'a-blues',
+    name: 'Escala de Blues de LA',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'A',
+        chords: aBluesChords
+      }
+    ]
+  },
+  {
+    id: 'b-blues',
+    name: 'Escala de Blues de SI',
+    mode: 'blues',
+    chords: [
+      {
+        note: 'B',
+        chords: bBluesChords
       }
     ]
   }

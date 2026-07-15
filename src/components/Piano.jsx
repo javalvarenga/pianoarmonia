@@ -25,7 +25,7 @@ function notesWithOctaves(chordNotes, rootNote, baseOctave = 4) {
   });
 }
 
-const Piano = ({ scale, chord, notas = [] }) => {
+const Piano = ({ scale, chord, notas = [], scaleNotes = [] }) => {
   const chordNotes = useMemo(
     () => (chord ? Chord.get(chord).notes ?? [] : []),
     [chord],
@@ -36,11 +36,17 @@ const Piano = ({ scale, chord, notas = [] }) => {
     return chord.match(/^([A-G][#b]?)/)?.[1] ?? null;
   }, [chord]);
 
+  const scaleRoot = useMemo(() => {
+    if (scaleNotes.length > 0) return scaleNotes[0];
+    return null;
+  }, [scaleNotes]);
+
   const highlighted = useMemo(() => {
     const fromChord = notesWithOctaves(chordNotes, rootNote, 4);
+    const fromScale = notesWithOctaves(scaleNotes, scaleRoot, 4);
     const normalizedNotas = notas.map((n) => normalizeNote(n));
-    return [...new Set([...fromChord, ...normalizedNotas])];
-  }, [chordNotes, rootNote, notas]);
+    return [...new Set([...fromScale, ...fromChord, ...normalizedNotas])];
+  }, [chordNotes, rootNote, notas, scaleNotes, scaleRoot]);
 
   // Pasar las notas del acorde a RetroKeyboard para que las resalte
   const chordsForKeyboard = useMemo(

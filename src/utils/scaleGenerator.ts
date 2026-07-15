@@ -30,7 +30,9 @@ export function normalizeNote(note: string): string {
 // Cualidades de acordes por grado para cada modo
 const CHORD_QUALITIES: Record<string, string[]> = {
   major: ['', 'm', 'm', '', '', 'm', 'dim'],
-  minor: ['m', 'dim', '', 'm', 'm', '', '']
+  minor: ['m', 'dim', '', 'm', 'm', '', ''],
+  // Escala de blues (6 grados): I7, IIm, III7, IVdim, V7, VIm
+  blues: ['7', 'm', '7', 'dim', '7', 'm'],
 };
 
 // Función para obtener el nombre del acorde basado en la nota y el grado

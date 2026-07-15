@@ -3,49 +3,56 @@
     "note": "DO",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   },
   {
     "note": "RE",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   },
   {
     "note": "MI",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   },
   {
     "note": "FA",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   },
   {
     "note": "SOL",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   },
   {
     "note": "LA",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   },
   {
     "note": "SI",
     "submenus": [
       { "label": "Mayor", "quality": "major" },
-      { "label": "Menor", "quality": "minor" }
+      { "label": "Menor", "quality": "minor" },
+      { "label": "Blues", "quality": "blues" }
     ]
   }
 ]
