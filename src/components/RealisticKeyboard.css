@@ -1,3 +1,10 @@
+/* =====================================================================
+ * PIANO REALISTA — Overrides sobre react-piano/dist/styles.css
+ * =====================================================================
+ * Se simula un piano acústico con teclas visibles y dimensiones adecuadas.
+ * ===================================================================== */
+
+/* --- Contenedor exterior: scroll horizontal sin recortar --- */
 .realistic-keyboard-container {
   width: 100%;
   box-sizing: border-box;
@@ -5,16 +12,18 @@
   justify-content: center;
   padding: 0.5rem 0 1rem;
   overflow-x: auto;
+  overflow-y: hidden;
   background: transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
+/* --- Wrapper interior: debe permitir que el piano ocupe su ancho calculado --- */
 .realistic-piano-wrapper {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
 }
 
 .realistic-keyboard-loading {
@@ -25,19 +34,7 @@
   margin: 0;
 }
 
-/* =====================================================================
- * PIANO REALISTA — Overrides sobre react-piano/dist/styles.css
- * =====================================================================
- * Se simula un piano acústico con:
- *  - Teclas blancas: marfil con gradiente vertical sutil, sombra inferior
- *    que simula profundidad, bordes laterales oscuros.
- *  - Teclas negras: negro profundo con gradiente, brillo superior sutil,
- *    sombra inferior fuerte que simula la altura de la tecla.
- *  - Estados hover: calentamiento sutil del marfil / brillo en negras.
- *  - Estado active (resaltado): glow ámbar intenso del tema retro.
- * ===================================================================== */
-
-/* --- Contenedor del teclado: marco de madera oscura --- */
+/* --- Marco de madera oscura del teclado --- */
 .realistic-keyboard-container .react-piano {
   background: linear-gradient(180deg, #1a1208 0%, #0d0804 100%);
   border-radius: 6px;
@@ -47,6 +44,8 @@
     0 2px 6px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(212, 136, 42, 0.08);
   border: 2px solid #3a2c18;
+  /* Asegurar que el piano no colapse */
+  min-height: 120px;
 }
 
 /* --- Tecla base (común a blancas y negras) --- */
@@ -127,10 +126,6 @@
 
 /* =====================================================================
  * RESALTADO ÁMBAR — Notas activas (escala/acorde + tecla pulsada)
- * =====================================================================
- * Las notas en highlightedNotes se pasan como activeNotes a react-piano,
- * que añade la clase .react-piano__key--active. Se sobreescribe con el
- * brillo ámbar del tema retro (var(--accent) / var(--glow-accent)).
  * ===================================================================== */
 
 /* Tecla blanca activa: marfil teñido de ámbar con glow intenso */
@@ -196,8 +191,13 @@
 
 /* --- Responsividad --- */
 @media (max-width: 768px) {
+  .realistic-keyboard-container {
+    padding: 0.25rem 0 0.5rem;
+  }
+
   .realistic-keyboard-container .react-piano {
     padding: 8px 6px 10px;
+    min-height: 90px;
   }
 
   .realistic-keyboard-container .react-piano__key {

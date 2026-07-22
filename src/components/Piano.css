@@ -1,4 +1,4 @@
-/* Contenedor del piano; el layout de teclas vive en RetroKeyboard.css */
+/* Contenedor del piano; el layout de teclas vive en RealisticKeyboard.css */
 .piano-container {
   background-color: var(--bg-secondary);
   border-radius: 10px;
@@ -38,13 +38,17 @@
   }
 }
 
+/* Sección del teclado: ancho completo, scroll horizontal sin recortar */
 .piano-keyboard-section {
   width: 100%;
   text-align: center;
   overflow-x: auto;
+  overflow-y: hidden;
   padding: 0;
   display: flex;
   justify-content: center;
+  /* Evitar que el contenido colapse el ancho del flex parent */
+  min-width: 0;
 }
 
 /*

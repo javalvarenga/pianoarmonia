@@ -68,6 +68,37 @@ const SoundfontProvider = ({
 };
 
 /**
+ * Hook para medir el ancho de un elemento contenedor de forma reactiva.
+ * Devuelve el ancho en píxeles (0 hasta que se mide).
+ */
+function useContainerWidth() {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+
+    const measure = () => {
+      setWidth(el.clientWidth);
+    };
+
+    measure();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(measure);
+      ro.observe(el);
+      return () => ro.disconnect();
+    } else {
+      window.addEventListener('resize', measure);
+      return () => window.removeEventListener('resize', measure);
+    }
+  }, []);
+
+  return [ref, width];
+}
+
+/**
  * RealisticKeyboard
  *
  * Piano realista construido con react-piano + soundfont-player.
@@ -79,6 +110,9 @@ const SoundfontProvider = ({
 const RealisticKeyboard = ({ highlightedNotes = [] }) => {
   const firstNote = MidiNumbers.fromNote('C4');
   const lastNote = MidiNumbers.fromNote('B5');
+
+  // Medir el ancho real del contenedor para pasarlo a react-piano
+  const [containerRef, containerWidth] = useContainerWidth();
 
   // Convertir highlightedNotes (strings) a números MIDI
   const highlightedMidis = (highlightedNotes || [])
@@ -117,8 +151,12 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
     ...new Set([...highlightedMidis, ...Array.from(playedNotes)]),
   ];
 
+  // react-piano requiere width en píxeles. Si el contenedor aún no se ha
+  // medido, usar un mínimo para que las teclas no colapsen a 0.
+  const pianoWidth = containerWidth > 0 ? containerWidth : 900;
+
   return (
-    <div className="realistic-keyboard-container">
+    <div className="realistic-keyboard-container" ref={containerRef}>
       <SoundfontProvider
         instrumentName="acoustic_grand_piano"
         render={({ isLoading, playNote, stopNote, stopAllNotes }) => (
@@ -140,6 +178,7 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
                 onStopNoteInput(midiNumber, opts);
               }}
               keyWidthToHeight={0.33}
+              width={pianoWidth}
             />
           </div>
         )}
