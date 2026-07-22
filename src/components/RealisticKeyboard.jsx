@@ -159,7 +159,7 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
     <div className="realistic-keyboard-container" ref={containerRef}>
       <SoundfontProvider
         instrumentName="acoustic_grand_piano"
-        render={({ isLoading, playNote, stopNote, stopAllNotes }) => (
+        render={({ isLoading, playNote: sfPlayNote, stopNote: sfStopNote, stopAllNotes: sfStopAllNotes }) => (
           <div className="realistic-piano-wrapper">
             {isLoading && (
               <p className="realistic-keyboard-loading">
@@ -169,8 +169,8 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
             <RPiano
               noteRange={{ first: firstNote, last: lastNote }}
               activeNotes={activeNotes}
-              playNote={playNote}
-              stopNote={stopNote}
+              playNote={sfPlayNote}
+              stopNote={sfStopNote}
               onPlayNoteInput={onPlayNoteInput}
               onStopNoteInput={onStopNoteInput}
               keyWidthToHeight={0.33}
