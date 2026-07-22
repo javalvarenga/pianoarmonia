@@ -53,7 +53,17 @@
   --black-h: calc(var(--keyboard-h) * 0.62);
 }
 
-.key {
+/* =========================================================================
+ * REGLAS DE TECLAS (.key, .white-key, .black-key, .key-label) — DESACTIVADAS
+ * -------------------------------------------------------------------------
+ * RetroKeyboard.jsx ya no se usa en componentes activos.
+ * Piano.jsx, PianoRetro.jsx y Home.jsx usan RealisticKeyboard (react-piano).
+ * Los estilos de teclas se mantienen comentados para referencia histórica
+ * pero no aplican en runtime. El piano realista se estila desde
+ * RealisticKeyboard.css.
+ * ========================================================================= */
+
+/* .key {
   position: absolute;
   top: var(--pad);
   box-sizing: border-box;
@@ -74,10 +84,10 @@
   font-weight: 600;
   padding-bottom: 12px;
   opacity: 0.55;
-}
+} */
 
 /* —— Teclas blancas: marfil envejecido sobre fondo oscuro —— */
-.white-key {
+/* .white-key {
   left: calc(var(--pad) + var(--white-index) * var(--white-w));
   width: var(--white-w);
   height: var(--keyboard-h);
@@ -97,10 +107,10 @@
   transform: translateY(4px);
   background: #c0b488;
   box-shadow: 0 1px 0 #4a3a20;
-}
+} */
 
 /* —— Teclas negras: negro mate profundo —— */
-.black-key {
+/* .black-key {
   left: calc(
     var(--pad) + (var(--white-index) + 1) * var(--white-w) - var(--black-w) / 2
   );
@@ -127,13 +137,13 @@
   transform: translateY(4px);
   background: #1a1a1a;
   box-shadow: 0 1px 0 #000;
-}
+} */
 
 /*
  * Resaltado de acorde: brillo ámbar sobre el teclado dark.
  * No sustituye el aspecto B/N del teclado; solo indica notas activas.
  */
-.white-key.chord-note {
+/* .white-key.chord-note {
   background: color-mix(in srgb, var(--note-color, #d4882a) 50%, #d4c8a0);
   box-shadow: 0 4px 0 #6a5a35, inset 0 0 0 4px var(--note-color, #d4882a), 0 0 12px color-mix(in srgb, var(--note-color, #d4882a) 60%, transparent);
 }
@@ -148,22 +158,12 @@
   opacity: 0.95;
   font-weight: 700;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-}
+} */
 
 /* Responsividad: tablet */
 @media (max-width: 768px) {
   .piano-keys {
     height: clamp(180px, 30vh, 280px);
-  }
-
-  .key-label {
-    font-size: 0.75rem;
-    padding-bottom: 10px;
-  }
-
-  .black-key .key-label {
-    font-size: 0.65rem;
-    padding-bottom: 8px;
   }
 }
 
@@ -175,9 +175,5 @@
 
   .piano-keys {
     height: clamp(160px, 26vh, 240px);
-  }
-
-  .key {
-    border-radius: 0 0 6px 6px;
   }
 }

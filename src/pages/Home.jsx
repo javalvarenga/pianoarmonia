@@ -1,5 +1,5 @@
 import React from 'react';
-import Piano from '../components/Piano.jsx';
+import RealisticKeyboard from '../components/RealisticKeyboard.jsx';
 
 const Home = () => {
   return (
@@ -17,7 +17,7 @@ const Home = () => {
         <li>SI Mayor / Menor / Blues</li>
       </ul>
       <div className="piano-container">
-        <Piano scale="C major" chord="C" />
+        <RealisticKeyboard highlightedNotes={['C4', 'E4', 'G4']} />
       </div>
     </div>
   );

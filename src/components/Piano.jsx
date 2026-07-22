@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Chord } from '@tonaljs/tonal';
 import { normalizeNote } from '../utils/scaleGenerator.ts';
 import './Piano.css';
-import RetroKeyboard from './RetroKeyboard.jsx';
+import RealisticKeyboard from './RealisticKeyboard.jsx';
 
 const NOTE_ORDER = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
@@ -48,19 +48,13 @@ const Piano = ({ scale, chord, notas = [], scaleNotes = [] }) => {
     return [...new Set([...fromScale, ...fromChord, ...normalizedNotas])];
   }, [chordNotes, rootNote, notas, scaleNotes, scaleRoot]);
 
-  // Pasar las notas del acorde a RetroKeyboard para que las resalte
-  const chordsForKeyboard = useMemo(
-    () => (highlighted.length > 0 ? [{ name: '', notes: highlighted }] : []),
-    [highlighted],
-  );
-
   return (
     <div className="piano-container">
       {scale ? (
         <p className="piano-scale-label">Escala: {scale}</p>
       ) : null}
       <div className="piano-keyboard-section">
-        <RetroKeyboard chords={chordsForKeyboard} />
+        <RealisticKeyboard highlightedNotes={highlighted} />
       </div>
     </div>
   );
