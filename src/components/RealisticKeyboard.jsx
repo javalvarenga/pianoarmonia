@@ -69,7 +69,7 @@ const SoundfontProvider = ({
 
 /**
  * Hook para medir el ancho de un elemento contenedor de forma reactiva.
- * Devuelve el ancho en píxeles (0 hasta que se mide).
+ * Devuelve el ancho en pixeles (0 hasta que se mide).
  */
 function useContainerWidth() {
   const ref = useRef(null);
@@ -105,7 +105,7 @@ function useContainerWidth() {
  *
  * Props:
  *  - highlightedNotes: array de strings con nombres de nota (ej. "C4", "E4")
- *    que se resaltan permanentemente con fondo ámbar (var(--glow-accent)).
+ *    que se resaltan permanentemente con fondo ambar (var(--glow-accent)).
  */
 const RealisticKeyboard = ({ highlightedNotes = [] }) => {
   const firstNote = MidiNumbers.fromNote('C4');
@@ -114,12 +114,12 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
   // Medir el ancho real del contenedor para pasarlo a react-piano
   const [containerRef, containerWidth] = useContainerWidth();
 
-  // Convertir highlightedNotes (strings) a números MIDI
+  // Convertir highlightedNotes (strings) a numeros MIDI
   const highlightedMidis = (highlightedNotes || [])
     .map((n) => {
       try {
         return MidiNumbers.fromNote(n);
-      } catch {
+      } catch (e) {
         return null;
       }
     })
@@ -146,13 +146,13 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
     });
   }, []);
 
-  // Combinar notas resaltadas + notas tocadas → activeNotes para react-piano
+  // Combinar notas resaltadas + notas tocadas -> activeNotes para react-piano
   const activeNotes = [
     ...new Set([...highlightedMidis, ...Array.from(playedNotes)]),
   ];
 
-  // react-piano requiere width en píxeles. Si el contenedor aún no se ha
-  // medido, usar un mínimo para que las teclas no colapsen a 0.
+  // react-piano requiere width en pixeles. Si el contenedor aun no se ha
+  // medido, usar un minimo para que las teclas no colapsen a 0.
   const pianoWidth = containerWidth > 0 ? containerWidth : 900;
 
   return (
@@ -163,20 +163,16 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
           <div className="realistic-piano-wrapper">
             {isLoading && (
               <p className="realistic-keyboard-loading">
-                Cargando sonido de piano…
+                Cargando sonido de piano...
               </p>
             )}
             <RPiano
               noteRange={{ first: firstNote, last: lastNote }}
               activeNotes={activeNotes}
-              onPlayNoteInput={(midiNumber, opts) => {
-                playNote(midiNumber);
-                onPlayNoteInput(midiNumber, opts);
-              }}
-              onStopNoteInput={(midiNumber, opts) => {
-                stopNote(midiNumber);
-                onStopNoteInput(midiNumber, opts);
-              }}
+              playNote={playNote}
+              stopNote={stopNote}
+              onPlayNoteInput={onPlayNoteInput}
+              onStopNoteInput={onStopNoteInput}
               keyWidthToHeight={0.33}
               width={pianoWidth}
             />
