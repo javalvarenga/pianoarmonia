@@ -1,10 +1,9 @@
 /* =====================================================================
  * PIANO REALISTA — Overrides sobre react-piano/dist/styles.css
  * =====================================================================
- * Se simula un piano acústico con teclas visibles y dimensiones adecuadas.
+ * Piano acústico con marco de madera oscura, teclas marfil y glow ámbar.
  * ===================================================================== */
 
-/* --- Contenedor exterior: scroll horizontal sin recortar --- */
 .realistic-keyboard-container {
   width: 100%;
   box-sizing: border-box;
@@ -17,7 +16,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* --- Wrapper interior: debe permitir que el piano ocupe su ancho calculado --- */
 .realistic-piano-wrapper {
   display: flex;
   flex-direction: column;
@@ -32,23 +30,24 @@
   font-family: var(--vintage-font);
   padding: 2rem 0;
   margin: 0;
+  font-style: italic;
 }
 
-/* --- Marco de madera oscura del teclado --- */
+/* Marco de madera oscura del teclado */
 .realistic-keyboard-container .react-piano {
   background: linear-gradient(180deg, #1a1208 0%, #0d0804 100%);
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 10px 8px 12px;
   box-shadow:
-    0 6px 20px rgba(0, 0, 0, 0.7),
-    0 2px 6px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(212, 136, 42, 0.08);
+    0 8px 24px rgba(0, 0, 0, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(212, 136, 42, 0.1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.4);
   border: 2px solid #3a2c18;
-  /* Asegurar que el piano no colapse */
   min-height: 120px;
 }
 
-/* --- Tecla base (común a blancas y negras) --- */
+/* Tecla base */
 .realistic-keyboard-container .react-piano__key {
   border-radius: 0 0 4px 4px;
   transition:
@@ -57,13 +56,13 @@
     transform 0.05s ease;
 }
 
-/* --- Teclas blancas (naturales): marfil envejecido --- */
+/* Teclas blancas: marfil envejecido con profundidad */
 .realistic-keyboard-container .react-piano__key--natural {
   background: linear-gradient(
     180deg,
     #faf6ec 0%,
-    #f0e8d0 60%,
-    #e0d4b8 92%,
+    #f0e8d0 55%,
+    #e0d4b8 88%,
     #c8b890 100%
   );
   border: 1px solid #4a3820;
@@ -76,23 +75,21 @@
     0 5px 6px rgba(0, 0, 0, 0.4);
 }
 
-/* Hueco entre teclas blancas (separador visual) */
 .realistic-keyboard-container .react-piano__key--natural:not(:last-child) {
   border-right: 1px solid #8a7858;
 }
 
-/* Hover en teclas blancas: calentamiento sutil */
 .realistic-keyboard-container .react-piano__key--natural:hover {
   background: linear-gradient(
     180deg,
     #fff8ee 0%,
-    #f5edd8 60%,
-    #e8dcc0 92%,
+    #f5edd8 55%,
+    #e8dcc0 88%,
     #d0c098 100%
   );
 }
 
-/* --- Teclas negras (accidentales): negro profundo con profundidad --- */
+/* Teclas negras: negro profundo con brillo sutil */
 .realistic-keyboard-container .react-piano__key--accidental {
   background: linear-gradient(
     180deg,
@@ -112,7 +109,6 @@
   z-index: 2;
 }
 
-/* Hover en teclas negras: leve brillo */
 .realistic-keyboard-container .react-piano__key--accidental:hover {
   background: linear-gradient(
     180deg,
@@ -125,10 +121,9 @@
 }
 
 /* =====================================================================
- * RESALTADO ÁMBAR — Notas activas (escala/acorde + tecla pulsada)
+ * RESALTADO ÁMBAR — Notas activas
  * ===================================================================== */
 
-/* Tecla blanca activa: marfil teñido de ámbar con glow intenso */
 .realistic-keyboard-container .react-piano__key--active.react-piano__key--natural {
   background: linear-gradient(
     180deg,
@@ -139,15 +134,14 @@
   ) !important;
   border-color: #8a5810 !important;
   box-shadow:
-    0 0 12px var(--glow-accent),
-    0 0 24px rgba(212, 136, 42, 0.3),
+    0 0 14px var(--glow-accent-strong),
+    0 0 28px rgba(212, 136, 42, 0.3),
     inset 0 0 8px rgba(255, 200, 80, 0.4),
     0 3px 0 #6a4a18,
     0 5px 8px rgba(0, 0, 0, 0.4) !important;
   transform: translateY(2px);
 }
 
-/* Tecla negra activa: negro teñido de ámbar con glow intenso */
 .realistic-keyboard-container .react-piano__key--active.react-piano__key--accidental {
   background: linear-gradient(
     180deg,
@@ -159,15 +153,14 @@
   ) !important;
   border-color: #5a3808 !important;
   box-shadow:
-    0 0 14px var(--glow-accent),
-    0 0 28px rgba(212, 136, 42, 0.35),
+    0 0 16px var(--glow-accent-strong),
+    0 0 32px rgba(212, 136, 42, 0.35),
     inset 0 0 6px rgba(255, 200, 80, 0.3),
     0 4px 0 #4a3008,
     0 6px 10px rgba(0, 0, 0, 0.5) !important;
   transform: translateY(2px);
 }
 
-/* Asegurar que el hover no anule el resaltado activo */
 .realistic-keyboard-container .react-piano__key--active.react-piano__key--natural:hover {
   background: linear-gradient(
     180deg,
@@ -189,7 +182,6 @@
   ) !important;
 }
 
-/* --- Responsividad --- */
 @media (max-width: 768px) {
   .realistic-keyboard-container {
     padding: 0.25rem 0 0.5rem;
@@ -198,6 +190,7 @@
   .realistic-keyboard-container .react-piano {
     padding: 8px 6px 10px;
     min-height: 90px;
+    border-radius: 6px;
   }
 
   .realistic-keyboard-container .react-piano__key {
