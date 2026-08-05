@@ -50,6 +50,7 @@
   text-align: center;
   border-bottom: 1px solid var(--sidebar-border);
   position: relative;
+  flex: 0 0 auto;
 }
 
 .sidebar-header::after {
@@ -72,7 +73,7 @@
 }
 
 .menu-container {
-  flex: 1;
+  flex: none;
   padding: 0.5rem 0;
   font-family: var(--vintage-font);
 }
@@ -217,9 +218,20 @@
 @media (max-width: 768px) {
   .sidebar-menu {
     display: none;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
   }
 
   .sidebar-menu.open {
     display: flex;
+    transform: translateX(0);
   }
 }

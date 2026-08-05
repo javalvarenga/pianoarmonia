@@ -79,7 +79,9 @@ h1, h2, h3, h4, p, span, div, label, select, option, button {
 
 @media (max-width: 768px) {
   .sidebar-menu {
-    height: auto;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
     width: 100%;
     position: fixed;
     top: 0;
