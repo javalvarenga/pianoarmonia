@@ -40,6 +40,7 @@ const collections = NOTES.flatMap(noteInfo =>
     id: `${noteInfo.note.toLowerCase()}-${scale.mode}`,
     name: `Escala ${scale.name} de ${noteInfo.label}`,
     mode: scale.mode,
+    description: `Escala ${scale.name} en la nota ${noteInfo.label}`,
     chords: [
       {
         note: noteInfo.note,
