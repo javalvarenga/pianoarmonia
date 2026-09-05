@@ -1,0 +1,57 @@
+.acorde-component {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.acorde-info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chord-play-button {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--gradient-wood);
+  color: var(--accent-bright);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  padding: 0;
+}
+
+.chord-play-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--glow-accent-strong);
+}
+
+.chord-play-button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .acorde-component {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .chord-play-button {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+}
