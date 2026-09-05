@@ -3,7 +3,7 @@ import Piano from './Piano.jsx';
 import Acorde from './Acorde.jsx';
 import './CollectionList.css';
 import { Chord } from '@tonaljs/tonal';
-import { getChordName, getScaleNotesFromIntervals } from '../utils/scaleGenerator.ts';
+import { getChordName, getScaleNotesFromIntervals } from '../utils/scaleGenerator';
 
 /**
  * Componente CollectionList que renderiza una lista de colecciones musicales

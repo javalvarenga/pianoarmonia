@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { normalizeNote } from '../utils/scaleGenerator.ts';
+import { normalizeNote } from '../utils/scaleGenerator';
 import './RetroKeyboard.css';
 
 // Mapeo de nombres de nota a índice de tecla blanca y si tiene negra adyacente
