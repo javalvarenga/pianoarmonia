@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import HamburgerMenu from './HamburgerMenu.jsx';
 import SidebarMenu from './SidebarMenu.jsx';
+import HeaderSearch from './HeaderSearch.jsx';
 import '../index.css';
 
 const Layout = () => {
@@ -18,6 +19,7 @@ const Layout = () => {
       <div className="app-main-content">
         <header>
           <h1 className="app-header">PianoArmonia</h1>
+          <HeaderSearch />
         </header>
         <main>
           <Outlet />
