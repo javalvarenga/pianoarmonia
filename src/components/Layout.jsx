@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import HamburgerMenu from './HamburgerMenu.jsx';
 import SidebarMenu from './SidebarMenu.jsx';
 import HeaderSearch from './HeaderSearch.jsx';
+import NoteButton from './NoteButton.jsx';
 import '../index.css';
 
 const Layout = () => {
@@ -25,6 +26,7 @@ const Layout = () => {
           <Outlet />
         </main>
       </div>
+      <NoteButton />
     </div>
   );
 };

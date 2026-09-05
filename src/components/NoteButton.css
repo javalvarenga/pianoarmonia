@@ -1,0 +1,29 @@
+.note-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--gradient-wood);
+  color: var(--accent-bright);
+  font-size: 1.5rem;
+  font-family: var(--vintage-font);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1100;
+}
+
+.note-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--glow-accent-strong);
+}
+
+.note-button:active {
+  transform: scale(0.95);
+}
