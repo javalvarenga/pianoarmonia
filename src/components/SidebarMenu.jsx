@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { downloadLogs } from '../utils/logger';
 import './SidebarMenu.css';
 import menuData from '../data/menu.json';
 
@@ -80,6 +81,16 @@ const SidebarMenu = ({ isOpen, toggleMenu }) => {
           ))}
         </ul>
       </nav>
+      <div className="sidebar-footer">
+        <button
+          className="download-logs-button"
+          onClick={downloadLogs}
+          aria-label="Descargar logs del sistema"
+          title="Descargar logs del sistema"
+        >
+          Descargar logs
+        </button>
+      </div>
     </div>
   );
 };

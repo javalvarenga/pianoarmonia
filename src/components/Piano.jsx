@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Chord } from '@tonaljs/tonal';
 import { normalizeNote } from '../utils/scaleGenerator.ts';
+import { logError } from '../utils/logger';
 import './Piano.css';
 import RealisticKeyboard from './RealisticKeyboard.jsx';
 
@@ -48,13 +49,20 @@ const Piano = ({ scale, chord, notas = [], scaleNotes = [] }) => {
     return [...new Set([...fromScale, ...fromChord, ...normalizedNotas])];
   }, [chordNotes, rootNote, notas, scaleNotes, scaleRoot]);
 
+  const handleAudioError = useCallback(
+    (message, details) => {
+      logError(`[Piano] ${message}`, details);
+    },
+    [],
+  );
+
   return (
     <div className="piano-container">
       {scale ? (
         <p className="piano-scale-label">Escala: {scale}</p>
       ) : null}
       <div className="piano-keyboard-section">
-        <RealisticKeyboard highlightedNotes={highlighted} />
+        <RealisticKeyboard highlightedNotes={highlighted} onAudioError={handleAudioError} />
       </div>
     </div>
   );

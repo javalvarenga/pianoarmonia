@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import * as Tone from 'tone';
 import { normalizeNote } from '../utils/scaleGenerator.ts';
+import { logError } from '../utils/logger';
 import './Acorde.css';
 
 const NOTE_ORDER = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -31,25 +32,41 @@ const Acorde = ({ chordDetails, chordColor }) => {
     // audio real exista cuando start() llame a resume(). Si se hace al reves,
     // start() opera sobre el DummyContext (no-op) y el contexto real queda
     // suspendido, por lo que no se emite sonido en el primer click.
-    if (!synthRef.current) {
-      synthRef.current = new Tone.PolySynth(Tone.Synth).toDestination();
-    }
+    try {
+      if (!synthRef.current) {
+        synthRef.current = new Tone.PolySynth(Tone.Synth).toDestination();
+      }
 
-    await Tone.start();
+      await Tone.start();
 
-    const synth = synthRef.current;
-    const rawNotes = chordDetails.notes || [];
-    if (rawNotes.length === 0) return;
+      const synth = synthRef.current;
+      const rawNotes = chordDetails.notes || [];
+      if (rawNotes.length === 0) {
+        logError('[Acorde] Sin notas para reproducir', { chord: chordDetails });
+        return;
+      }
 
-    // Tone.js requiere notas con octava; Chord.get devuelve notas sin octava
-    const rootNote = (chordDetails.tonic ||
-      (chordDetails.symbol || '').match(/^([A-G][#b]?)/)?.[1] ||
-      rawNotes[0]
-    );
-    const notes = notesWithOctaves(rawNotes, rootNote, 4);
+      // Tone.js requiere notas con octava; Chord.get devuelve notas sin octava
+      const rootNote = (chordDetails.tonic ||
+        (chordDetails.symbol || '').match(/^([A-G][#b]?)/)?.[1] ||
+        rawNotes[0]
+      );
+      const notes = notesWithOctaves(rawNotes, rootNote, 4);
 
-    if (notes.length > 0) {
-      synth.triggerAttackRelease(notes, '2n');
+      if (notes.length > 0) {
+        synth.triggerAttackRelease(notes, '2n');
+      } else {
+        logError('[Acorde] No se pudieron calcular notas con octava', {
+          rawNotes,
+          rootNote,
+          chord: chordDetails,
+        });
+      }
+    } catch (err) {
+      logError('[Acorde] Fallo al reproducir el acorde', {
+        chord: chordDetails,
+        error: err?.message ?? String(err),
+      });
     }
   };
 

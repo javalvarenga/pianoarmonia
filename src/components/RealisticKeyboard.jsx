@@ -10,6 +10,7 @@ import './RealisticKeyboard.css';
  */
 const SoundfontProvider = ({
   instrumentName = 'acoustic_grand_piano',
+  onAudioError,
   render,
 }) => {
   const [instrument, setInstrument] = useState(null);
@@ -18,7 +19,12 @@ const SoundfontProvider = ({
   useEffect(() => {
     let cancelled = false;
     const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
+    if (!AC) {
+      const msg = 'AudioContext no disponible en este navegador';
+      console.error(msg);
+      onAudioError?.(msg);
+      return;
+    }
 
     if (!audioContextRef.current) {
       audioContextRef.current = new AC();
@@ -31,21 +37,31 @@ const SoundfontProvider = ({
       })
       .catch((err) => {
         console.error('Error loading soundfont:', err);
+        onAudioError?.(`No se pudo cargar el soundfont "${instrumentName}"`, err);
       });
 
     return () => {
       cancelled = true;
     };
-  }, [instrumentName]);
+  }, [instrumentName, onAudioError]);
 
   const playNote = useCallback(
     (midiNumber) => {
       if (audioContextRef.current?.state === 'suspended') {
         audioContextRef.current.resume();
       }
-      if (instrument) instrument.play(midiNumber);
+      if (instrument) {
+        try {
+          instrument.play(midiNumber);
+        } catch (err) {
+          console.error('Error al reproducir nota:', err);
+          onAudioError?.(`Error al reproducir nota MIDI ${midiNumber}`, err);
+        }
+      } else {
+        onAudioError?.(`Intento de reproducción sin instrumento cargado (MIDI ${midiNumber})`);
+      }
     },
-    [instrument],
+    [instrument, onAudioError],
   );
 
   const stopNote = useCallback(
@@ -107,7 +123,7 @@ function useContainerWidth() {
  *  - highlightedNotes: array de strings con nombres de nota (ej. "C4", "E4")
  *    que se resaltan permanentemente con fondo ambar (var(--glow-accent)).
  */
-const RealisticKeyboard = ({ highlightedNotes = [] }) => {
+const RealisticKeyboard = ({ highlightedNotes = [], onAudioError }) => {
   const firstNote = MidiNumbers.fromNote('C4');
   const lastNote = MidiNumbers.fromNote('B5');
 
@@ -159,6 +175,7 @@ const RealisticKeyboard = ({ highlightedNotes = [] }) => {
     <div className="realistic-keyboard-container" ref={containerRef}>
       <SoundfontProvider
         instrumentName="acoustic_grand_piano"
+        onAudioError={onAudioError}
         render={({ isLoading, playNote: sfPlayNote, stopNote: sfStopNote, stopAllNotes: sfStopAllNotes }) => (
           <div className="realistic-piano-wrapper">
             {isLoading && (
