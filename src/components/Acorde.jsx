@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import * as Tone from 'tone';
-import { normalizeNote } from '../utils/scaleGenerator.ts';
+import { normalizeNote } from '../utils/scaleGenerator';
 import { logError } from '../utils/logger';
 import './Acorde.css';
 

@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { Chord } from '@tonaljs/tonal';
-import { normalizeNote } from '../utils/scaleGenerator.ts';
+import { normalizeNote } from '../utils/scaleGenerator';
 import { logError } from '../utils/logger';
 import './Piano.css';
 import RealisticKeyboard from './RealisticKeyboard.jsx';
