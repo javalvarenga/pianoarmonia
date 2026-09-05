@@ -35,7 +35,7 @@ const SCALES = [
 ];
 
 // Generar todas las colecciones: 7 notas × 19 escalas = 133 colecciones
-export const collections = NOTES.flatMap(noteInfo =>
+const collections = NOTES.flatMap(noteInfo =>
   SCALES.map(scale => ({
     id: `${noteInfo.note.toLowerCase()}-${scale.mode}`,
     name: `Escala ${scale.name} de ${noteInfo.label}`,
@@ -48,3 +48,8 @@ export const collections = NOTES.flatMap(noteInfo =>
     ]
   }))
 );
+
+// Ordenar las colecciones alfabéticamente por el campo name
+collections.sort((a, b) => a.name.localeCompare(b.name));
+
+export { collections };
