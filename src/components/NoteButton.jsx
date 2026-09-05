@@ -11,8 +11,6 @@ const NoteButton = () => {
   const [ready, setReady] = useState(false);
 
   const playNote = async () => {
-    await Tone.start();
-
     if (!samplerRef.current) {
       samplerRef.current = new Tone.Sampler({
         urls: {
@@ -22,6 +20,10 @@ const NoteButton = () => {
         onload: () => setReady(true),
       }).toDestination();
     }
+
+    // Tone.start() debe llamarse DESPUES de crear los nodos de audio para
+    // que el contexto real exista al hacer resume().
+    await Tone.start();
 
     const sampler = samplerRef.current;
     // Si las muestras aún no cargan, dispara igual; Tone encolará la nota.
