@@ -27,11 +27,15 @@ const Acorde = ({ chordDetails, chordColor }) => {
   const synthRef = useRef(null);
 
   const playChord = async () => {
-    await Tone.start();
-
+    // Crear el sintetizador ANTES de Tone.start() para que el contexto de
+    // audio real exista cuando start() llame a resume(). Si se hace al reves,
+    // start() opera sobre el DummyContext (no-op) y el contexto real queda
+    // suspendido, por lo que no se emite sonido en el primer click.
     if (!synthRef.current) {
       synthRef.current = new Tone.PolySynth(Tone.Synth).toDestination();
     }
+
+    await Tone.start();
 
     const synth = synthRef.current;
     const rawNotes = chordDetails.notes || [];
