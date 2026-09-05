@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import * as Tone from 'tone';
+import { logError } from '../utils/logger';
 import './NoteButton.css';
 
 /**
@@ -11,23 +12,30 @@ const NoteButton = () => {
   const [ready, setReady] = useState(false);
 
   const playNote = async () => {
-    if (!samplerRef.current) {
-      samplerRef.current = new Tone.Sampler({
-        urls: {
-          C4: 'C4.mp3',
-        },
-        baseUrl: 'https://tonejs.github.io/audio/salamander/',
-        onload: () => setReady(true),
-      }).toDestination();
+    try {
+      if (!samplerRef.current) {
+        samplerRef.current = new Tone.Sampler({
+          urls: {
+            C4: 'C4.mp3',
+          },
+          baseUrl: 'https://tonejs.github.io/audio/salamander/',
+          onload: () => setReady(true),
+        }).toDestination();
+      }
+
+      // Tone.start() debe llamarse DESPUES de crear los nodos de audio para
+      // que el contexto real exista al hacer resume().
+      await Tone.start();
+
+      const sampler = samplerRef.current;
+      // Si las muestras aún no cargan, dispara igual; Tone encolará la nota.
+      sampler.triggerAttackRelease('C4', '2n');
+    } catch (err) {
+      logError('[NoteButton] Fallo al reproducir nota C4', {
+        error: err?.message ?? String(err),
+        ready,
+      });
     }
-
-    // Tone.start() debe llamarse DESPUES de crear los nodos de audio para
-    // que el contexto real exista al hacer resume().
-    await Tone.start();
-
-    const sampler = samplerRef.current;
-    // Si las muestras aún no cargan, dispara igual; Tone encolará la nota.
-    sampler.triggerAttackRelease('C4', '2n');
   };
 
   return (

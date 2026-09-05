@@ -215,6 +215,35 @@
   margin: 0;
 }
 
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--sidebar-border);
+  flex: 0 0 auto;
+}
+
+.download-logs-button {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-family: var(--vintage-font);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--sidebar-accent-bright);
+  background: linear-gradient(180deg, rgba(212, 136, 42, 0.08) 0%, rgba(212, 136, 42, 0.02) 100%);
+  border: 1px solid var(--sidebar-border-bright);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 1px;
+}
+
+.download-logs-button:hover {
+  background: linear-gradient(180deg, rgba(212, 136, 42, 0.18) 0%, rgba(212, 136, 42, 0.08) 100%);
+  border-color: var(--sidebar-accent);
+  color: var(--sidebar-hover-text);
+  box-shadow: 0 0 8px rgba(212, 136, 42, 0.2);
+}
+
 @media (max-width: 768px) {
   .sidebar-menu {
     display: none;
